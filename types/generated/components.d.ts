@@ -1,5 +1,21 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface HomepageHorizonCard extends Struct.ComponentSchema {
+  collectionName: 'components_homepage_horizon_cards';
+  info: {
+    displayName: 'Horizon Card';
+    icon: 'landscape';
+  };
+  attributes: {
+    borderColor: Schema.Attribute.Enumeration<
+      ['bleu', 'vert', 'rouge', 'jaune', 'beige']
+    >;
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -65,6 +81,7 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'homepage.horizon-card': HomepageHorizonCard;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

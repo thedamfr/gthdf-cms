@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_homepage_horizon_cards",
+  "info": {
+    "displayName": "Horizon Card",
+    "icon": "landscape"
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "borderColor": {
+      "type": "enumeration",
+      "enum": [
+        "bleu",
+        "vert",
+        "rouge",
+        "jaune",
+        "beige"
+      ]
+    }
+  },
+  "config": {}
+}
