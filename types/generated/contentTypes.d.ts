@@ -610,6 +610,7 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     horizons: Schema.Attribute.Component<'homepage.horizon-card', true>;
+    HorizonsTitres: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -618,6 +619,8 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     publishedAt: Schema.Attribute.DateTime;
+    rencontres: Schema.Attribute.Component<'homepage.encounter-card', true>;
+    rencontresTitre: Schema.Attribute.String;
     seo: Schema.Attribute.Component<'shared.seo', true>;
     subtitle: Schema.Attribute.String;
     title: Schema.Attribute.String;

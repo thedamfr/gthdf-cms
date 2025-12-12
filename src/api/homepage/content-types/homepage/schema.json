@@ -16,12 +16,6 @@
       "component": "shared.seo",
       "repeatable": true
     },
-    "title": {
-      "type": "string"
-    },
-    "subtitle": {
-      "type": "string"
-    },
     "logo": {
       "type": "media",
       "multiple": false,
@@ -32,9 +26,26 @@
         "audios"
       ]
     },
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "HorizonsTitres": {
+      "type": "string"
+    },
     "horizons": {
       "type": "component",
       "component": "homepage.horizon-card",
+      "repeatable": true
+    },
+    "rencontresTitre": {
+      "type": "string"
+    },
+    "rencontres": {
+      "type": "component",
+      "component": "homepage.encounter-card",
       "repeatable": true
     }
   }
