@@ -60,11 +60,10 @@ services:
       JWT_SECRET: 1oxJOhFnpvM9x9Lm/GfEYA==
     volumes:
       - ./:/app
-      - /app/node_modules
     depends_on:
       - postgres
       - minio
-    command: sh -c "npm install --ignore-scripts && npm run develop"
+    command: npm run develop
 
 volumes:
   pgdata:
