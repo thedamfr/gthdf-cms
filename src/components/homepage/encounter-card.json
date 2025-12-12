@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_homepage_encounter_cards",
+  "info": {
+    "displayName": "encounterCard",
+    "icon": "emotionHappy"
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "borderColor": {
+      "type": "enumeration",
+      "enum": [
+        "bleu",
+        "vert",
+        "rouge",
+        "jaune",
+        "beige"
+      ]
+    },
+    "description": {
+      "type": "richtext"
+    }
+  },
+  "config": {}
+}
