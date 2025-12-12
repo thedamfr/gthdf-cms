@@ -115,3 +115,9 @@ Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/
 ---
 
 <sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+
+## License
+
+This project is licensed under the GNU General Public License v3.0 (GPL-3.0-or-later).
+See the LICENSE file for the full license text.
+

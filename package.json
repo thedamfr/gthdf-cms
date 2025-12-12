@@ -9,6 +9,7 @@
     "deploy": "strapi deploy",
     "dev": "strapi develop",
     "develop": "strapi develop",
+    "postinstall": "npm run build",
     "seed:example": "node ./scripts/seed.js",
     "start": "strapi start",
     "strapi": "strapi",
@@ -38,6 +39,7 @@
     "node": ">=20.0.0 <=24.x.x",
     "npm": ">=6.0.0"
   },
+  "license": "GPL-3.0-or-later",
   "strapi": {
     "uuid": "fd857c7f-7f2e-4d2e-bee2-b8fda9ae8fa4",
     "installId": "2bcc5705b81bbc4171d38fff7722c67622c5d9e27b70862afbe46c2eba8c3256"
