@@ -27,6 +27,44 @@ services:
     volumes:
       - miniodata:/data
 
+  strapi:
+    image: node:24-alpine
+    container_name: gthdf-strapi
+    restart: unless-stopped
+    working_dir: /app
+    ports:
+      - "1337:1337"
+    environment:
+      NODE_ENV: development
+      HOST: 0.0.0.0
+      PORT: 1337
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: gthdf
+      DATABASE_USERNAME: gthdf
+      DATABASE_PASSWORD: gthdf
+      DATABASE_SSL: false
+      AWS_ACCESS_KEY_ID: gthdf
+      AWS_SECRET_ACCESS_KEY: gthdfpassword
+      AWS_REGION: us-east-1
+      AWS_ENDPOINT: http://minio:9000
+      AWS_BUCKET: gthdf-media
+      AWS_CDN_URL: http://127.0.0.1:9000/gthdf-media
+      APP_KEYS: Q0T9u38qvke3tRvDZnO+8A==,7kM0OTH1SXj6Z0xPRZ6ZBg==,DsF2rBuQruBEPEhuI6zl5A==,1CDKU3+3ulhYsxKfQYlaRA==
+      API_TOKEN_SALT: HQI2p+kY9oy74YLZcjpOSg==
+      ADMIN_JWT_SECRET: 0DTOsjZ5dFNCWLbANj5BTg==
+      TRANSFER_TOKEN_SALT: qnjAyEz3RMBoSQjdzWQ9IA==
+      ENCRYPTION_KEY: Fp0Sx6n8uYeZrJBme++tMg==
+      JWT_SECRET: 1oxJOhFnpvM9x9Lm/GfEYA==
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    depends_on:
+      - postgres
+      - minio
+    command: sh -c "npm install && npm run dev"
+
 volumes:
   pgdata:
   miniodata:

@@ -3,20 +3,24 @@ export default ({ env }) => ({
     config: {
       provider: 'aws-s3',
       providerOptions: {
-        baseUrl: env('AWS_CDN_URL'),
+        baseUrl: env('CELLAR_ADDON_HOST') 
+          ? `https://${env('CELLAR_ADDON_HOST')}/${env('AWS_BUCKET', 'gthdf-media')}`
+          : env('AWS_CDN_URL'),
         s3Options: {
           credentials: {
-            accessKeyId: env('AWS_ACCESS_KEY_ID'),
-            secretAccessKey: env('AWS_SECRET_ACCESS_KEY'),
+            accessKeyId: env('CELLAR_ADDON_KEY_ID') || env('AWS_ACCESS_KEY_ID'),
+            secretAccessKey: env('CELLAR_ADDON_KEY_SECRET') || env('AWS_SECRET_ACCESS_KEY'),
           },
           region: env('AWS_REGION', 'us-east-1'),
-          endpoint: env('AWS_ENDPOINT'),
+          endpoint: env('CELLAR_ADDON_HOST') 
+            ? `https://${env('CELLAR_ADDON_HOST')}`
+            : env('AWS_ENDPOINT'),
           forcePathStyle: true,
-          tls: false,
+          tls: env('CELLAR_ADDON_HOST') ? true : false,
           bucketEndpoint: false,
         },
         params: {
-          Bucket: env('AWS_BUCKET'),
+          Bucket: env('AWS_BUCKET', 'gthdf-media'),
         },
       },
       sizeLimit: 10 * 1024 * 1024, // 10MB
