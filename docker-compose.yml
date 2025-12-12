@@ -1,0 +1,32 @@
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: gthdf-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: gthdf
+      POSTGRES_USER: gthdf
+      POSTGRES_PASSWORD: gthdf
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  minio:
+    image: minio/minio:latest
+    container_name: gthdf-minio
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
+    ports:
+      - "9000:9000"   # API S3
+      - "9001:9001"   # Console web
+    environment:
+      MINIO_ROOT_USER: gthdf
+      MINIO_ROOT_PASSWORD: gthdfpassword
+    volumes:
+      - miniodata:/data
+
+volumes:
+  pgdata:
+  miniodata:

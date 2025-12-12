@@ -2,14 +2,70 @@
 
 Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
 
+## 🐳 Development Setup
+
+### Prerequisites
+
+- Node.js v24.3.0+
+- Docker & Docker Compose
+
+### 1. Start Infrastructure
+
+```bash
+docker-compose up -d
+```
+
+This starts:
+- **PostgreSQL** (port 5432): Database `gthdf`
+- **MinIO** (ports 9000/9001): S3-compatible object storage
+
+### 2. Configure Environment
+
+Create `.env` file with:
+
+```env
+# Database
+DATABASE_NAME=gthdf
+DATABASE_USERNAME=gthdf
+DATABASE_PASSWORD=gthdf
+
+# MinIO S3 Storage
+AWS_ACCESS_KEY_ID=gthdf
+AWS_SECRET_ACCESS_KEY=gthdfpassword
+AWS_REGION=us-east-1
+AWS_BUCKET=gthdf-media
+AWS_CDN_URL=http://127.0.0.1:9000/gthdf-media
+```
+
+### 3. Create MinIO Bucket
+
+**Important**: Create bucket via AWS SDK (not MinIO CLI) for compatibility:
+
+```bash
+node create-bucket.js
+```
+
+Set public read policy:
+
+```bash
+s3cmd setpolicy minio-policy.json s3://gthdf-media --host=http://127.0.0.1:9000 \
+  --host-bucket=http://127.0.0.1:9000/gthdf-media \
+  --access_key=gthdf --secret_key=gthdfpassword --no-ssl
+```
+
+### 4. Install & Run
+
+```bash
+npm install
+npm run develop
+```
+
 ### `develop`
 
 Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
 
 ```
 npm run develop
-# or
-yarn develop
 ```
 
 ### `start`
