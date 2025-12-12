@@ -36,6 +36,7 @@ services:
       - "1337:1337"
     environment:
       NODE_ENV: development
+      NODE_OPTIONS: --max-old-space-size=2048
       HOST: 0.0.0.0
       PORT: 1337
       DATABASE_CLIENT: postgres
@@ -63,7 +64,7 @@ services:
     depends_on:
       - postgres
       - minio
-    command: sh -c "npm install && npm run dev"
+    command: sh -c "npm install --ignore-scripts && npm run develop"
 
 volumes:
   pgdata:

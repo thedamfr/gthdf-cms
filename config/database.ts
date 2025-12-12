@@ -6,12 +6,12 @@ export default ({ env }) => {
   const connections = {
     postgres: {
       connection: {
-        connectionString: env('DATABASE_URL'),
-        host: env('DATABASE_HOST', 'localhost'),
-        port: env.int('DATABASE_PORT', 5432),
-        database: env('DATABASE_NAME', 'strapi'),
-        user: env('DATABASE_USERNAME', 'strapi'),
-        password: env('DATABASE_PASSWORD', 'strapi'),
+        connectionString: env('POSTGRESQL_ADDON_URI') || env('DATABASE_URL'),
+        host: env('POSTGRESQL_ADDON_HOST') || env('DATABASE_HOST', 'localhost'),
+        port: env.int('POSTGRESQL_ADDON_PORT') || env.int('DATABASE_PORT', 5432),
+        database: env('POSTGRESQL_ADDON_DB') || env('DATABASE_NAME', 'strapi'),
+        user: env('POSTGRESQL_ADDON_USER') || env('DATABASE_USERNAME', 'strapi'),
+        password: env('POSTGRESQL_ADDON_PASSWORD') || env('DATABASE_PASSWORD', 'strapi'),
         ssl: env.bool('DATABASE_SSL', false) && {
           key: env('DATABASE_SSL_KEY', undefined),
           cert: env('DATABASE_SSL_CERT', undefined),
