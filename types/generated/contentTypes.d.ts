@@ -621,6 +621,8 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
     mapCaption: Schema.Attribute.Text;
     mapEmbedUrl: Schema.Attribute.Text;
     mapTitle: Schema.Attribute.String;
+    principles: Schema.Attribute.Component<'homepage.principle-card', true>;
+    principlesTitle: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     rencontres: Schema.Attribute.Component<'homepage.encounter-card', true>;
     rencontresTitre: Schema.Attribute.String;

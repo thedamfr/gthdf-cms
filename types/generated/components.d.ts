@@ -32,6 +32,26 @@ export interface HomepageHorizonCard extends Struct.ComponentSchema {
   };
 }
 
+export interface HomepagePrincipleCard extends Struct.ComponentSchema {
+  collectionName: 'components_homepage_principle_cards';
+  info: {
+    description: 'A principle card with title, description and background color';
+    displayName: 'Principle Card';
+  };
+  attributes: {
+    backgroundColor: Schema.Attribute.Enumeration<
+      ['charbon', 'jaune', 'beige', 'bleu', 'vert', 'rouge']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'beige'>;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    textColor: Schema.Attribute.Enumeration<['charbon', 'creme']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'charbon'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -99,6 +119,7 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'homepage.encounter-card': HomepageEncounterCard;
       'homepage.horizon-card': HomepageHorizonCard;
+      'homepage.principle-card': HomepagePrincipleCard;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

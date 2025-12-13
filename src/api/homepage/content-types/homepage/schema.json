@@ -56,6 +56,14 @@
     },
     "mapCaption": {
       "type": "text"
+    },
+    "principlesTitle": {
+      "type": "string"
+    },
+    "principles": {
+      "type": "component",
+      "component": "homepage.principle-card",
+      "repeatable": true
     }
   }
 }

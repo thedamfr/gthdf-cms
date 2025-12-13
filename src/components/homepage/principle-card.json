@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_homepage_principle_cards",
+  "info": {
+    "displayName": "Principle Card",
+    "description": "A principle card with title, description and background color"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "backgroundColor": {
+      "type": "enumeration",
+      "enum": ["charbon", "jaune", "beige", "bleu", "vert", "rouge"],
+      "required": true,
+      "default": "beige"
+    },
+    "textColor": {
+      "type": "enumeration",
+      "enum": ["charbon", "creme"],
+      "required": true,
+      "default": "charbon"
+    }
+  }
+}
