@@ -64,6 +64,14 @@
       "type": "component",
       "component": "homepage.principle-card",
       "repeatable": true
+    },
+    "footerText": {
+      "type": "text"
+    },
+    "socialLinks": {
+      "type": "component",
+      "component": "shared.social-link",
+      "repeatable": true
     }
   }
 }

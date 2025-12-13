@@ -609,6 +609,7 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    footerText: Schema.Attribute.Text;
     horizons: Schema.Attribute.Component<'homepage.horizon-card', true>;
     HorizonsTitres: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -627,6 +628,7 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
     rencontres: Schema.Attribute.Component<'homepage.encounter-card', true>;
     rencontresTitre: Schema.Attribute.String;
     seo: Schema.Attribute.Component<'shared.seo', true>;
+    socialLinks: Schema.Attribute.Component<'shared.social-link', true>;
     subtitle: Schema.Attribute.String;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
