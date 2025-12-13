@@ -47,6 +47,15 @@
       "type": "component",
       "component": "homepage.encounter-card",
       "repeatable": true
+    },
+    "mapTitle": {
+      "type": "string"
+    },
+    "mapEmbedUrl": {
+      "type": "text"
+    },
+    "mapCaption": {
+      "type": "text"
     }
   }
 }

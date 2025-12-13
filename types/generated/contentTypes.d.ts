@@ -618,6 +618,9 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    mapCaption: Schema.Attribute.Text;
+    mapEmbedUrl: Schema.Attribute.Text;
+    mapTitle: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     rencontres: Schema.Attribute.Component<'homepage.encounter-card', true>;
     rencontresTitre: Schema.Attribute.String;
