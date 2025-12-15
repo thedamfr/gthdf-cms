@@ -1,0 +1,70 @@
+{
+  "kind": "collectionType",
+  "collectionName": "chapters",
+  "info": {
+    "singularName": "chapter",
+    "pluralName": "chapters",
+    "displayName": "Chapter",
+    "description": "A chapter of the route"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "startStation": {
+      "type": "string",
+      "required": true
+    },
+    "endStation": {
+      "type": "string",
+      "required": true
+    },
+    "distance": {
+      "type": "integer",
+      "required": true
+    },
+    "introSentence": {
+      "type": "text",
+      "required": true
+    },
+    "komootEmbedAB": {
+      "type": "text"
+    },
+    "komootEmbedBA": {
+      "type": "text"
+    },
+    "gpxFileAB": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["files"]
+    },
+    "gpxFileBA": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["files"]
+    },
+    "horizons": {
+      "type": "component",
+      "component": "homepage.horizon-card",
+      "repeatable": true
+    },
+    "routeNotes": {
+      "type": "richtext"
+    },
+    "testimonials": {
+      "type": "component",
+      "component": "shared.testimonial",
+      "repeatable": true
+    }
+  }
+}

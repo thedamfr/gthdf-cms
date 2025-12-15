@@ -24,6 +24,17 @@ export default ({ env }) => ({
         },
       },
       sizeLimit: 10 * 1024 * 1024, // 10MB
+      mimeTypes: [
+        'image/jpeg',
+        'image/png',
+        'image/gif',
+        'image/svg+xml',
+        'image/webp',
+        'application/pdf',
+        'application/gpx+xml',
+        'application/xml',
+        'text/xml',
+      ],
     },
   },
 });

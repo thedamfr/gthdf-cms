@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_shared_testimonials",
+  "info": {
+    "displayName": "Testimonial",
+    "description": "A short testimonial or quote"
+  },
+  "options": {},
+  "attributes": {
+    "quote": {
+      "type": "text",
+      "required": true
+    },
+    "author": {
+      "type": "string",
+      "required": true
+    },
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "borderColor": {
+      "type": "enumeration",
+      "enum": ["bleu", "vert", "rouge", "jaune", "beige"],
+      "required": true,
+      "default": "jaune"
+    }
+  }
+}

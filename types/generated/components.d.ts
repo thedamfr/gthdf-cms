@@ -127,6 +127,24 @@ export interface SharedSocialLink extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedTestimonial extends Struct.ComponentSchema {
+  collectionName: 'components_shared_testimonials';
+  info: {
+    description: 'A short testimonial or quote';
+    displayName: 'Testimonial';
+  };
+  attributes: {
+    author: Schema.Attribute.String & Schema.Attribute.Required;
+    borderColor: Schema.Attribute.Enumeration<
+      ['bleu', 'vert', 'rouge', 'jaune', 'beige']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'jaune'>;
+    photo: Schema.Attribute.Media<'images'>;
+    quote: Schema.Attribute.Text & Schema.Attribute.Required;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
@@ -139,6 +157,7 @@ declare module '@strapi/strapi' {
       'shared.seo': SharedSeo;
       'shared.slider': SharedSlider;
       'shared.social-link': SharedSocialLink;
+      'shared.testimonial': SharedTestimonial;
     }
   }
 }
