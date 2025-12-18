@@ -65,6 +65,16 @@
       "type": "component",
       "component": "shared.testimonial",
       "repeatable": true
+    },
+    "nextChapter": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::chapter.chapter"
+    },
+    "previousChapter": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::chapter.chapter"
     }
   }
 }

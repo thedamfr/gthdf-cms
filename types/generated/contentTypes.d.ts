@@ -592,6 +592,11 @@ export interface ApiChapterChapter extends Struct.CollectionTypeSchema {
       'api::chapter.chapter'
     > &
       Schema.Attribute.Private;
+    nextChapter: Schema.Attribute.Relation<'oneToOne', 'api::chapter.chapter'>;
+    previousChapter: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::chapter.chapter'
+    >;
     publishedAt: Schema.Attribute.DateTime;
     routeNotes: Schema.Attribute.RichText;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
