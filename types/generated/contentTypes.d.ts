@@ -602,6 +602,7 @@ export interface ApiChapterChapter extends Struct.CollectionTypeSchema {
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     startStation: Schema.Attribute.String & Schema.Attribute.Required;
     testimonials: Schema.Attribute.Component<'shared.testimonial', true>;
+    thumbnail: Schema.Attribute.Media<'images'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

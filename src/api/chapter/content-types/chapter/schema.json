@@ -37,6 +37,12 @@
       "type": "text",
       "required": true
     },
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"],
+      "required": false
+    },
     "komootEmbedAB": {
       "type": "text"
     },
