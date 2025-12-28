@@ -1,0 +1,25 @@
+{
+  "kind": "singleType",
+  "collectionName": "legal_notices",
+  "info": {
+    "singularName": "legal-notice",
+    "pluralName": "legal-notices",
+    "displayName": "Legal Notice",
+    "description": "Mentions légales du site"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "default": "Mentions Légales"
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}
