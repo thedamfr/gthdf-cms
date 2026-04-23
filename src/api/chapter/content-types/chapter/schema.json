@@ -81,6 +81,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::chapter.chapter"
+    },
+    "checkpoints": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::checkpoint.checkpoint",
+      "mappedBy": "chapter"
     }
   }
 }

@@ -575,6 +575,10 @@ export interface ApiChapterChapter extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    checkpoints: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::checkpoint.checkpoint'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -607,6 +611,47 @@ export interface ApiChapterChapter extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCheckpointCheckpoint extends Struct.CollectionTypeSchema {
+  collectionName: 'checkpoints';
+  info: {
+    description: 'A checkpoint on the route with an enigma to solve';
+    displayName: 'Checkpoint';
+    pluralName: 'checkpoints';
+    singularName: 'checkpoint';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    chapter: Schema.Attribute.Relation<'manyToOne', 'api::chapter.chapter'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    enigma: Schema.Attribute.Text & Schema.Attribute.Required;
+    hint: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::checkpoint.checkpoint'
+    > &
+      Schema.Attribute.Private;
+    number: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    what3words: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -1231,6 +1276,7 @@ declare module '@strapi/strapi' {
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
       'api::chapter.chapter': ApiChapterChapter;
+      'api::checkpoint.checkpoint': ApiCheckpointCheckpoint;
       'api::global.global': ApiGlobalGlobal;
       'api::homepage.homepage': ApiHomepageHomepage;
       'api::legal-notice.legal-notice': ApiLegalNoticeLegalNotice;

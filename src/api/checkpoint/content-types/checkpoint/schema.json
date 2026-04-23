@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "checkpoints",
+  "info": {
+    "singularName": "checkpoint",
+    "pluralName": "checkpoints",
+    "displayName": "Checkpoint",
+    "description": "A checkpoint on the route with an enigma to solve"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "number": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "enigma": {
+      "type": "text",
+      "required": true
+    },
+    "hint": {
+      "type": "text",
+      "required": false
+    },
+    "what3words": {
+      "type": "string",
+      "required": true
+    },
+    "chapter": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::chapter.chapter",
+      "inversedBy": "checkpoints"
+    }
+  }
+}
