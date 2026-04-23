@@ -484,6 +484,10 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 80;
       }>;
+    excerpt: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -491,6 +495,11 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    relatedChapters: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::chapter.chapter'
+    >;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'>;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -579,6 +588,7 @@ export interface ApiChapterChapter extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::checkpoint.checkpoint'
     >;
+    cities: Schema.Attribute.JSON;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -602,7 +612,12 @@ export interface ApiChapterChapter extends Struct.CollectionTypeSchema {
       'api::chapter.chapter'
     >;
     publishedAt: Schema.Attribute.DateTime;
+    relatedArticles: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::article.article'
+    >;
     routeNotes: Schema.Attribute.RichText;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     startStation: Schema.Attribute.String & Schema.Attribute.Required;
     testimonials: Schema.Attribute.Component<'shared.testimonial', true>;

@@ -44,6 +44,21 @@
     "blocks": {
       "type": "dynamiczone",
       "components": ["shared.media", "shared.quote", "shared.rich-text", "shared.slider"]
+    },
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "excerpt": {
+      "type": "text",
+      "maxLength": 200
+    },
+    "relatedChapters": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::chapter.chapter",
+      "mappedBy": "relatedArticles"
     }
   }
 }

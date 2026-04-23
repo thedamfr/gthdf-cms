@@ -87,6 +87,20 @@
       "relation": "oneToMany",
       "target": "api::checkpoint.checkpoint",
       "mappedBy": "chapter"
+    },
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "cities": {
+      "type": "json"
+    },
+    "relatedArticles": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::article.article",
+      "inversedBy": "relatedChapters"
     }
   }
 }
