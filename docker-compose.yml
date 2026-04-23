@@ -63,7 +63,7 @@ services:
     depends_on:
       - postgres
       - minio
-    command: npm run develop
+    command: sh -c "npm install --os=linux --libc=musl --cpu=arm64 sharp --ignore-scripts && npm run develop"
 
 volumes:
   pgdata:
