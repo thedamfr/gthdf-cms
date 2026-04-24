@@ -1,0 +1,83 @@
+{
+  "kind": "singleType",
+  "collectionName": "checkpoints_pages",
+  "info": {
+    "singularName": "checkpoints-page",
+    "pluralName": "checkpoints-pages",
+    "displayName": "Checkpoints Page",
+    "description": "Contenu éditorial de la page checkpoints"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "default": "Les checkpoints"
+    },
+    "heroLead": {
+      "type": "text",
+      "required": true
+    },
+    "heroParagraph1": {
+      "type": "text",
+      "required": true
+    },
+    "heroParagraph2": {
+      "type": "text",
+      "required": true
+    },
+    "rule1": {
+      "type": "string",
+      "required": true
+    },
+    "rule2": {
+      "type": "string",
+      "required": true
+    },
+    "rule3": {
+      "type": "string",
+      "required": true
+    },
+    "rule4": {
+      "type": "string",
+      "required": true
+    },
+    "heroImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "whatsappUrl": {
+      "type": "string"
+    },
+    "whatsappSubtitle": {
+      "type": "string",
+      "default": "entraide checkpoints & sorties"
+    },
+    "mapsSectionTitle": {
+      "type": "string",
+      "default": "Cartes du parcours"
+    },
+    "mapA3Label": {
+      "type": "string",
+      "default": "Carte de randonnée"
+    },
+    "mapA1Label": {
+      "type": "string",
+      "default": "Carte grand format"
+    },
+    "mapA3Pdf": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["files"]
+    },
+    "mapA1Pdf": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["files"]
+    }
+  }
+}
