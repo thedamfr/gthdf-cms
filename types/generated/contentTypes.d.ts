@@ -670,6 +670,57 @@ export interface ApiCheckpointCheckpoint extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCheckpointsPageCheckpointsPage
+  extends Struct.SingleTypeSchema {
+  collectionName: 'checkpoints_pages';
+  info: {
+    description: 'Contenu \u00E9ditorial de la page checkpoints';
+    displayName: 'Checkpoints Page';
+    pluralName: 'checkpoints-pages';
+    singularName: 'checkpoints-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    heroImage: Schema.Attribute.Media<'images'>;
+    heroLead: Schema.Attribute.Text & Schema.Attribute.Required;
+    heroParagraph1: Schema.Attribute.Text & Schema.Attribute.Required;
+    heroParagraph2: Schema.Attribute.Text & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::checkpoints-page.checkpoints-page'
+    > &
+      Schema.Attribute.Private;
+    mapA1Label: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Carte grand format'>;
+    mapA1Pdf: Schema.Attribute.Media<'files'>;
+    mapA3Label: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Carte de randonn\u00E9e'>;
+    mapA3Pdf: Schema.Attribute.Media<'files'>;
+    mapsSectionTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Cartes du parcours'>;
+    publishedAt: Schema.Attribute.DateTime;
+    rule1: Schema.Attribute.String & Schema.Attribute.Required;
+    rule2: Schema.Attribute.String & Schema.Attribute.Required;
+    rule3: Schema.Attribute.String & Schema.Attribute.Required;
+    rule4: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Les checkpoints'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    whatsappSubtitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'entraide checkpoints & sorties'>;
+    whatsappUrl: Schema.Attribute.String;
+  };
+}
+
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -1293,6 +1344,7 @@ declare module '@strapi/strapi' {
       'api::category.category': ApiCategoryCategory;
       'api::chapter.chapter': ApiChapterChapter;
       'api::checkpoint.checkpoint': ApiCheckpointCheckpoint;
+      'api::checkpoints-page.checkpoints-page': ApiCheckpointsPageCheckpointsPage;
       'api::global.global': ApiGlobalGlobal;
       'api::homepage.homepage': ApiHomepageHomepage;
       'api::legal-notice.legal-notice': ApiLegalNoticeLegalNotice;
