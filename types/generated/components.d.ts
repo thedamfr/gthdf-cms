@@ -1,5 +1,38 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface ChapterDestination extends Struct.ComponentSchema {
+  collectionName: 'components_chapter_destinations';
+  info: {
+    description: "Suggestions touristiques pour la ville d'arriv\u00E9e du chapitre";
+    displayName: 'Destination';
+    icon: 'map-pin';
+    name: 'Destination';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText;
+    pois: Schema.Attribute.Component<'chapter.point-of-interest', true>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Que visiter'>;
+  };
+}
+
+export interface ChapterPointOfInterest extends Struct.ComponentSchema {
+  collectionName: 'components_chapter_point_of_interests';
+  info: {
+    description: 'Un lieu touristique sugg\u00E9r\u00E9';
+    displayName: 'Point of Interest';
+    icon: 'star';
+    name: 'PointOfInterest';
+  };
+  attributes: {
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    photo: Schema.Attribute.Media<'images'>;
+    url: Schema.Attribute.String;
+  };
+}
+
 export interface HomepageEncounterCard extends Struct.ComponentSchema {
   collectionName: 'components_homepage_encounter_cards';
   info: {
@@ -148,6 +181,8 @@ export interface SharedTestimonial extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'chapter.destination': ChapterDestination;
+      'chapter.point-of-interest': ChapterPointOfInterest;
       'homepage.encounter-card': HomepageEncounterCard;
       'homepage.horizon-card': HomepageHorizonCard;
       'homepage.principle-card': HomepagePrincipleCard;

@@ -40,8 +40,10 @@
     "thumbnail": {
       "type": "media",
       "multiple": false,
-      "allowedTypes": ["images"],
-      "required": false
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
     },
     "komootEmbedAB": {
       "type": "text"
@@ -52,12 +54,16 @@
     "gpxFileAB": {
       "type": "media",
       "multiple": false,
-      "allowedTypes": ["files"]
+      "allowedTypes": [
+        "files"
+      ]
     },
     "gpxFileBA": {
       "type": "media",
       "multiple": false,
-      "allowedTypes": ["files"]
+      "allowedTypes": [
+        "files"
+      ]
     },
     "horizons": {
       "type": "component",
@@ -71,6 +77,11 @@
       "type": "component",
       "component": "shared.testimonial",
       "repeatable": true
+    },
+    "destination": {
+      "type": "component",
+      "component": "chapter.destination",
+      "repeatable": false
     },
     "nextChapter": {
       "type": "relation",
@@ -88,19 +99,22 @@
       "target": "api::checkpoint.checkpoint",
       "mappedBy": "chapter"
     },
+    "relatedArticles": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::article.article",
+      "inversedBy": "relatedChapters"
+    },
     "seo": {
       "type": "component",
       "component": "shared.seo",
       "repeatable": false
     },
     "cities": {
-      "type": "json"
-    },
-    "relatedArticles": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::article.article",
-      "inversedBy": "relatedChapters"
+      "type": "json",
+      "info": {
+        "description": "Liste des villes traversées pour le SEO local. Ex: [\"Lille\", \"Haubourdin\", \"Armentières\", \"Saint-Omer\"]"
+      }
     }
   }
 }

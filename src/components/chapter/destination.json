@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_chapter_destinations",
+  "info": {
+    "name": "Destination",
+    "icon": "map-pin",
+    "displayName": "Destination",
+    "description": "Suggestions touristiques pour la ville d'arrivée du chapitre"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "default": "Que visiter"
+    },
+    "description": {
+      "type": "richtext",
+      "required": false
+    },
+    "pois": {
+      "type": "component",
+      "component": "chapter.point-of-interest",
+      "repeatable": true,
+      "required": false
+    }
+  }
+}

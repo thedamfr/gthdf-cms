@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_chapter_point_of_interests",
+  "info": {
+    "name": "PointOfInterest",
+    "icon": "star",
+    "displayName": "Point of Interest",
+    "description": "Un lieu touristique suggéré"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "url": {
+      "type": "string",
+      "required": false
+    }
+  }
+}

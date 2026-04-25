@@ -11,11 +11,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "seo": {
-      "type": "component",
-      "component": "shared.seo",
-      "repeatable": true
-    },
     "logo": {
       "type": "media",
       "multiple": false,
@@ -71,6 +66,11 @@
     "socialLinks": {
       "type": "component",
       "component": "shared.social-link",
+      "repeatable": true
+    },
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
       "repeatable": true
     }
   }
