@@ -1,35 +1,33 @@
-function getPreviewPathname(uid: string, document: Record<string, any> | null) {
-  const slug = document?.slug;
-
-  switch (uid) {
-    case 'api::article.article':
-      return slug ? `/article/${slug}` : '/blog';
-
-    case 'api::chapter.chapter':
-      return slug ? `/chapitres/${slug}` : '/chapitres';
-
-    case 'api::author.author':
-      return slug ? `/auteur/${slug}` : null;
-
-    case 'api::about.about':
-      return '/a-propos';
-
-    case 'api::legal-notice.legal-notice':
-      return '/mentions-legales';
-
-    case 'api::checkpoints-page.checkpoints-page':
-      return '/checkpoints';
-
-    case 'api::homepage.homepage':
-      return '/';
-
-    default:
-      return null;
-  }
-}
-
 export default ({ env }) => {
-  const clientUrl = env('CLIENT_URL', 'https://gthf.fr');
+  const rawClientUrl = env('CLIENT_URL', 'http://localhost:3000');
+  const clientUrl = rawClientUrl.replace(/\/$/, '');
+
+  const envAllowedOrigins = env('PREVIEW_ALLOWED_ORIGINS', '')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
+  const allowedOrigins = Array.from(new Set([
+    clientUrl,
+    ...envAllowedOrigins,
+    'http://localhost:3000',
+    'https://localhost:3000',
+    'http://localhost:8080',
+    'https://localhost:8080',
+  ]));
+
+  const staticPathByUid: Record<string, string> = {
+    'api::about.about': '/a-propos',
+    'api::legal-notice.legal-notice': '/mentions-legales',
+    'api::checkpoints-page.checkpoints-page': '/checkpoints',
+    'api::homepage.homepage': '/',
+  };
+
+  const dynamicPathByUid: Record<string, { basePath: string }> = {
+    'api::article.article': { basePath: '/article' },
+    'api::chapter.chapter': { basePath: '/chapitres' },
+    'api::author.author': { basePath: '/auteur' },
+  };
 
   return {
     auth: {
@@ -53,21 +51,41 @@ export default ({ env }) => {
     preview: {
       enabled: true,
       config: {
-        allowedOrigins: [clientUrl],
+        allowedOrigins,
         async handler(uid, { documentId, status }) {
-          const document = await strapi.documents(uid).findOne({ documentId });
-          const pathname = getPreviewPathname(uid, document as Record<string, any> | null);
+          try {
+            const staticPath = staticPathByUid[uid];
+            if (staticPath) {
+              const params = new URLSearchParams({
+                url: staticPath,
+                status: status || 'draft',
+              });
+              return `${clientUrl}/api/preview?${params.toString()}`;
+            }
 
-          if (!pathname) {
+            const dynamicPath = dynamicPathByUid[uid];
+            if (!dynamicPath) {
+              return null;
+            }
+
+            const document = await strapi.documents(uid).findOne({ documentId });
+            const slug = (document as Record<string, any> | null)?.slug;
+
+            if (!slug) {
+              return null;
+            }
+
+            const pathname = `${dynamicPath.basePath}/${slug}`;
+            const params = new URLSearchParams({
+              url: pathname,
+              status: status || 'draft',
+            });
+
+            return `${clientUrl}/api/preview?${params.toString()}`;
+          } catch (error) {
+            strapi.log.error(`Preview handler error for ${uid}:`, error);
             return null;
           }
-
-          const params = new URLSearchParams({
-            url: pathname,
-            status,
-          });
-
-          return `${clientUrl}/api/preview?${params.toString()}`;
         },
       },
     },
