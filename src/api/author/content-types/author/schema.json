@@ -15,6 +15,13 @@
     "name": {
       "type": "string"
     },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "bio": {
+      "type": "text"
+    },
     "avatar": {
       "type": "media",
       "multiple": false,
