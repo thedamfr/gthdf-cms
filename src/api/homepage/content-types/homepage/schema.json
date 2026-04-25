@@ -52,6 +52,14 @@
     "mapCaption": {
       "type": "text"
     },
+    "mapPreviewImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
     "principlesTitle": {
       "type": "string"
     },
@@ -71,7 +79,7 @@
     "seo": {
       "type": "component",
       "component": "shared.seo",
-      "repeatable": true
+      "repeatable": false
     }
   }
 }

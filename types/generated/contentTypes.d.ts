@@ -784,13 +784,14 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
     logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     mapCaption: Schema.Attribute.Text;
     mapEmbedUrl: Schema.Attribute.Text;
+    mapPreviewImage: Schema.Attribute.Media<'images'>;
     mapTitle: Schema.Attribute.String;
     principles: Schema.Attribute.Component<'homepage.principle-card', true>;
     principlesTitle: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     rencontres: Schema.Attribute.Component<'homepage.encounter-card', true>;
     rencontresTitre: Schema.Attribute.String;
-    seo: Schema.Attribute.Component<'shared.seo', true>;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     socialLinks: Schema.Attribute.Component<'shared.social-link', true>;
     subtitle: Schema.Attribute.String;
     title: Schema.Attribute.String;
