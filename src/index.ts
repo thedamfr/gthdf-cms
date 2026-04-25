@@ -99,6 +99,35 @@ async function validateSeoShareImage(
   );
 }
 
+async function validateEntitySeoShareImage(
+  strapi: Core.Strapi,
+  uid: string,
+  documentId: string | undefined
+) {
+  if (!documentId) {
+    return;
+  }
+
+  const entity = await strapi.db.query(uid).findOne({
+    where: { documentId },
+    populate: {
+      seo: {
+        populate: ['shareImage'],
+      },
+    },
+  });
+
+  const shareImage = (entity as Record<string, any> | null)?.seo?.shareImage;
+
+  if (!shareImage || typeof shareImage.size !== 'number' || shareImage.size <= MAX_SHARE_IMAGE_SIZE_KB) {
+    return;
+  }
+
+  throw new ApplicationError(
+    `L'image de partage doit faire moins de ${MAX_SHARE_IMAGE_SIZE_KB} KB pour rester compatible avec WhatsApp. Taille actuelle : ${shareImage.size.toFixed(2)} KB.`
+  );
+}
+
 export default {
   /**
    * An asynchronous register function that runs before
@@ -116,6 +145,33 @@ export default {
    * run jobs, or perform some special logic.
    */
   bootstrap({ strapi }: { strapi: Core.Strapi }) {
+    strapi.documents.use(async (context, next) => {
+      const documentParams = context.params as {
+        data?: Record<string, unknown>;
+        documentId?: string;
+      };
+
+      if (!SEO_CONTENT_TYPES.includes(context.contentType.uid)) {
+        return next();
+      }
+
+      if (['create', 'update'].includes(context.action)) {
+        await validateSeoShareImage(strapi, {
+          params: { data: documentParams.data },
+        });
+      }
+
+      if (['update', 'publish'].includes(context.action)) {
+        await validateEntitySeoShareImage(
+          strapi,
+          context.contentType.uid,
+          documentParams.documentId
+        );
+      }
+
+      return next();
+    });
+
     strapi.db.lifecycles.subscribe({
       models: SEO_CONTENT_TYPES,
       async beforeCreate(event) {
