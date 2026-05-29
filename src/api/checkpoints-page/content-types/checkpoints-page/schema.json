@@ -65,9 +65,17 @@
       "type": "string",
       "default": "Carte de randonnée"
     },
+    "mapA3Format": {
+      "type": "string",
+      "default": "Format A3 — PDF"
+    },
     "mapA1Label": {
       "type": "string",
       "default": "Carte grand format"
+    },
+    "mapA1Format": {
+      "type": "string",
+      "default": "Format A1 — PDF"
     },
     "mapA3Pdf": {
       "type": "media",
