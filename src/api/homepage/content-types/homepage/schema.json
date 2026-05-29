@@ -68,6 +68,20 @@
       "component": "homepage.principle-card",
       "repeatable": true
     },
+    "introTitle": {
+      "type": "string"
+    },
+    "introText": {
+      "type": "text"
+    },
+    "faqTitle": {
+      "type": "string"
+    },
+    "faqItems": {
+      "type": "component",
+      "component": "homepage.faq-item",
+      "repeatable": true
+    },
     "footerText": {
       "type": "text"
     },

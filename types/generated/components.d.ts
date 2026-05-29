@@ -49,6 +49,18 @@ export interface HomepageEncounterCard extends Struct.ComponentSchema {
   };
 }
 
+export interface HomepageFaqItem extends Struct.ComponentSchema {
+  collectionName: 'components_homepage_faq_items';
+  info: {
+    displayName: 'FAQ Item';
+    icon: 'question';
+  };
+  attributes: {
+    answer: Schema.Attribute.Text & Schema.Attribute.Required;
+    question: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface HomepageHorizonCard extends Struct.ComponentSchema {
   collectionName: 'components_homepage_horizon_cards';
   info: {
@@ -184,6 +196,7 @@ declare module '@strapi/strapi' {
       'chapter.destination': ChapterDestination;
       'chapter.point-of-interest': ChapterPointOfInterest;
       'homepage.encounter-card': HomepageEncounterCard;
+      'homepage.faq-item': HomepageFaqItem;
       'homepage.horizon-card': HomepageHorizonCard;
       'homepage.principle-card': HomepagePrincipleCard;
       'shared.media': SharedMedia;
