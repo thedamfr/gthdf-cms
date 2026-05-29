@@ -701,9 +701,15 @@ export interface ApiCheckpointsPageCheckpointsPage
       'api::checkpoints-page.checkpoints-page'
     > &
       Schema.Attribute.Private;
+    mapA1Format: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Format A1 \u2014 PDF'>;
+    mapA1Icon: Schema.Attribute.String & Schema.Attribute.DefaultTo<'A1'>;
     mapA1Label: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Carte grand format'>;
     mapA1Pdf: Schema.Attribute.Media<'files'>;
+    mapA3Format: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Format A3 \u2014 PDF'>;
+    mapA3Icon: Schema.Attribute.String & Schema.Attribute.DefaultTo<'A3'>;
     mapA3Label: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Carte de randonn\u00E9e'>;
     mapA3Pdf: Schema.Attribute.Media<'files'>;
