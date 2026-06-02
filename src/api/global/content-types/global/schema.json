@@ -30,6 +30,10 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.seo"
+    },
+    "llmsTxt": {
+      "type": "text",
+      "required": false
     }
   }
 }
