@@ -593,6 +593,7 @@ export interface ApiChapterChapter extends Struct.CollectionTypeSchema {
       'api::checkpoint.checkpoint'
     >;
     cities: Schema.Attribute.JSON;
+    cityPassages: Schema.Attribute.Component<'chapter.city-passage', true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -729,6 +730,67 @@ export interface ApiCheckpointsPageCheckpointsPage
     whatsappSubtitle: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'entraide checkpoints & sorties'>;
     whatsappUrl: Schema.Attribute.String;
+  };
+}
+
+export interface ApiCityCity extends Struct.CollectionTypeSchema {
+  collectionName: 'cities';
+  info: {
+    description: 'R\u00E9f\u00E9rentiel \u00E9ditorial des villes travers\u00E9es par le Grand Tour';
+    displayName: 'Ville';
+    pluralName: 'cities';
+    singularName: 'city';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    administrativeArea: Schema.Attribute.String;
+    alternativeNames: Schema.Attribute.JSON;
+    blocks: Schema.Attribute.DynamicZone<
+      ['shared.media', 'shared.quote', 'shared.rich-text', 'shared.slider']
+    >;
+    coordinateSource: Schema.Attribute.JSON & Schema.Attribute.Private;
+    countryCode: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 2;
+        minLength: 2;
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    hasPublicPage: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    latitude: Schema.Attribute.Decimal &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 90;
+          min: -90;
+        },
+        number
+      >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::city.city'> &
+      Schema.Attribute.Private;
+    longitude: Schema.Attribute.Decimal &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 180;
+          min: -180;
+        },
+        number
+      >;
+    municipalityCode: Schema.Attribute.String;
+    municipalityKey: Schema.Attribute.String & Schema.Attribute.Unique;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    shortDescription: Schema.Attribute.Text;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1362,6 +1424,7 @@ declare module '@strapi/strapi' {
       'api::chapter.chapter': ApiChapterChapter;
       'api::checkpoint.checkpoint': ApiCheckpointCheckpoint;
       'api::checkpoints-page.checkpoints-page': ApiCheckpointsPageCheckpointsPage;
+      'api::city.city': ApiCityCity;
       'api::global.global': ApiGlobalGlobal;
       'api::homepage.homepage': ApiHomepageHomepage;
       'api::legal-notice.legal-notice': ApiLegalNoticeLegalNotice;

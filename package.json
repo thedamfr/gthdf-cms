@@ -11,6 +11,7 @@
     "develop": "strapi develop",
     "postinstall": "npm run build",
     "seed:example": "node ./scripts/seed.js",
+    "test": "node --test tests/*.test.ts",
     "seed:remote": "./scripts/seed-remote.sh",
     "setup:cellar": "node ./scripts/setup-cellar.js",
     "setup:cellar:policy": "./scripts/setup-cellar-policy.sh",

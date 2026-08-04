@@ -1,14 +1,34 @@
 import type { Core } from '@strapi/strapi';
 import { errors } from '@strapi/utils';
+import { validateChapterForPublication } from './domain/chapter-validation';
+import {
+  normalizeAlternativeNames,
+  validateCityCoordinates,
+  validateCityForPublication,
+  validateStableCityIdentity,
+} from './domain/city-validation';
 
 const MAX_SHARE_IMAGE_SIZE_KB = 600;
 const { ApplicationError } = errors;
 const SEO_CONTENT_TYPES = [
   'api::article.article',
   'api::chapter.chapter',
+  'api::city.city',
   'api::global.global',
   'api::homepage.homepage',
 ];
+const CITY_UID = 'api::city.city';
+const CHAPTER_UID = 'api::chapter.chapter';
+
+type DocumentMiddlewareContext = {
+  action: string;
+  contentType: { uid: string };
+  params: {
+    data?: Record<string, unknown>;
+    documentId?: string;
+    status?: string;
+  };
+};
 
 type MediaReference = {
   id?: number;
@@ -128,6 +148,113 @@ async function validateEntitySeoShareImage(
   );
 }
 
+function throwApplicationError(error: unknown): never {
+  const message = error instanceof Error ? error.message : 'Validation métier impossible.';
+  throw new ApplicationError(message);
+}
+
+async function getDraftForValidation(
+  strapi: Core.Strapi,
+  uid: string,
+  documentId: string | undefined,
+  populate?: Record<string, unknown>
+): Promise<Record<string, unknown> | null> {
+  if (!documentId) {
+    return null;
+  }
+
+  return strapi.db.query(uid).findOne({
+    where: { documentId, publishedAt: null },
+    ...(populate ? { populate } : {}),
+  }) as Promise<Record<string, unknown> | null>;
+}
+
+async function validateCityDocument(
+  strapi: Core.Strapi,
+  context: DocumentMiddlewareContext
+): Promise<void> {
+  const { action, params } = context;
+  const isWrite = action === 'create' || action === 'update';
+  const isPublishing = action === 'publish'
+    || (isWrite && params.status === 'published');
+
+  if (!isWrite && !isPublishing) {
+    return;
+  }
+
+  const draft = await getDraftForValidation(strapi, CITY_UID, params.documentId);
+  const incomingData = params.data ?? {};
+
+  if (isWrite && Object.prototype.hasOwnProperty.call(incomingData, 'alternativeNames')) {
+    incomingData.alternativeNames = normalizeAlternativeNames(incomingData.alternativeNames);
+  }
+
+  const nextCity = {
+    ...(draft ?? {}),
+    ...incomingData,
+  };
+
+  try {
+    validateCityCoordinates(nextCity);
+
+    if (action === 'update' && params.documentId) {
+      const publishedCity = await strapi.db.query(CITY_UID).findOne({
+        where: {
+          documentId: params.documentId,
+          publishedAt: { $ne: null },
+        },
+        select: ['slug', 'municipalityKey'],
+      }) as Record<string, unknown> | null;
+
+      validateStableCityIdentity(publishedCity, nextCity);
+    }
+
+    if (isPublishing) {
+      validateCityForPublication(nextCity);
+    }
+  } catch (error) {
+    throwApplicationError(error);
+  }
+}
+
+async function validateChapterDocument(
+  strapi: Core.Strapi,
+  context: DocumentMiddlewareContext
+): Promise<void> {
+  const { action, params } = context;
+  const isWrite = action === 'create' || action === 'update';
+  const isPublishing = action === 'publish'
+    || (isWrite && params.status === 'published');
+
+  if (!isPublishing) {
+    return;
+  }
+
+  const draft = await getDraftForValidation(
+    strapi,
+    CHAPTER_UID,
+    params.documentId,
+    {
+      cityPassages: {
+        populate: {
+          city: true,
+        },
+      },
+    }
+  );
+
+  const nextChapter = {
+    ...(draft ?? {}),
+    ...(params.data ?? {}),
+  };
+
+  try {
+    validateChapterForPublication(nextChapter);
+  } catch (error) {
+    throwApplicationError(error);
+  }
+}
+
 export default {
   /**
    * An asynchronous register function that runs before
@@ -145,11 +272,19 @@ export default {
    * run jobs, or perform some special logic.
    */
   bootstrap({ strapi }: { strapi: Core.Strapi }) {
-    strapi.documents.use(async (context, next) => {
+    strapi.documents.use(async (context: DocumentMiddlewareContext, next) => {
       const documentParams = context.params as {
         data?: Record<string, unknown>;
         documentId?: string;
       };
+
+      if (context.contentType.uid === CITY_UID) {
+        await validateCityDocument(strapi, context);
+      }
+
+      if (context.contentType.uid === CHAPTER_UID) {
+        await validateChapterDocument(strapi, context);
+      }
 
       if (!SEO_CONTENT_TYPES.includes(context.contentType.uid)) {
         return next();
