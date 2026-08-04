@@ -1,5 +1,24 @@
 # 🚀 Getting started with Strapi
 
+## Architecture GTHF et documentation transverse
+
+Le produit GTHF est réparti entre ce CMS Strapi et le dépôt public
+[`gthdf-frontend`](https://github.com/thedamfr/gthdf-frontend). Le schéma
+exécutable et ses migrations appartiennent à ce dépôt ; le contrat de données
+qu’ils exposent est partagé avec le frontend.
+
+Les PRD transverses ont une source canonique unique dans
+[`gthdf-frontend/documentation/`](https://github.com/thedamfr/gthdf-frontend/tree/main/documentation).
+Chaque document précise les dépôts d’implémentation concernés, leur ordre de
+déploiement et les contraintes de compatibilité. Dans un checkout local où les
+deux dépôts sont voisins, ces fichiers se trouvent sous
+`../gthdf-frontend/documentation/`.
+
+Ne pas copier les PRD dans ce dépôt : les lier depuis le README, une issue ou
+une pull request. Cette centralisation simplifie la revue d’architecture sans
+coupler les cycles de livraison ; chaque application reste versionnée et
+déployée depuis son propre dépôt, notamment vers `production-clever`.
+
 Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
 
 ## 🐳 Development Setup
@@ -120,4 +139,3 @@ Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/
 
 This project is licensed under the GNU General Public License v3.0 (GPL-3.0-or-later).
 See the LICENSE file for the full license text.
-
