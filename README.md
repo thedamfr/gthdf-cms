@@ -1,6 +1,28 @@
-# 🚀 Getting started with Strapi
+# GTHF CMS
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+CMS Strapi du Grand Tour des Hauts-de-France. Ce dépôt porte les schémas
+éditoriaux, l’administration, les migrations et les médias consommés par
+l’application publique.
+
+## Organisation des dépôts et documentation
+
+Le produit GTHF est réparti entre :
+
+- ce dépôt `gthdf-cms`, source du schéma exécutable Strapi ;
+- [`gthdf-frontend`](https://github.com/thedamfr/gthdf-frontend), application
+  Next.js qui consomme son contrat de données.
+
+Les PRD transverses ont une source canonique unique dans
+[`gthdf-frontend/documentation/`](https://github.com/thedamfr/gthdf-frontend/tree/main/documentation).
+Chaque document précise les dépôts d’implémentation concernés, leur ordre de
+déploiement et les contraintes de compatibilité. Dans un checkout local où les
+deux dépôts sont voisins, ces fichiers se trouvent sous
+`../gthdf-frontend/documentation/`.
+
+Ne pas copier les PRD dans ce dépôt : les lier depuis le README, une issue ou
+une pull request. Cette centralisation simplifie la revue d’architecture sans
+coupler les cycles de livraison ; chaque application reste versionnée et
+déployée depuis son propre dépôt, notamment vers `production-clever`.
 
 ## 🐳 Development Setup
 
@@ -120,4 +142,3 @@ Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/
 
 This project is licensed under the GNU General Public License v3.0 (GPL-3.0-or-later).
 See the LICENSE file for the full license text.
-
