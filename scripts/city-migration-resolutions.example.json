@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "resolutions": [
+    {
+      "chapterSlug": "exemple-de-chapitre",
+      "cityName": "Saint-Aubin",
+      "municipalityKey": "FR-00000"
+    }
+  ]
+}

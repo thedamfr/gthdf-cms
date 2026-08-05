@@ -1,6 +1,7 @@
 export default ({ env }) => {
   const rawClientUrl = env('CLIENT_URL', 'http://localhost:3000');
   const clientUrl = rawClientUrl.replace(/\/$/, '');
+  const previewSecret = env('PREVIEW_SECRET');
 
   const envAllowedOrigins = env('PREVIEW_ALLOWED_ORIGINS', '')
     .split(',')
@@ -26,6 +27,7 @@ export default ({ env }) => {
   const dynamicPathByUid: Record<string, { basePath: string }> = {
     'api::article.article': { basePath: '/article' },
     'api::chapter.chapter': { basePath: '/chapitres' },
+    'api::city.city': { basePath: '/villes' },
     'api::author.author': { basePath: '/auteur' },
   };
 
@@ -54,11 +56,17 @@ export default ({ env }) => {
         allowedOrigins,
         async handler(uid, { documentId, status }) {
           try {
+            if (!previewSecret) {
+              strapi.log.error('PREVIEW_SECRET is required to generate preview URLs.');
+              return null;
+            }
+
             const staticPath = staticPathByUid[uid];
             if (staticPath) {
               const params = new URLSearchParams({
                 url: staticPath,
                 status: status || 'draft',
+                secret: previewSecret,
               });
               return `${clientUrl}/api/preview?${params.toString()}`;
             }
@@ -79,6 +87,7 @@ export default ({ env }) => {
             const params = new URLSearchParams({
               url: pathname,
               status: status || 'draft',
+              secret: previewSecret,
             });
 
             return `${clientUrl}/api/preview?${params.toString()}`;

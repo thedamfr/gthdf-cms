@@ -1,5 +1,27 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface ChapterCityPassage extends Struct.ComponentSchema {
+  collectionName: 'components_chapter_city_passages';
+  info: {
+    description: "Ville travers\u00E9e dans l'ordre canonique du chapitre";
+    displayName: 'Passage de ville';
+    icon: 'pinMap';
+  };
+  attributes: {
+    city: Schema.Attribute.Relation<'oneToOne', 'api::city.city'> &
+      Schema.Attribute.Required;
+    featured: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    note: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 300;
+      }>;
+    role: Schema.Attribute.Enumeration<['start', 'intermediate', 'end']> &
+      Schema.Attribute.Required;
+  };
+}
+
 export interface ChapterDestination extends Struct.ComponentSchema {
   collectionName: 'components_chapter_destinations';
   info: {
@@ -191,8 +213,9 @@ export interface SharedTestimonial extends Struct.ComponentSchema {
 }
 
 declare module '@strapi/strapi' {
-  export module Public {
+  export namespace Public {
     export interface ComponentSchemas {
+      'chapter.city-passage': ChapterCityPassage;
       'chapter.destination': ChapterDestination;
       'chapter.point-of-interest': ChapterPointOfInterest;
       'homepage.encounter-card': HomepageEncounterCard;

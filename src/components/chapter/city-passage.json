@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_chapter_city_passages",
+  "info": {
+    "displayName": "Passage de ville",
+    "icon": "pinMap",
+    "description": "Ville traversée dans l'ordre canonique du chapitre"
+  },
+  "options": {},
+  "attributes": {
+    "city": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::city.city",
+      "required": true
+    },
+    "role": {
+      "type": "enumeration",
+      "enum": [
+        "start",
+        "intermediate",
+        "end"
+      ],
+      "required": true
+    },
+    "featured": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "note": {
+      "type": "text",
+      "maxLength": 300
+    }
+  }
+}

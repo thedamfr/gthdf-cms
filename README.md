@@ -82,6 +82,97 @@ npm install
 npm run develop
 ```
 
+Le CMS et le frontend doivent partager la même valeur longue et aléatoire de
+`PREVIEW_SECRET`. Elle protège l’activation du Draft Mode pour les previews
+d’article, de chapitre et de ville.
+
+## Migration PRD 01 des villes
+
+Le script de reprise lit par défaut l’export contrôlé
+`../gthdf-frontend/documentation/data/gthf_villes_et_produits_seo/csv/villes.csv`.
+Il utilise les noms legacy des chapitres pour proposer uniquement les villes
+nécessaires ; il n’importe jamais tout le référentiel de 223 villes.
+
+Commencer obligatoirement par le dry-run, qui ne modifie aucune donnée :
+
+```bash
+npm run migrate:cities
+```
+
+Le rapport détaillé est écrit dans
+`.tmp/city-migration-report.json`. Une ville ambiguë ou absente y est associée
+au chapitre concerné. Pour résoudre un homonyme, copier
+`scripts/city-migration-resolutions.example.json`, renseigner le slug du
+chapitre et la `municipalityKey` relue, puis relancer :
+
+```bash
+npm run migrate:cities -- --resolutions /chemin/resolutions.json
+```
+
+Après revue du rapport, l’application est volontaire :
+
+```bash
+npm run migrate:cities -- --resolutions /chemin/resolutions.json --apply
+```
+
+Garanties du script :
+
+- `dry-run` par défaut et rapport JSON observable ;
+- création de brouillons avec `hasPublicPage=false` uniquement ;
+- mise à jour des brouillons de chapitre sans aucune republication ;
+- refus d’écraser des `cityPassages` éditoriaux qui diffèrent de la
+  proposition legacy ;
+- exécution idempotente : un second passage valide reste sans changement.
+
+Les chemins peuvent être remplacés avec `--mapping`, `--resolutions` et
+`--report`. `npm run migrate:cities -- --help` documente toutes les options.
+
+### Reprise manuelle en production
+
+Cette reprise n'est jamais lancée au démarrage de Clever Cloud. Strapi crée le
+schéma au chargement de la nouvelle version ; le script ci-dessous reprend
+ensuite les données, une seule fois et depuis un checkout local où les deux
+dépôts sont voisins.
+
+Après déploiement du CMS, mettre `gthdf-frontend` à jour pour disposer du CSV
+canonique et renseigner dans le `.env` local du CMS les variables
+`POSTGRESQL_ADDON_HOST_REMOTE`, `POSTGRESQL_ADDON_PORT_REMOTE`,
+`POSTGRESQL_ADDON_DB_REMOTE`, `POSTGRESQL_ADDON_USER_REMOTE` et
+`POSTGRESQL_ADDON_PASSWORD_REMOTE`. Commencer par le dry-run distant :
+
+```bash
+npm run migrate:cities:remote -- --resolutions /chemin/resolutions.json
+```
+
+Relire le rapport local `.tmp/city-migration-report.json`, notamment les
+ambiguïtés, conflits et chapitres bloqués. L'application distante exige ensuite
+deux options explicites :
+
+```bash
+npm run migrate:cities:remote -- \
+  --resolutions /chemin/resolutions.json \
+  --apply \
+  --confirm-remote
+```
+
+Même dans ce mode, seules des villes en brouillon avec `hasPublicPage=false` et
+les versions brouillon des chapitres sont écrites. La relecture puis la
+publication éditoriale restent manuelles dans Strapi.
+
+### Validation locale
+
+Avec PostgreSQL disponible et le schéma chargé, les validations pures et le
+smoke test Strapi se lancent ainsi :
+
+```bash
+npm test
+npm run test:integration:prd01
+```
+
+Le smoke test vérifie le refus d'une ville incomplète, l'immutabilité du slug
+après publication et le refus d'un chapitre aux passages invalides. Ses
+documents QA temporaires sont supprimés avant la fin du test.
+
 ### `develop`
 
 Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)

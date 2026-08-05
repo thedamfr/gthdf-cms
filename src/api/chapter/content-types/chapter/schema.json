@@ -113,8 +113,13 @@
     "cities": {
       "type": "json",
       "info": {
-        "description": "Liste des villes traversées pour le SEO local. Ex: [\"Lille\", \"Haubourdin\", \"Armentières\", \"Saint-Omer\"]"
+        "description": "LEGACY — ne plus modifier. Liste historique des villes, conservée temporairement pour la compatibilité."
       }
+    },
+    "cityPassages": {
+      "type": "component",
+      "component": "chapter.city-passage",
+      "repeatable": true
     }
   }
 }

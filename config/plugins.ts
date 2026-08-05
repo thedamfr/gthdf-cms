@@ -26,9 +26,9 @@ export default ({ env }) => {
             forcePathStyle: true,
             tls: useCleverCloudCellar ? true : false,
             bucketEndpoint: false,
-          },
-          params: {
-            Bucket: env('AWS_BUCKET', 'gthdf-media'),
+            params: {
+              Bucket: env('AWS_BUCKET', 'gthdf-media'),
+            },
           },
         },
         sizeLimit: 10 * 1024 * 1024, // 10MB
