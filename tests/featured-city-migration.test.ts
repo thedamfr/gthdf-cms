@@ -163,3 +163,28 @@ test('runFeaturedCityMigration is dry-run by default and idempotent after apply'
   assert.equal(applied.summary.chaptersUpdated, 1);
   assert.equal(secondRun.summary.chaptersUnchanged, 1);
 });
+
+test('runFeaturedCityMigration blocks malformed passage data without throwing', async () => {
+  let updateCalls = 0;
+  const report = await runFeaturedCityMigration({
+    adapter: {
+      listChapters: async () => [{
+        documentId: 'chapter-1',
+        slug: 'hirson-a-soissons',
+        title: 'Hirson → Soissons',
+        cityPassages: { malformed: true },
+      }],
+      updateChapter: async () => {
+        updateCalls += 1;
+      },
+    },
+    selection: [{
+      chapterSlug: 'hirson-a-soissons',
+      featuredCities: [{ name: 'Guise', municipalityKey: 'FR-02361' }],
+    }],
+  });
+
+  assert.equal(report.summary.chaptersBlocked, 1);
+  assert.match(report.errors[0].message, /n’est pas un passage intermédiaire/);
+  assert.equal(updateCalls, 0);
+});

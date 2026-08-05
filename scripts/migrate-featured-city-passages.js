@@ -211,9 +211,12 @@ async function runFeaturedCityMigration({
     }
 
     const chapter = matches[0];
+    const currentPassages = Array.isArray(chapter.cityPassages)
+      ? chapter.cityPassages
+      : [];
     chapterReport.documentId = chapter.documentId;
     chapterReport.title = chapter.title;
-    chapterReport.beforeFeaturedMunicipalityKeys = (chapter.cityPassages ?? [])
+    chapterReport.beforeFeaturedMunicipalityKeys = currentPassages
       .filter((passage) => passage.role === 'intermediate' && passage.featured)
       .map((passage) => passage.city?.municipalityKey)
       .filter(Boolean);
@@ -230,7 +233,6 @@ async function runFeaturedCityMigration({
       continue;
     }
 
-    const currentPassages = chapter.cityPassages ?? [];
     if (hasSameFeaturedState(currentPassages, proposedPassages)) {
       chapterReport.status = 'unchanged';
       continue;
