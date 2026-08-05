@@ -127,6 +127,38 @@ Garanties du script :
 Les chemins peuvent être remplacés avec `--mapping`, `--resolutions` et
 `--report`. `npm run migrate:cities -- --help` documente toutes les options.
 
+### Reprise manuelle en production
+
+Cette reprise n'est jamais lancée au démarrage de Clever Cloud. Strapi crée le
+schéma au chargement de la nouvelle version ; le script ci-dessous reprend
+ensuite les données, une seule fois et depuis un checkout local où les deux
+dépôts sont voisins.
+
+Après déploiement du CMS, mettre `gthdf-frontend` à jour pour disposer du CSV
+canonique et renseigner dans le `.env` local du CMS les variables
+`POSTGRESQL_ADDON_HOST_REMOTE`, `POSTGRESQL_ADDON_PORT_REMOTE`,
+`POSTGRESQL_ADDON_DB_REMOTE`, `POSTGRESQL_ADDON_USER_REMOTE` et
+`POSTGRESQL_ADDON_PASSWORD_REMOTE`. Commencer par le dry-run distant :
+
+```bash
+npm run migrate:cities:remote -- --resolutions /chemin/resolutions.json
+```
+
+Relire le rapport local `.tmp/city-migration-report.json`, notamment les
+ambiguïtés, conflits et chapitres bloqués. L'application distante exige ensuite
+deux options explicites :
+
+```bash
+npm run migrate:cities:remote -- \
+  --resolutions /chemin/resolutions.json \
+  --apply \
+  --confirm-remote
+```
+
+Même dans ce mode, seules des villes en brouillon avec `hasPublicPage=false` et
+les versions brouillon des chapitres sont écrites. La relecture puis la
+publication éditoriale restent manuelles dans Strapi.
+
 ### `develop`
 
 Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)

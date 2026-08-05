@@ -8,6 +8,7 @@ import migration from '../scripts/migrate-cities.js';
 
 const {
   buildPassageProposal,
+  configureRemoteDatabaseEnvironment,
   hasSameCityPassages,
   loadCityMapping,
   loadDatasetDate,
@@ -17,7 +18,74 @@ const {
   parseMigrationArguments,
   resolveCityReference,
   runCityMigration,
+  validateRemoteMigrationSafety,
 } = migration;
+
+test('parseMigrationArguments keeps remote production access opt-in', () => {
+  assert.deepEqual(
+    parseMigrationArguments(['--remote', '--apply', '--confirm-remote'], '/workspace'),
+    {
+      apply: true,
+      confirmRemote: true,
+      help: false,
+      mappingPath: '/gthdf-frontend/documentation/data/gthf_villes_et_produits_seo/csv/villes.csv',
+      remote: true,
+      reportPath: '/workspace/.tmp/city-migration-report.json',
+      resolutionsPath: undefined,
+    }
+  );
+});
+
+test('configureRemoteDatabaseEnvironment maps only explicit remote credentials', () => {
+  const env: Record<string, string> = {
+    POSTGRESQL_ADDON_HOST_REMOTE: 'remote.example.test',
+    POSTGRESQL_ADDON_PORT_REMOTE: '5432',
+    POSTGRESQL_ADDON_DB_REMOTE: 'gthdf-production',
+    POSTGRESQL_ADDON_USER_REMOTE: 'gthdf-user',
+    POSTGRESQL_ADDON_PASSWORD_REMOTE: 'secret',
+    POSTGRESQL_ADDON_URI_REMOTE: 'postgresql://remote.example.test/gthdf-production',
+  };
+
+  assert.deepEqual(configureRemoteDatabaseEnvironment(env), {
+    host: 'remote.example.test',
+    database: 'gthdf-production',
+  });
+  assert.equal(env.DATABASE_CLIENT, 'postgres');
+  assert.equal(env.DATABASE_SSL, 'true');
+  assert.equal(env.POSTGRESQL_ADDON_HOST, 'remote.example.test');
+  assert.equal(env.POSTGRESQL_ADDON_DB, 'gthdf-production');
+  assert.equal(env.POSTGRESQL_ADDON_URI, 'postgresql://remote.example.test/gthdf-production');
+});
+
+test('configureRemoteDatabaseEnvironment refuses incomplete remote credentials', () => {
+  assert.throws(
+    () => configureRemoteDatabaseEnvironment({
+      POSTGRESQL_ADDON_HOST_REMOTE: 'remote.example.test',
+    }),
+    /variables distantes manquantes/i
+  );
+});
+
+test('validateRemoteMigrationSafety requires a second opt-in before remote writes', () => {
+  assert.doesNotThrow(() => validateRemoteMigrationSafety({
+    remote: true,
+    apply: false,
+    confirmRemote: false,
+  }));
+  assert.throws(
+    () => validateRemoteMigrationSafety({
+      remote: true,
+      apply: true,
+      confirmRemote: false,
+    }),
+    /--confirm-remote/
+  );
+  assert.doesNotThrow(() => validateRemoteMigrationSafety({
+    remote: true,
+    apply: true,
+    confirmRemote: true,
+  }));
+});
 
 test('normalizeCityName ignores case, accents, spaces and hyphens', () => {
   assert.equal(normalizeCityName('  Saint-Quentin  '), 'saint quentin');
@@ -260,9 +328,11 @@ test('parseMigrationArguments keeps dry-run safe by default and requires --apply
   assert.match(defaults.mappingPath, /gthdf-frontend.*villes\.csv$/);
   assert.deepEqual(applied, {
     apply: true,
+    confirmRemote: false,
     help: false,
     mappingPath: '/data/villes.csv',
     resolutionsPath: '/data/resolutions.json',
+    remote: false,
     reportPath: '/tmp/report.json',
   });
 });

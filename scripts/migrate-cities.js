@@ -139,12 +139,14 @@ function loadDatasetDate(mappingPath) {
 function parseMigrationArguments(argv, cwd = process.cwd()) {
   const options = {
     apply: false,
+    confirmRemote: false,
     help: false,
     mappingPath: resolve(
       cwd,
       '../gthdf-frontend/documentation/data/gthf_villes_et_produits_seo/csv/villes.csv'
     ),
     resolutionsPath: undefined,
+    remote: false,
     reportPath: resolve(cwd, '.tmp/city-migration-report.json'),
   };
 
@@ -158,6 +160,16 @@ function parseMigrationArguments(argv, cwd = process.cwd()) {
 
     if (argument === '--dry-run') {
       options.apply = false;
+      continue;
+    }
+
+    if (argument === '--remote') {
+      options.remote = true;
+      continue;
+    }
+
+    if (argument === '--confirm-remote') {
+      options.confirmRemote = true;
       continue;
     }
 
@@ -187,6 +199,52 @@ function parseMigrationArguments(argv, cwd = process.cwd()) {
   }
 
   return options;
+}
+
+function configureRemoteDatabaseEnvironment(env = process.env) {
+  const remoteVariables = {
+    POSTGRESQL_ADDON_HOST: 'POSTGRESQL_ADDON_HOST_REMOTE',
+    POSTGRESQL_ADDON_PORT: 'POSTGRESQL_ADDON_PORT_REMOTE',
+    POSTGRESQL_ADDON_DB: 'POSTGRESQL_ADDON_DB_REMOTE',
+    POSTGRESQL_ADDON_USER: 'POSTGRESQL_ADDON_USER_REMOTE',
+    POSTGRESQL_ADDON_PASSWORD: 'POSTGRESQL_ADDON_PASSWORD_REMOTE',
+  };
+  const missingVariables = Object.values(remoteVariables)
+    .filter((remoteName) => !String(env[remoteName] ?? '').trim());
+
+  if (missingVariables.length > 0) {
+    throw new Error(`Variables distantes manquantes : ${missingVariables.join(', ')}.`);
+  }
+
+  env.DATABASE_CLIENT = 'postgres';
+  env.DATABASE_SSL = 'true';
+
+  for (const [targetName, remoteName] of Object.entries(remoteVariables)) {
+    env[targetName] = env[remoteName];
+  }
+
+  if (env.POSTGRESQL_ADDON_URI_REMOTE) {
+    env.POSTGRESQL_ADDON_URI = env.POSTGRESQL_ADDON_URI_REMOTE;
+  } else {
+    delete env.POSTGRESQL_ADDON_URI;
+  }
+
+  return {
+    host: env.POSTGRESQL_ADDON_HOST,
+    database: env.POSTGRESQL_ADDON_DB,
+  };
+}
+
+function validateRemoteMigrationSafety({ remote, apply, confirmRemote }) {
+  if (confirmRemote && !remote) {
+    throw new Error('--confirm-remote ne peut être utilisé qu’avec --remote.');
+  }
+
+  if (remote && apply && !confirmRemote) {
+    throw new Error(
+      'Une écriture distante exige --apply et le second verrou --confirm-remote.'
+    );
+  }
 }
 
 function loadResolutions(resolutionsPath) {
@@ -730,6 +788,8 @@ Options :
   --report <fichier>       Rapport JSON (défaut : .tmp/city-migration-report.json)
   --apply                  Crée les brouillons et met à jour les brouillons de chapitre
   --dry-run                Force le mode lecture seule (comportement par défaut)
+  --remote                 Utilise les variables POSTGRESQL_ADDON_*_REMOTE
+  --confirm-remote         Second verrou obligatoire avec --remote --apply
   --help                   Affiche cette aide
 
 Le script ne publie jamais de ville ou de chapitre et laisse hasPublicPage=false.`);
@@ -740,6 +800,12 @@ async function main(argv = process.argv.slice(2)) {
   if (options.help) {
     printHelp();
     return 0;
+  }
+
+  validateRemoteMigrationSafety(options);
+  if (options.remote) {
+    const target = configureRemoteDatabaseEnvironment();
+    console.log(`Base distante ciblée : ${target.host} / ${target.database}`);
   }
 
   const datasetDate = loadDatasetDate(options.mappingPath);
@@ -786,6 +852,7 @@ async function main(argv = process.argv.slice(2)) {
 
 module.exports = {
   buildPassageProposal,
+  configureRemoteDatabaseEnvironment,
   createStrapiAdapter,
   hasSameCityPassages,
   loadCityMapping,
@@ -796,6 +863,7 @@ module.exports = {
   parseMigrationArguments,
   resolveCityReference,
   runCityMigration,
+  validateRemoteMigrationSafety,
   writeMigrationReport,
 };
 
