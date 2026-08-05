@@ -189,6 +189,60 @@ puis le passer avec `--selection` après un nouveau dry-run. Une restauration de
 la sauvegarde PostgreSQL prise avant application reste le retour arrière
 complet.
 
+## Migration PRD 02 de l’ordre public des chapitres
+
+Le champ `displayOrder` fixe l’ordre public de la boucle sans dépendre de
+l’ordre de retour de Strapi. Un brouillon peut temporairement ne pas avoir
+d’ordre ou partager une valeur avec un autre brouillon. La publication exige
+en revanche des entiers positifs, uniques et contigus de `1` au nombre de
+chapitres publiés. Dépublier ou supprimer un chapitre d’ordre intermédiaire
+est refusé tant que cela créerait un trou ; retirer le dernier ordre conserve
+un ensemble valide. Les publications, dépublications et suppressions sont
+sérialisées dans une transaction qui verrouille les lignes Chapter par `id`
+croissant avant validation. Les opérations limitées aux brouillons restent
+inchangées et ne prennent pas ce verrou.
+
+Le mapping versionné couvre explicitement les dix slugs actuels, de
+`lille-a-arras` (`1`) à `st-omer-lille` (`10`). Commencer par le dry-run local :
+
+```bash
+npm run migrate:chapter-display-order
+```
+
+Le rapport `.tmp/chapter-display-order-migration-report.json` affiche, pour
+chaque slug, les valeurs brouillon et publiée avant migration ainsi que la
+valeur cible. L’application est volontaire :
+
+```bash
+npm run migrate:chapter-display-order -- --apply
+```
+
+La commande met à jour dans une seule transaction les versions brouillon et
+publiée de chaque document. Elle ne republie aucun chapitre et n’écrit que
+`displayOrder`. Elle refuse l’ensemble de l’application si un slug est absent,
+inattendu, dupliqué ou s’il manque une des deux versions. Un second passage doit
+signaler les dix chapitres comme inchangés.
+
+En production, prendre une sauvegarde PostgreSQL puis exécuter d’abord :
+
+```bash
+npm run migrate:chapter-display-order:remote
+```
+
+Après relecture du rapport et contrôle des dix associations, appliquer avec le
+second verrou :
+
+```bash
+npm run migrate:chapter-display-order:remote -- --apply --confirm-remote
+```
+
+Contrôler ensuite que les valeurs publiées vont de `1` à `10` et que les
+relations `nextChapter` et `previousChapter` n’ont pas changé. Le rollback
+applicatif peut conserver ce champ additif : l’ancien frontend l’ignore. Pour
+annuler également les données CMS, restaurer la sauvegarde PostgreSQL prise
+avant `--apply`; le script ne modifiant aucun autre champ, aucune reprise de
+contenu séparée n’est nécessaire.
+
 ### Validation locale
 
 Avec PostgreSQL disponible et le schéma chargé, les validations pures et le

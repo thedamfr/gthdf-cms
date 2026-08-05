@@ -611,6 +611,13 @@ export interface ApiChapterChapter extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     destination: Schema.Attribute.Component<'chapter.destination', false>;
+    displayOrder: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
     distance: Schema.Attribute.Integer & Schema.Attribute.Required;
     endStation: Schema.Attribute.String & Schema.Attribute.Required;
     gpxFileAB: Schema.Attribute.Media<'files'>;

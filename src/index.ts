@@ -1,6 +1,10 @@
-import type { Core } from '@strapi/strapi';
+import type { Core, Modules } from '@strapi/strapi';
 import { errors } from '@strapi/utils';
-import { validateChapterForPublication } from './domain/chapter-validation';
+import {
+  validateChapterForPublication,
+  validatePublishedChapterOrder,
+  validatePublishedChapterRemoval,
+} from './domain/chapter-validation';
 import {
   normalizeAlternativeNames,
   validateCityCoordinates,
@@ -29,6 +33,9 @@ type DocumentMiddlewareContext = {
     status?: string;
   };
 };
+
+type DocumentMiddlewareNext = Parameters<Modules.Documents.Middleware.Middleware>[1];
+type DocumentMiddlewareResult = ReturnType<Modules.Documents.Middleware.Middleware>;
 
 type MediaReference = {
   id?: number;
@@ -217,7 +224,7 @@ async function validateCityDocument(
   }
 }
 
-async function validateChapterDocument(
+export async function validateChapterDocument(
   strapi: Core.Strapi,
   context: DocumentMiddlewareContext
 ): Promise<void> {
@@ -225,8 +232,25 @@ async function validateChapterDocument(
   const isWrite = action === 'create' || action === 'update';
   const isPublishing = action === 'publish'
     || (isWrite && params.status === 'published');
+  const isRemovingPublishedVersion = action === 'unpublish' || action === 'delete';
 
-  if (!isPublishing) {
+  if (!isPublishing && !isRemovingPublishedVersion) {
+    return;
+  }
+
+  const publishedChapters = await strapi.db.query(CHAPTER_UID).findMany({
+    where: {
+      publishedAt: { $ne: null },
+    },
+    select: ['documentId', 'slug', 'title', 'displayOrder'],
+  }) as Record<string, unknown>[];
+
+  if (isRemovingPublishedVersion) {
+    try {
+      validatePublishedChapterRemoval(publishedChapters, params.documentId);
+    } catch (error) {
+      throwApplicationError(error);
+    }
     return;
   }
 
@@ -248,11 +272,94 @@ async function validateChapterDocument(
     ...(params.data ?? {}),
   };
 
+  const nextPublishedSet = [
+    ...publishedChapters.filter((chapter) => (
+      !params.documentId || chapter.documentId !== params.documentId
+    )),
+    nextChapter,
+  ];
+
   try {
     validateChapterForPublication(nextChapter);
+    validatePublishedChapterOrder(nextPublishedSet);
   } catch (error) {
     throwApplicationError(error);
   }
+}
+
+function changesPublishedChapterSet(context: DocumentMiddlewareContext): boolean {
+  if (context.contentType.uid !== CHAPTER_UID) {
+    return false;
+  }
+
+  const { action, params } = context;
+  const publishesFromWrite = (action === 'create' || action === 'update')
+    && params.status === 'published';
+
+  return action === 'publish'
+    || action === 'unpublish'
+    || action === 'delete'
+    || publishesFromWrite;
+}
+
+async function lockChapterRows(strapi: Core.Strapi): Promise<void> {
+  await strapi.db.queryBuilder(CHAPTER_UID)
+    .select('id')
+    .orderBy({ id: 'asc' })
+    .forUpdate()
+    .execute();
+}
+
+async function validateDocumentAndRunNext(
+  strapi: Core.Strapi,
+  context: DocumentMiddlewareContext,
+  next: DocumentMiddlewareNext
+): DocumentMiddlewareResult {
+  const documentParams = context.params as {
+    data?: Record<string, unknown>;
+    documentId?: string;
+  };
+
+  if (context.contentType.uid === CITY_UID) {
+    await validateCityDocument(strapi, context);
+  }
+
+  if (context.contentType.uid === CHAPTER_UID) {
+    await validateChapterDocument(strapi, context);
+  }
+
+  if (SEO_CONTENT_TYPES.includes(context.contentType.uid)) {
+    if (['create', 'update'].includes(context.action)) {
+      await validateSeoShareImage(strapi, {
+        params: { data: documentParams.data },
+      });
+    }
+
+    if (['update', 'publish'].includes(context.action)) {
+      await validateEntitySeoShareImage(
+        strapi,
+        context.contentType.uid,
+        documentParams.documentId
+      );
+    }
+  }
+
+  return next();
+}
+
+export async function runDocumentMiddleware(
+  strapi: Core.Strapi,
+  context: DocumentMiddlewareContext,
+  next: DocumentMiddlewareNext
+): DocumentMiddlewareResult {
+  if (!changesPublishedChapterSet(context)) {
+    return validateDocumentAndRunNext(strapi, context, next);
+  }
+
+  return strapi.db.transaction(async () => {
+    await lockChapterRows(strapi);
+    return validateDocumentAndRunNext(strapi, context, next);
+  });
 }
 
 export default {
@@ -272,40 +379,9 @@ export default {
    * run jobs, or perform some special logic.
    */
   bootstrap({ strapi }: { strapi: Core.Strapi }) {
-    strapi.documents.use(async (context: DocumentMiddlewareContext, next) => {
-      const documentParams = context.params as {
-        data?: Record<string, unknown>;
-        documentId?: string;
-      };
-
-      if (context.contentType.uid === CITY_UID) {
-        await validateCityDocument(strapi, context);
-      }
-
-      if (context.contentType.uid === CHAPTER_UID) {
-        await validateChapterDocument(strapi, context);
-      }
-
-      if (!SEO_CONTENT_TYPES.includes(context.contentType.uid)) {
-        return next();
-      }
-
-      if (['create', 'update'].includes(context.action)) {
-        await validateSeoShareImage(strapi, {
-          params: { data: documentParams.data },
-        });
-      }
-
-      if (['update', 'publish'].includes(context.action)) {
-        await validateEntitySeoShareImage(
-          strapi,
-          context.contentType.uid,
-          documentParams.documentId
-        );
-      }
-
-      return next();
-    });
+    strapi.documents.use((context, next) => (
+      runDocumentMiddleware(strapi, context as DocumentMiddlewareContext, next)
+    ));
 
     strapi.db.lifecycles.subscribe({
       models: SEO_CONTENT_TYPES,
