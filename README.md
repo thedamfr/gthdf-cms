@@ -159,6 +159,20 @@ Même dans ce mode, seules des villes en brouillon avec `hasPublicPage=false` et
 les versions brouillon des chapitres sont écrites. La relecture puis la
 publication éditoriale restent manuelles dans Strapi.
 
+### Validation locale
+
+Avec PostgreSQL disponible et le schéma chargé, les validations pures et le
+smoke test Strapi se lancent ainsi :
+
+```bash
+npm test
+npm run test:integration:prd01
+```
+
+Le smoke test vérifie le refus d'une ville incomplète, l'immutabilité du slug
+après publication et le refus d'un chapitre aux passages invalides. Ses
+documents QA temporaires sont supprimés avant la fin du test.
+
 ### `develop`
 
 Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
