@@ -9,6 +9,7 @@
     "deploy": "strapi deploy",
     "dev": "strapi develop",
     "develop": "strapi develop",
+    "migrate:cities": "node scripts/migrate-cities.js",
     "postinstall": "npm run build",
     "seed:example": "node ./scripts/seed.js",
     "test": "node --test tests/*.test.ts",

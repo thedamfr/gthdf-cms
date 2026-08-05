@@ -82,6 +82,51 @@ npm install
 npm run develop
 ```
 
+Le CMS et le frontend doivent partager la même valeur longue et aléatoire de
+`PREVIEW_SECRET`. Elle protège l’activation du Draft Mode pour les previews
+d’article, de chapitre et de ville.
+
+## Migration PRD 01 des villes
+
+Le script de reprise lit par défaut l’export contrôlé
+`../gthdf-frontend/documentation/data/gthf_villes_et_produits_seo/csv/villes.csv`.
+Il utilise les noms legacy des chapitres pour proposer uniquement les villes
+nécessaires ; il n’importe jamais tout le référentiel de 223 villes.
+
+Commencer obligatoirement par le dry-run, qui ne modifie aucune donnée :
+
+```bash
+npm run migrate:cities
+```
+
+Le rapport détaillé est écrit dans
+`.tmp/city-migration-report.json`. Une ville ambiguë ou absente y est associée
+au chapitre concerné. Pour résoudre un homonyme, copier
+`scripts/city-migration-resolutions.example.json`, renseigner le slug du
+chapitre et la `municipalityKey` relue, puis relancer :
+
+```bash
+npm run migrate:cities -- --resolutions /chemin/resolutions.json
+```
+
+Après revue du rapport, l’application est volontaire :
+
+```bash
+npm run migrate:cities -- --resolutions /chemin/resolutions.json --apply
+```
+
+Garanties du script :
+
+- `dry-run` par défaut et rapport JSON observable ;
+- création de brouillons avec `hasPublicPage=false` uniquement ;
+- mise à jour des brouillons de chapitre sans aucune republication ;
+- refus d’écraser des `cityPassages` éditoriaux qui diffèrent de la
+  proposition legacy ;
+- exécution idempotente : un second passage valide reste sans changement.
+
+Les chemins peuvent être remplacés avec `--mapping`, `--resolutions` et
+`--report`. `npm run migrate:cities -- --help` documente toutes les options.
+
 ### `develop`
 
 Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
