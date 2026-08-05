@@ -13,7 +13,7 @@
     "migrate:cities:remote": "node --env-file=.env scripts/migrate-cities.js --remote",
     "postinstall": "npm run build",
     "seed:example": "node ./scripts/seed.js",
-    "test": "node --test tests/*.test.ts",
+    "test": "tsx --test tests/*.test.ts",
     "test:integration:prd01": "node scripts/check-prd01-local.js",
     "seed:remote": "./scripts/seed-remote.sh",
     "setup:cellar": "node ./scripts/setup-cellar.js",
@@ -38,12 +38,15 @@
     "styled-components": "^6.0.0"
   },
   "optionalDependencies": {
+    "@img/sharp-libvips-linux-x64": "1.2.4",
+    "@img/sharp-linux-x64": "0.34.5",
     "sharp": "^0.34.5"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "tsx": "^4.23.7",
     "typescript": "^5"
   },
   "engines": {

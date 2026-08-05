@@ -8,7 +8,7 @@ export interface ChapterCityPassage extends Struct.ComponentSchema {
     icon: 'pinMap';
   };
   attributes: {
-    city: Schema.Attribute.Relation<'oneToOne', 'api::city.city'> &
+    city: Schema.Attribute.Relation<'manyToOne', 'api::city.city'> &
       Schema.Attribute.Required;
     featured: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
