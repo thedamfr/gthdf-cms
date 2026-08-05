@@ -24,6 +24,13 @@ une pull request. Cette centralisation simplifie la revue d’architecture sans
 coupler les cycles de livraison ; chaque application reste versionnée et
 déployée depuis son propre dépôt, notamment vers `production-clever`.
 
+Documents de référence :
+
+- [PRD 01 — Référentiel des villes et pages hubs](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/prd_01_referentiel_villes_pages_hubs.md), livré ;
+- [PRD 02 — Retrouver son chapitre sur mobile](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/prd_02_retrouver_chapitre_mobile.md), livré et validé en production ;
+- [PRD 03 — GPX Builder v2](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/prd_03_gpx_builder_fusion_decoupe.md), prêt pour revue ;
+- [PRD 04 — Catalogue d’itinéraires ville à ville](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/prd_04_catalogue_itineraires_ville_a_ville.md), prêt pour revue.
+
 ## 🐳 Development Setup
 
 ### Prerequisites
@@ -257,6 +264,20 @@ applicatif peut conserver ce champ additif : l’ancien frontend l’ignore. Pou
 annuler également les données CMS, restaurer la sauvegarde PostgreSQL prise
 avant `--apply`; le script ne modifiant aucun autre champ, aucune reprise de
 contenu séparée n’est nécessaire.
+
+### Exécution de production du 5 août 2026
+
+La migration a été appliquée aux dix documents de production, soit vingt
+versions brouillon et publiée. Elle a écrit les ordres `1` à `10` sans erreur ;
+le dry-run postérieur a classé les dix documents comme inchangés. Les rapports
+avant et après application ont été conservés localement sans exposer les
+identifiants de la base.
+
+La sauvegarde tentée ce jour-là n’a pas abouti. L’application sans sauvegarde
+réussie a fait l’objet d’une autorisation explicite pour cette exécution
+précise. Cette exception historique ne change pas le runbook : toute nouvelle
+application distante doit être précédée d’une sauvegarde PostgreSQL réussie et
+contrôlée.
 
 ### Validation locale
 
