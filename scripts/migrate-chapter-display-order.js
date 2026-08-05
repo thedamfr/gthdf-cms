@@ -2,13 +2,13 @@
 
 'use strict';
 
+const { execFileSync } = require('node:child_process');
 const {
   mkdirSync,
   writeFileSync,
 } = require('node:fs');
 const { dirname, resolve } = require('node:path');
 const {
-  configureRemoteDatabaseEnvironment,
   validateRemoteMigrationSafety,
 } = require('./migrate-cities.js');
 
@@ -30,6 +30,7 @@ const CHAPTER_DISPLAY_ORDERS = Object.freeze([
 function parseDisplayOrderMigrationArguments(argv, cwd = process.cwd()) {
   const options = {
     apply: false,
+    cleverApp: 'gthdf-cms',
     confirmRemote: false,
     help: false,
     remote: false,
@@ -55,6 +56,15 @@ function parseDisplayOrderMigrationArguments(argv, cwd = process.cwd()) {
       options.confirmRemote = true;
       continue;
     }
+    if (argument === '--clever-app') {
+      const value = argv[index + 1];
+      if (!value || value.startsWith('--')) {
+        throw new Error('Une valeur est requise après --clever-app.');
+      }
+      options.cleverApp = value;
+      index += 1;
+      continue;
+    }
     if (argument === '--help' || argument === '-h') {
       options.help = true;
       continue;
@@ -73,6 +83,120 @@ function parseDisplayOrderMigrationArguments(argv, cwd = process.cwd()) {
   }
 
   return options;
+}
+
+function flattenCleverEnvironment(payload) {
+  const entries = [
+    ...(Array.isArray(payload?.env) ? payload.env : []),
+    ...(Array.isArray(payload?.fromAddons)
+      ? payload.fromAddons.flatMap((addon) => Array.isArray(addon.env) ? addon.env : [])
+      : []),
+    ...(Array.isArray(payload?.fromDependencies)
+      ? payload.fromDependencies.flatMap((dependency) => (
+          Array.isArray(dependency.env) ? dependency.env : []
+        ))
+      : []),
+  ];
+
+  const environment = {};
+  for (const entry of entries) {
+    if (typeof entry?.name === 'string' && typeof entry.value === 'string') {
+      environment[entry.name] = entry.value;
+    }
+  }
+  return environment;
+}
+
+function loadCleverEnvironment(cleverApp, runner = execFileSync) {
+  let rawPayload;
+  try {
+    rawPayload = runner('clever', [
+      'env',
+      '--app',
+      cleverApp,
+      '--format',
+      'json',
+    ], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'inherit'],
+    });
+  } catch (error) {
+    throw new Error(
+      `Impossible de lire les variables Clever de l'application ${cleverApp}.`,
+      { cause: error }
+    );
+  }
+
+  let payload;
+  try {
+    payload = JSON.parse(rawPayload);
+  } catch (error) {
+    throw new Error('La CLI Clever a renvoyé un JSON invalide.', { cause: error });
+  }
+
+  return flattenCleverEnvironment(payload);
+}
+
+function requiredCleverValue(environment, name) {
+  const value = String(environment[name] ?? '').trim();
+  if (!value) {
+    throw new Error(`Variable Clever requise manquante : ${name}.`);
+  }
+  return value;
+}
+
+function configureCleverRemoteDatabaseEnvironment({
+  cleverApp,
+  environment = process.env,
+  runner = execFileSync,
+}) {
+  const cleverEnvironment = loadCleverEnvironment(cleverApp, runner);
+  Object.assign(environment, cleverEnvironment);
+
+  const directUri = String(cleverEnvironment.POSTGRESQL_ADDON_DIRECT_URI ?? '').trim();
+  const directHost = String(cleverEnvironment.POSTGRESQL_ADDON_DIRECT_HOST ?? '').trim();
+  const directPort = String(cleverEnvironment.POSTGRESQL_ADDON_DIRECT_PORT ?? '').trim();
+
+  environment.DATABASE_CLIENT = 'postgres';
+  environment.DATABASE_SSL = 'true';
+  environment.DATABASE_SSL_REJECT_UNAUTHORIZED = 'false';
+  delete environment.DATABASE_URL;
+
+  if (directUri) {
+    const parsed = new URL(directUri);
+    environment.POSTGRESQL_ADDON_URI = directUri;
+    return {
+      host: parsed.hostname,
+      database: parsed.pathname.replace(/^\//, ''),
+    };
+  }
+
+  if (!directHost || !directPort) {
+    throw new Error(
+      'La CLI Clever ne fournit pas de connexion PostgreSQL DIRECT utilisable depuis le poste local.'
+    );
+  }
+
+  delete environment.POSTGRESQL_ADDON_URI;
+  environment.POSTGRESQL_ADDON_HOST = directHost;
+  environment.POSTGRESQL_ADDON_PORT = directPort;
+  environment.POSTGRESQL_ADDON_DB = requiredCleverValue(
+    cleverEnvironment,
+    'POSTGRESQL_ADDON_DB'
+  );
+  environment.POSTGRESQL_ADDON_USER = requiredCleverValue(
+    cleverEnvironment,
+    'POSTGRESQL_ADDON_USER'
+  );
+  environment.POSTGRESQL_ADDON_PASSWORD = requiredCleverValue(
+    cleverEnvironment,
+    'POSTGRESQL_ADDON_PASSWORD'
+  );
+
+  return {
+    host: directHost,
+    database: environment.POSTGRESQL_ADDON_DB,
+  };
 }
 
 function validateDisplayOrderMapping(mapping) {
@@ -293,7 +417,8 @@ Options :
   --report <fichier>  Rapport JSON (défaut : .tmp/chapter-display-order-migration-report.json)
   --apply             Met à jour displayOrder sur les versions brouillon et publiée
   --dry-run           Force le mode lecture seule (comportement par défaut)
-  --remote            Utilise les variables POSTGRESQL_ADDON_*_REMOTE
+  --remote            Lit l’accès PostgreSQL DIRECT avec la CLI Clever
+  --clever-app <app>  Application Clever source (défaut : gthdf-cms)
   --confirm-remote    Second verrou obligatoire avec --remote --apply
   --help              Affiche cette aide
 
@@ -310,7 +435,9 @@ async function main(argv = process.argv.slice(2)) {
 
   validateRemoteMigrationSafety(options);
   if (options.remote) {
-    const target = configureRemoteDatabaseEnvironment();
+    const target = configureCleverRemoteDatabaseEnvironment({
+      cleverApp: options.cleverApp,
+    });
     console.log(`Base distante ciblée : ${target.host} / ${target.database}`);
   }
 
@@ -345,7 +472,10 @@ async function main(argv = process.argv.slice(2)) {
 
 module.exports = {
   CHAPTER_DISPLAY_ORDERS,
+  configureCleverRemoteDatabaseEnvironment,
   createStrapiAdapter,
+  flattenCleverEnvironment,
+  loadCleverEnvironment,
   parseDisplayOrderMigrationArguments,
   runChapterDisplayOrderMigration,
   validateDisplayOrderMapping,

@@ -224,11 +224,18 @@ publiée de chaque document. Elle ne republie aucun chapitre et n’écrit que
 inattendu, dupliqué ou s’il manque une des deux versions. Un second passage doit
 signaler les dix chapitres comme inchangés.
 
-En production, prendre une sauvegarde PostgreSQL puis exécuter d’abord :
+En production, prendre une sauvegarde PostgreSQL, vérifier que la CLI Clever
+est installée et authentifiée, puis exécuter d’abord :
 
 ```bash
 npm run migrate:chapter-display-order:remote
 ```
+
+La commande appelle `clever env --app gthdf-cms --format json`, sélectionne
+l’endpoint PostgreSQL externe `DIRECT_*` et conserve les secrets uniquement en
+mémoire. Elle ne dépend pas de variables `*_REMOTE` copiées dans `.env`. Une
+autre application peut être ciblée explicitement avec
+`--clever-app <id-ou-nom>`.
 
 Après relecture du rapport et contrôle des dix associations, appliquer avec le
 second verrou :
