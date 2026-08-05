@@ -9,6 +9,8 @@ type ChapterPublicationInput = {
   cityPassages?: unknown;
 };
 
+export const MAX_FEATURED_INTERMEDIATES = 6;
+
 function chapterLabel(chapter: ChapterPublicationInput): string {
   return typeof chapter.title === 'string' && chapter.title.trim()
     ? ` « ${chapter.title.trim()} »`
@@ -45,5 +47,15 @@ export function validateChapterForPublication(chapter: ChapterPublicationInput):
 
   if (passages.some((passage) => !passage.city)) {
     throw new Error(`Chaque passage doit référencer une ville pour le chapitre${chapterLabel(chapter)}.`);
+  }
+
+  const featuredIntermediateCount = passages.filter((passage) => (
+    passage.role === 'intermediate' && passage.featured === true
+  )).length;
+
+  if (featuredIntermediateCount > MAX_FEATURED_INTERMEDIATES) {
+    throw new Error(
+      `Le chapitre${chapterLabel(chapter)} peut contenir au maximum six passages intermédiaires mis en avant.`
+    );
   }
 }

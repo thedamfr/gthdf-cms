@@ -52,3 +52,36 @@ test('validateChapterForPublication requires a city on every passage', () => {
     /chaque passage doit référencer une ville/i
   );
 });
+
+test('validateChapterForPublication accepts up to six featured intermediates', () => {
+  assert.doesNotThrow(() => validateChapterForPublication({
+    title: 'Chapitre test',
+    cityPassages: [
+      { role: 'start', featured: false, city: { documentId: 'city-start' } },
+      ...Array.from({ length: 6 }, (_, index) => ({
+        role: 'intermediate',
+        featured: true,
+        city: { documentId: `city-${index + 1}` },
+      })),
+      { role: 'end', featured: false, city: { documentId: 'city-end' } },
+    ],
+  }));
+});
+
+test('validateChapterForPublication rejects more than six featured intermediates', () => {
+  assert.throws(
+    () => validateChapterForPublication({
+      title: 'Chapitre test',
+      cityPassages: [
+        { role: 'start', featured: false, city: { documentId: 'city-start' } },
+        ...Array.from({ length: 7 }, (_, index) => ({
+          role: 'intermediate',
+          featured: true,
+          city: { documentId: `city-${index + 1}` },
+        })),
+        { role: 'end', featured: false, city: { documentId: 'city-end' } },
+      ],
+    }),
+    /au maximum six passages intermédiaires mis en avant/
+  );
+});
