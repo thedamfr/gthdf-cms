@@ -5,8 +5,11 @@ import migration from '../scripts/migrate-chapter-display-order.js';
 
 const {
   CHAPTER_DISPLAY_ORDERS,
+  configureCleverRemoteDatabaseEnvironment,
   createStrapiAdapter,
+  flattenCleverEnvironment,
   parseDisplayOrderMigrationArguments,
+  parseCleverDirectDatabaseUri,
   runChapterDisplayOrderMigration,
 } = migration;
 
@@ -59,12 +62,140 @@ test('CHAPTER_DISPLAY_ORDERS maps the ten canonical slugs to 1 through 10', () =
 
 test('parseDisplayOrderMigrationArguments keeps dry-run as the safe default', () => {
   assert.deepEqual(parseDisplayOrderMigrationArguments([], '/workspace'), {
+    allowSelfSignedTls: false,
     apply: false,
+    cleverApp: 'gthdf-cms',
     confirmRemote: false,
     help: false,
     remote: false,
     reportPath: '/workspace/.tmp/chapter-display-order-migration-report.json',
   });
+});
+
+test('parseDisplayOrderMigrationArguments accepts an explicit Clever application', () => {
+  assert.deepEqual(
+    parseDisplayOrderMigrationArguments([
+      '--remote',
+      '--clever-app',
+      'app_test',
+      '--allow-self-signed-tls',
+    ], '/workspace'),
+    {
+      allowSelfSignedTls: true,
+      apply: false,
+      cleverApp: 'app_test',
+      confirmRemote: false,
+      help: false,
+      remote: true,
+      reportPath: '/workspace/.tmp/chapter-display-order-migration-report.json',
+    }
+  );
+});
+
+test('flattenCleverEnvironment keeps application and add-on values in memory', () => {
+  assert.deepEqual(flattenCleverEnvironment({
+    env: [{ name: 'APP_KEYS', value: 'application-secret' }],
+    fromAddons: [{
+      env: [
+        { name: 'POSTGRESQL_ADDON_DIRECT_URI', value: 'postgres://direct' },
+        { name: 'POSTGRESQL_ADDON_DB', value: 'production' },
+      ],
+    }],
+    fromDependencies: [],
+  }), {
+    APP_KEYS: 'application-secret',
+    POSTGRESQL_ADDON_DB: 'production',
+    POSTGRESQL_ADDON_DIRECT_URI: 'postgres://direct',
+  });
+});
+
+test('configureCleverRemoteDatabaseEnvironment gets the direct database endpoint with Clever CLI', () => {
+  const targetEnvironment: Record<string, string | undefined> = {
+    DATABASE_URL: 'postgres://local',
+  };
+  const calls: unknown[] = [];
+  const runner = (command: string, args: string[], options: unknown) => {
+    calls.push({ command, args, options });
+    return JSON.stringify({
+      env: [{ name: 'APP_KEYS', value: 'application-secret' }],
+      fromAddons: [{
+        env: [
+          { name: 'POSTGRESQL_ADDON_DIRECT_URI', value: 'postgres://direct-user:secret@external.example.com:5432/production' },
+          { name: 'POSTGRESQL_ADDON_DB', value: 'production' },
+        ],
+      }],
+      fromDependencies: [],
+    });
+  };
+
+  const target = configureCleverRemoteDatabaseEnvironment({
+    allowSelfSignedTls: true,
+    cleverApp: 'app_test',
+    environment: targetEnvironment,
+    runner,
+  });
+
+  assert.deepEqual(calls, [{
+    command: 'clever',
+    args: ['env', '--app', 'app_test', '--format', 'json'],
+    options: {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'inherit'],
+    },
+  }]);
+  assert.deepEqual(target, {
+    database: 'production',
+    host: 'external.example.com',
+  });
+  assert.equal(targetEnvironment.APP_KEYS, 'application-secret');
+  assert.equal(targetEnvironment.DATABASE_CLIENT, 'postgres');
+  assert.equal(targetEnvironment.DATABASE_SSL, 'true');
+  assert.equal(targetEnvironment.DATABASE_SSL_REJECT_UNAUTHORIZED, 'false');
+  assert.equal(
+    targetEnvironment.POSTGRESQL_ADDON_URI,
+    'postgres://direct-user:secret@external.example.com:5432/production'
+  );
+  assert.equal(targetEnvironment.DATABASE_URL, undefined);
+});
+
+test('configureCleverRemoteDatabaseEnvironment keeps certificate verification by default', () => {
+  const targetEnvironment: Record<string, string | undefined> = {};
+  const runner = () => JSON.stringify({
+    fromAddons: [{
+      env: [{
+        name: 'POSTGRESQL_ADDON_DIRECT_URI',
+        value: 'postgres://direct-user:secret@external.example.com:5432/production',
+      }],
+    }],
+  });
+
+  configureCleverRemoteDatabaseEnvironment({
+    cleverApp: 'app_test',
+    environment: targetEnvironment,
+    runner,
+  });
+
+  assert.equal(targetEnvironment.DATABASE_SSL_REJECT_UNAUTHORIZED, 'true');
+});
+
+test('parseCleverDirectDatabaseUri rejects malformed or incomplete values without echoing them', () => {
+  const secretValue = 'not-a-url-with-secret-password';
+  assert.throws(
+    () => parseCleverDirectDatabaseUri(secretValue),
+    (error: unknown) => (
+      error instanceof Error
+      && /URI PostgreSQL DIRECT invalide/.test(error.message)
+      && !error.message.includes(secretValue)
+    )
+  );
+  assert.throws(
+    () => parseCleverDirectDatabaseUri('postgres://user:secret@external.example.com:5432/'),
+    /nom de base/
+  );
+  assert.throws(
+    () => parseCleverDirectDatabaseUri('https://external.example.com/production'),
+    /protocole PostgreSQL/
+  );
 });
 
 test('runChapterDisplayOrderMigration is read-only during dry-run', async () => {

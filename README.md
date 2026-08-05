@@ -224,17 +224,31 @@ publiée de chaque document. Elle ne republie aucun chapitre et n’écrit que
 inattendu, dupliqué ou s’il manque une des deux versions. Un second passage doit
 signaler les dix chapitres comme inchangés.
 
-En production, prendre une sauvegarde PostgreSQL puis exécuter d’abord :
+En production, prendre une sauvegarde PostgreSQL, vérifier que la CLI Clever
+est installée et authentifiée, puis exécuter d’abord :
 
 ```bash
-npm run migrate:chapter-display-order:remote
+npm run migrate:chapter-display-order:remote -- --allow-self-signed-tls
 ```
+
+La commande appelle `clever env --app gthdf-cms --format json`, sélectionne
+l’endpoint PostgreSQL externe `DIRECT_*` et conserve les secrets uniquement en
+mémoire. Elle ne dépend pas de variables `*_REMOTE` copiées dans `.env`. Une
+autre application peut être ciblée explicitement avec
+`--clever-app <id-ou-nom>`. La vérification du certificat TLS reste active par
+défaut. Clever expose actuellement cet endpoint avec un certificat auto-signé
+et sans CA dans les variables de l’add-on : l’exception
+`--allow-self-signed-tls` est donc volontaire et visible dans chaque commande
+distante, tout en conservant le chiffrement TLS.
 
 Après relecture du rapport et contrôle des dix associations, appliquer avec le
 second verrou :
 
 ```bash
-npm run migrate:chapter-display-order:remote -- --apply --confirm-remote
+npm run migrate:chapter-display-order:remote -- \
+  --allow-self-signed-tls \
+  --apply \
+  --confirm-remote
 ```
 
 Contrôler ensuite que les valeurs publiées vont de `1` à `10` et que les
