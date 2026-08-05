@@ -33,6 +33,13 @@
       "type": "integer",
       "required": true
     },
+    "displayOrder": {
+      "type": "integer",
+      "min": 1,
+      "info": {
+        "description": "Ordre public stable du chapitre. Obligatoire et unique uniquement à la publication."
+      }
+    },
     "introSentence": {
       "type": "text",
       "required": true
