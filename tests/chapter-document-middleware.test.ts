@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
+  CHAPTER_PUBLICATION_LOCK_KEY,
   runDocumentMiddleware,
   validateChapterDocument,
 } from '../src/index.ts';
@@ -46,24 +47,6 @@ function createStrapiMock() {
 }
 
 function createSerializedStrapiMock(events: string[]) {
-  const queryBuilder = {
-    select: (field: string) => {
-      events.push(`lock:select:${field}`);
-      return queryBuilder;
-    },
-    orderBy: (orderBy: unknown) => {
-      events.push(`lock:order:${JSON.stringify(orderBy)}`);
-      return queryBuilder;
-    },
-    forUpdate: () => {
-      events.push('lock:for-update');
-      return queryBuilder;
-    },
-    execute: async () => {
-      events.push('lock:execute');
-      return [];
-    },
-  };
   const draft = {
     ...publishedChapters[2],
     cityPassages: [
@@ -74,13 +57,22 @@ function createSerializedStrapiMock(events: string[]) {
 
   return {
     db: {
-      transaction: async (callback: () => Promise<unknown>) => {
+      transaction: async (callback: (context: {
+        trx: { raw: (sql: string, bindings: unknown[]) => Promise<void> };
+      }) => Promise<unknown>) => {
         events.push('transaction:start');
-        const result = await callback();
+        const result = await callback({
+          trx: {
+            raw: async (sql, bindings) => {
+              assert.equal(sql, 'SELECT pg_advisory_xact_lock(?)');
+              assert.deepEqual(bindings, [CHAPTER_PUBLICATION_LOCK_KEY]);
+              events.push('lock:advisory');
+            },
+          },
+        });
         events.push('transaction:end');
         return result;
       },
-      queryBuilder: () => queryBuilder,
       query: () => ({
         findMany: async () => {
           events.push('validation:read-published');
@@ -132,29 +124,78 @@ test('validateChapterDocument ignores discardDraft without querying published ch
   assert.equal(getQueryCount(), 0);
 });
 
-for (const action of ['publish', 'unpublish', 'delete']) {
-  test(`runDocumentMiddleware serializes ${action} before validation and next`, async () => {
-    const events: string[] = [];
-    const strapi = createSerializedStrapiMock(events);
-    const result = await runDocumentMiddleware(strapi as never, {
-      action,
+const publishedMutationCases = [
+  {
+    label: 'publish',
+    context: {
+      action: 'publish',
       contentType: { uid: 'api::chapter.chapter' },
       params: { documentId: 'chapter-3' },
-    }, async () => {
+    },
+  },
+  {
+    label: 'unpublish',
+    context: {
+      action: 'unpublish',
+      contentType: { uid: 'api::chapter.chapter' },
+      params: { documentId: 'chapter-3' },
+    },
+  },
+  {
+    label: 'delete',
+    context: {
+      action: 'delete',
+      contentType: { uid: 'api::chapter.chapter' },
+      params: { documentId: 'chapter-3' },
+    },
+  },
+  {
+    label: 'create with published status',
+    context: {
+      action: 'create',
+      contentType: { uid: 'api::chapter.chapter' },
+      params: {
+        status: 'published',
+        data: {
+          title: 'Chapitre 4',
+          slug: 'chapter-4',
+          displayOrder: 4,
+          cityPassages: [
+            { role: 'start', city: { documentId: 'city-1' } },
+            { role: 'end', city: { documentId: 'city-2' } },
+          ],
+        },
+      },
+    },
+  },
+  {
+    label: 'update with published status',
+    context: {
+      action: 'update',
+      contentType: { uid: 'api::chapter.chapter' },
+      params: { documentId: 'chapter-3', status: 'published', data: {} },
+    },
+  },
+];
+
+test('CHAPTER_PUBLICATION_LOCK_KEY is a stable GTHF namespace', () => {
+  assert.equal(CHAPTER_PUBLICATION_LOCK_KEY, 0x47544846);
+});
+
+for (const { label, context } of publishedMutationCases) {
+  test(`runDocumentMiddleware serializes ${label} before validation and next`, async () => {
+    const events: string[] = [];
+    const strapi = createSerializedStrapiMock(events);
+    const result = await runDocumentMiddleware(strapi as never, context as never, async () => {
       events.push('next');
       return 'completed';
     });
 
     assert.equal(result, 'completed');
     assert.equal(events[0], 'transaction:start');
-    assert.deepEqual(events.slice(1, 5), [
-      'lock:select:id',
-      'lock:order:{"id":"asc"}',
-      'lock:for-update',
-      'lock:execute',
-    ]);
+    assert.equal(events[1], 'lock:advisory');
 
-    const lockIndex = events.indexOf('lock:execute');
+    const lockIndex = events.indexOf('lock:advisory');
     const validationIndexes = events
       .map((event, index) => event.startsWith('validation:') ? index : -1)
       .filter((index) => index >= 0);
@@ -168,17 +209,44 @@ for (const action of ['publish', 'unpublish', 'delete']) {
   });
 }
 
-test('runDocumentMiddleware does not serialize discardDraft', async () => {
-  const events: string[] = [];
-  const strapi = createSerializedStrapiMock(events);
+const draftMutationCases = [
+  {
+    label: 'discardDraft',
+    context: {
+      action: 'discardDraft',
+      contentType: { uid: 'api::chapter.chapter' },
+      params: { documentId: 'chapter-2' },
+    },
+  },
+  {
+    label: 'create with draft status',
+    context: {
+      action: 'create',
+      contentType: { uid: 'api::chapter.chapter' },
+      params: { status: 'draft', data: {} },
+    },
+  },
+  {
+    label: 'update with draft status',
+    context: {
+      action: 'update',
+      contentType: { uid: 'api::chapter.chapter' },
+      params: { documentId: 'chapter-2', status: 'draft', data: {} },
+    },
+  },
+];
 
-  await runDocumentMiddleware(strapi as never, {
-    action: 'discardDraft',
-    contentType: { uid: 'api::chapter.chapter' },
-    params: { documentId: 'chapter-2' },
-  }, async () => {
-    events.push('next');
+for (const { label, context } of draftMutationCases) {
+  test(`runDocumentMiddleware does not lock ${label}`, async () => {
+    const events: string[] = [];
+    const strapi = createSerializedStrapiMock(events);
+
+    await runDocumentMiddleware(strapi as never, context as never, async () => {
+      events.push('next');
+    });
+
+    assert.equal(events.includes('transaction:start'), false);
+    assert.equal(events.includes('lock:advisory'), false);
+    assert.equal(events.includes('next'), true);
   });
-
-  assert.deepEqual(events, ['next']);
-});
+}

@@ -198,9 +198,10 @@ en revanche des entiers positifs, uniques et contigus de `1` au nombre de
 chapitres publiés. Dépublier ou supprimer un chapitre d’ordre intermédiaire
 est refusé tant que cela créerait un trou ; retirer le dernier ordre conserve
 un ensemble valide. Les publications, dépublications et suppressions sont
-sérialisées dans une transaction qui verrouille les lignes Chapter par `id`
-croissant avant validation. Les opérations limitées aux brouillons restent
-inchangées et ne prennent pas ce verrou.
+sérialisées avant validation par un verrou transactionnel global PostgreSQL
+(`pg_advisory_xact_lock`, clé stable `0x47544846`, soit `GTHF` en ASCII). Ce
+verrou couvre aussi les créations lorsque la table est vide. Les opérations
+limitées aux brouillons restent inchangées et ne prennent pas ce verrou.
 
 Le mapping versionné couvre explicitement les dix slugs actuels, de
 `lille-a-arras` (`1`) à `st-omer-lille` (`10`). Commencer par le dry-run local :

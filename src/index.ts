@@ -24,6 +24,10 @@ const SEO_CONTENT_TYPES = [
 const CITY_UID = 'api::city.city';
 const CHAPTER_UID = 'api::chapter.chapter';
 
+// Valeur ASCII hexadécimale de « GTHF », réservée dans cette base PostgreSQL
+// à la sérialisation transactionnelle de l’ensemble des chapitres publiés.
+export const CHAPTER_PUBLICATION_LOCK_KEY = 0x47544846;
+
 type DocumentMiddlewareContext = {
   action: string;
   contentType: { uid: string };
@@ -302,14 +306,6 @@ function changesPublishedChapterSet(context: DocumentMiddlewareContext): boolean
     || publishesFromWrite;
 }
 
-async function lockChapterRows(strapi: Core.Strapi): Promise<void> {
-  await strapi.db.queryBuilder(CHAPTER_UID)
-    .select('id')
-    .orderBy({ id: 'asc' })
-    .forUpdate()
-    .execute();
-}
-
 async function validateDocumentAndRunNext(
   strapi: Core.Strapi,
   context: DocumentMiddlewareContext,
@@ -356,8 +352,11 @@ export async function runDocumentMiddleware(
     return validateDocumentAndRunNext(strapi, context, next);
   }
 
-  return strapi.db.transaction(async () => {
-    await lockChapterRows(strapi);
+  return strapi.db.transaction(async ({ trx }) => {
+    await trx.raw(
+      'SELECT pg_advisory_xact_lock(?)',
+      [CHAPTER_PUBLICATION_LOCK_KEY]
+    );
     return validateDocumentAndRunNext(strapi, context, next);
   });
 }
