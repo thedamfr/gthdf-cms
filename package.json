@@ -11,6 +11,8 @@
     "develop": "strapi develop",
     "migrate:cities": "node scripts/migrate-cities.js",
     "migrate:cities:remote": "node --env-file=.env scripts/migrate-cities.js --remote",
+    "migrate:featured-cities": "node scripts/migrate-featured-city-passages.js",
+    "migrate:featured-cities:remote": "node --env-file=.env scripts/migrate-featured-city-passages.js --remote",
     "postinstall": "npm run build",
     "seed:example": "node ./scripts/seed.js",
     "test": "tsx --test tests/*.test.ts",

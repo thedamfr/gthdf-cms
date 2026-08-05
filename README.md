@@ -159,6 +159,36 @@ Même dans ce mode, seules des villes en brouillon avec `hasPublicPage=false` et
 les versions brouillon des chapitres sont écrites. La relecture puis la
 publication éditoriale restent manuelles dans Strapi.
 
+### Sélection des villes mises en avant
+
+La sélection éditoriale validée est versionnée dans
+`scripts/featured-city-passages.json`. Elle conserve tous les passages de
+ville et change uniquement leur booléen `featured`, avec un maximum de six
+intermédiaires par chapitre.
+
+Commencer par un dry-run local ou distant :
+
+```bash
+npm run migrate:featured-cities
+npm run migrate:featured-cities:remote
+```
+
+Le rapport `.tmp/featured-city-migration-report.json` expose, pour chaque
+chapitre, les clés mises en avant avant et après la migration. Après relecture,
+l’application locale ou distante est volontaire :
+
+```bash
+npm run migrate:featured-cities -- --apply
+npm run migrate:featured-cities:remote -- --apply --confirm-remote
+```
+
+Le script est idempotent, ne modifie que les brouillons de chapitre et ne
+publie aucun document. Pour revenir en arrière, reconstruire un fichier de
+sélection à partir des `beforeFeaturedMunicipalityKeys` du rapport sauvegardé,
+puis le passer avec `--selection` après un nouveau dry-run. Une restauration de
+la sauvegarde PostgreSQL prise avant application reste le retour arrière
+complet.
+
 ### Validation locale
 
 Avec PostgreSQL disponible et le schéma chargé, les validations pures et le
