@@ -9,7 +9,7 @@
   "attributes": {
     "city": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToOne",
       "target": "api::city.city",
       "required": true
     },
