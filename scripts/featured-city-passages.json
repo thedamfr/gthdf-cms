@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "chapters": [
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "featuredCities": [
+        { "name": "Étréaupont", "municipalityKey": "FR-02295" },
+        { "name": "Guise", "municipalityKey": "FR-02361" },
+        { "name": "La Fère", "municipalityKey": "FR-02304" },
+        { "name": "Laon", "municipalityKey": "FR-02408" },
+        { "name": "Urcel", "municipalityKey": "FR-02755" },
+        { "name": "Crouy", "municipalityKey": "FR-02243" }
+      ]
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "featuredCities": [
+        { "name": "Ambleny", "municipalityKey": "FR-02011" },
+        { "name": "Pierrefonds", "municipalityKey": "FR-60491" },
+        { "name": "Pont-Sainte-Maxence", "municipalityKey": "FR-60509" },
+        { "name": "Senlis", "municipalityKey": "FR-60612" },
+        { "name": "Creil", "municipalityKey": "FR-60175" },
+        { "name": "Hermes", "municipalityKey": "FR-60313" }
+      ]
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "featuredCities": [
+        { "name": "Goincourt", "municipalityKey": "FR-60277" },
+        { "name": "Crèvecœur-le-Grand", "municipalityKey": "FR-60178" },
+        { "name": "Ailly-sur-Noye", "municipalityKey": "FR-80010" },
+        { "name": "Villers-Bretonneux", "municipalityKey": "FR-80799" },
+        { "name": "Camon", "municipalityKey": "FR-80164" }
+      ]
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "featuredCities": [
+        { "name": "Ailly-sur-Somme", "municipalityKey": "FR-80011" },
+        { "name": "Abbeville", "municipalityKey": "FR-80001" },
+        { "name": "Friville-Escarbotin", "municipalityKey": "FR-80368" },
+        { "name": "Saint-Valery-sur-Somme", "municipalityKey": "FR-80721" },
+        { "name": "Quend", "municipalityKey": "FR-80649" },
+        { "name": "Berck", "municipalityKey": "FR-62108" }
+      ]
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "featuredCities": [
+        { "name": "Camiers", "municipalityKey": "FR-62201" },
+        { "name": "Outreau", "municipalityKey": "FR-62643" },
+        { "name": "Boulogne-sur-Mer", "municipalityKey": "FR-62160" },
+        { "name": "Ambleteuse", "municipalityKey": "FR-62025" },
+        { "name": "Sangatte", "municipalityKey": "FR-62774" }
+      ]
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "featuredCities": [
+        { "name": "Oye-Plage", "municipalityKey": "FR-62645" },
+        { "name": "Gravelines", "municipalityKey": "FR-59273" },
+        { "name": "Dunkerque", "municipalityKey": "FR-59183" },
+        { "name": "Coudekerque-Branche", "municipalityKey": "FR-59155" },
+        { "name": "Watten", "municipalityKey": "FR-59647" },
+        { "name": "Saint-Martin-lez-Tatinghem", "municipalityKey": "FR-62757" }
+      ]
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "featuredCities": [
+        { "name": "Arques", "municipalityKey": "FR-62040" },
+        { "name": "Steenvoorde", "municipalityKey": "FR-59580" },
+        { "name": "Boeschepe", "municipalityKey": "FR-59086" },
+        { "name": "Bailleul", "municipalityKey": "FR-59043" },
+        { "name": "Armentières", "municipalityKey": "FR-59017" },
+        { "name": "Lambersart", "municipalityKey": "FR-59328" }
+      ]
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "featuredCities": [
+        { "name": "Villeneuve-d'Ascq", "municipalityKey": "FR-59009" },
+        { "name": "Libercourt", "municipalityKey": "FR-62907" },
+        { "name": "Carvin", "municipalityKey": "FR-62215" },
+        { "name": "Lens", "municipalityKey": "FR-62498" },
+        { "name": "Aix-Noulette", "municipalityKey": "FR-62019" },
+        { "name": "Achicourt", "municipalityKey": "FR-62004" }
+      ]
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "featuredCities": [
+        { "name": "Saint-Laurent-Blangy", "municipalityKey": "FR-62753" },
+        { "name": "Arleux", "municipalityKey": "FR-59015" },
+        { "name": "Aniche", "municipalityKey": "FR-59008" },
+        { "name": "Somain", "municipalityKey": "FR-59574" },
+        { "name": "Raismes", "municipalityKey": "FR-59491" },
+        { "name": "Fresnes-sur-Escaut", "municipalityKey": "FR-59253" }
+      ]
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "featuredCities": [
+        { "name": "Quiévrechain", "municipalityKey": "FR-59484" },
+        { "name": "Bavay", "municipalityKey": "FR-59053" },
+        { "name": "Landrecies", "municipalityKey": "FR-59331" },
+        { "name": "Avesnes-sur-Helpe", "municipalityKey": "FR-59036" },
+        { "name": "Eppe-Sauvage", "municipalityKey": "FR-59198" },
+        { "name": "Momignies", "municipalityKey": "BE-56051" }
+      ]
+    }
+  ]
+}
