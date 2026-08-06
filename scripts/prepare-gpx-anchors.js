@@ -9,9 +9,11 @@ const {
 } = require('node:fs');
 const { dirname, resolve } = require('node:path');
 const {
-  configureRemoteDatabaseEnvironment,
   validateRemoteMigrationSafety,
 } = require('./migrate-cities.js');
+const {
+  configureCleverRemoteDatabaseEnvironment,
+} = require('./clever-remote-database.js');
 const {
   candidateKey,
   distanceWgs84Metres,
@@ -30,7 +32,9 @@ const DEFAULT_MEDIA_ORIGINS = [
 
 function parseAnchorPreparationArguments(argv, cwd = process.cwd()) {
   const options = {
+    allowSelfSignedTls: false,
     apply: false,
+    cleverApp: 'gthdf-cms',
     confirmApply: false,
     confirmRemote: false,
     help: false,
@@ -46,15 +50,21 @@ function parseAnchorPreparationArguments(argv, cwd = process.cwd()) {
     else if (argument === '--confirm-apply') options.confirmApply = true;
     else if (argument === '--remote') options.remote = true;
     else if (argument === '--confirm-remote') options.confirmRemote = true;
+    else if (argument === '--allow-self-signed-tls') options.allowSelfSignedTls = true;
     else if (argument === '--help' || argument === '-h') options.help = true;
-    else if (argument === '--report' || argument === '--resolutions') {
+    else if (
+      argument === '--report'
+      || argument === '--resolutions'
+      || argument === '--clever-app'
+    ) {
       const value = argv[index + 1];
       if (!value || value.startsWith('--')) {
         throw new Error(`Une valeur est requise après ${argument}.`);
       }
       index += 1;
       if (argument === '--report') options.reportPath = resolve(cwd, value);
-      else options.resolutionsPath = resolve(cwd, value);
+      else if (argument === '--resolutions') options.resolutionsPath = resolve(cwd, value);
+      else options.cleverApp = value;
     } else {
       throw new Error(`Option inconnue : ${argument}`);
     }
@@ -691,7 +701,9 @@ Options :
   --resolutions <fichier>  Décisions relues au format JSON v1
   --apply                  Met à jour uniquement les brouillons de chapitre
   --confirm-apply          Confirmation obligatoire avec --apply
-  --remote                 Utilise la base distante explicitement configurée
+  --remote                 Lit l’accès PostgreSQL DIRECT avec la CLI Clever
+  --clever-app <app>       Application Clever source (défaut : gthdf-cms)
+  --allow-self-signed-tls  Accepte le certificat auto-signé de l’endpoint DIRECT
   --confirm-remote         Confirmation supplémentaire pour --remote --apply
   --dry-run                Force le mode lecture seule, valeur par défaut
   --help                   Affiche cette aide
@@ -705,7 +717,13 @@ async function main(argv = process.argv.slice(2)) {
     printHelp();
     return 0;
   }
-  if (options.remote) configureRemoteDatabaseEnvironment();
+  if (options.remote) {
+    const target = configureCleverRemoteDatabaseEnvironment({
+      allowSelfSignedTls: options.allowSelfSignedTls,
+      cleverApp: options.cleverApp,
+    });
+    console.log(`Base distante ciblée : ${target.host} / ${target.database}`);
+  }
   const resolutions = loadAnchorResolutions(options.resolutionsPath);
   const { createStrapi, compileStrapi } = require('@strapi/strapi');
   const appContext = await compileStrapi();
