@@ -15,6 +15,7 @@ const {
   loadAnchorResolutions,
   parseAnchorPreparationArguments,
   runGpxAnchorPreparation,
+  warnAboutTlsException,
 } = preparation;
 
 test('loadAnchorResolutions expands one reviewed place into AB and BA junctions', () => {
@@ -156,6 +157,8 @@ test('parseAnchorPreparationArguments keeps dry-run safe and requires confirmati
 
   assert.equal(options.apply, false);
   assert.equal(options.remote, false);
+  assert.equal(options.cleverApp, 'gthdf-cms');
+  assert.equal(options.allowSelfSignedTls, false);
   assert.match(options.reportPath, /gpx-anchor-report\.json$/);
   assert.throws(
     () => parseAnchorPreparationArguments(['--apply'], '/tmp/gthdf-anchor-test'),
@@ -168,6 +171,34 @@ test('parseAnchorPreparationArguments keeps dry-run safe and requires confirmati
     ).apply,
     true
   );
+});
+
+test('parseAnchorPreparationArguments accepts the external Clever database options', () => {
+  const options = parseAnchorPreparationArguments([
+    '--remote',
+    '--clever-app',
+    'app_test',
+    '--allow-self-signed-tls',
+  ], '/tmp/gthdf-anchor-test');
+
+  assert.equal(options.remote, true);
+  assert.equal(options.cleverApp, 'app_test');
+  assert.equal(options.allowSelfSignedTls, true);
+});
+
+test('warnAboutTlsException makes the certificate exception visible', () => {
+  const warnings: string[] = [];
+
+  warnAboutTlsException({
+    allowSelfSignedTls: true,
+    remote: true,
+  }, {
+    warn: (message: string) => warnings.push(message),
+  });
+
+  assert.equal(warnings.length, 1);
+  assert.match(warnings[0], /certificat auto-signé/i);
+  assert.match(warnings[0], /vérification/i);
 });
 
 test('runGpxAnchorPreparation is dry-run first, applies drafts and becomes idempotent', async () => {

@@ -16,7 +16,7 @@
     "migrate:chapter-display-order": "node scripts/migrate-chapter-display-order.js",
     "migrate:chapter-display-order:remote": "node scripts/migrate-chapter-display-order.js --remote",
     "prepare:gpx-anchors": "node scripts/prepare-gpx-anchors.js",
-    "prepare:gpx-anchors:remote": "node --env-file=.env scripts/prepare-gpx-anchors.js --remote",
+    "prepare:gpx-anchors:remote": "node scripts/prepare-gpx-anchors.js --remote",
     "postinstall": "npm run build",
     "seed:example": "node ./scripts/seed.js",
     "test": "tsx --test tests/*.test.ts",

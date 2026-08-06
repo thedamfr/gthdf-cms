@@ -339,14 +339,22 @@ trois confirmations explicites :
 
 ```bash
 npm run prepare:gpx-anchors:remote -- \
+  --allow-self-signed-tls \
   --resolutions /chemin/gpx-anchor-resolutions.json
 
 npm run prepare:gpx-anchors:remote -- \
+  --allow-self-signed-tls \
   --resolutions /chemin/gpx-anchor-resolutions.json \
   --apply \
   --confirm-apply \
   --confirm-remote
 ```
+
+Comme la migration PRD 02, la commande distante lit avec la CLI Clever
+l’endpoint PostgreSQL externe `DIRECT_*` et conserve les secrets uniquement
+en mémoire. Elle ne demande ni variables `*_REMOTE` dans `.env`, ni saisie de
+coordonnées GPS. L’exception TLS reste explicite parce que l’endpoint externe
+actuel présente un certificat auto-signé.
 
 Le script ne publie aucun chapitre et n’active jamais le Builder. Après
 application, relire les brouillons, publier l’ensemble cohérent, exécuter les
@@ -367,6 +375,15 @@ physiques. Le dry run avec le fichier de paires les qualifie toutes en
 `accepted_gap`, avec le même repère dans les deux sens, sans écriture ni
 erreur. Ce résultat valide la préparation des jonctions, pas les propositions
 d’ancrage : il ne doit pas être transformé en `--apply` avant leur revue.
+
+### Dry run de production du 6 août 2026
+
+Après déploiement du schéma, la commande distante utilisant l’endpoint
+PostgreSQL externe Clever a inspecté les dix chapitres et calculé les 466
+ancrages sans écriture, blocage ni erreur. Les dix jonctions exactes et les
+dix jonctions acceptées correspondant aux cinq lieux éditoriaux ont également
+été retrouvées. Les 179 alertes d’ambiguïté restent à contrôler à partir du
+rapport calculé ; elles n’impliquent aucune saisie manuelle de coordonnées.
 
 ### Validation locale
 
