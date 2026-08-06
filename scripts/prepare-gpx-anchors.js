@@ -2,12 +2,14 @@
 
 'use strict';
 
+const { createHash } = require('node:crypto');
 const {
   mkdirSync,
   readFileSync,
   writeFileSync,
 } = require('node:fs');
 const { dirname, resolve } = require('node:path');
+const { parse } = require('csv-parse/sync');
 const {
   validateRemoteMigrationSafety,
 } = require('./migrate-cities.js');
@@ -30,6 +32,119 @@ const DEFAULT_MEDIA_ORIGINS = [
   'https://cms.gthf.fr',
 ];
 
+function parseControlledCsv(filePath, label, option) {
+  let bytes;
+  try {
+    bytes = readFileSync(filePath);
+  } catch (error) {
+    throw new Error(
+      `Impossible de lire le CSV contrôlé ${label} « ${filePath} ». Vérifiez l’option ${option}.`,
+      { cause: error }
+    );
+  }
+
+  try {
+    return {
+      bytes,
+      rows: parse(bytes, {
+        bom: true,
+        columns: true,
+        skip_empty_lines: true,
+      }),
+    };
+  } catch (error) {
+    throw new Error(
+      `Le CSV contrôlé ${label} « ${filePath} » est invalide. Vérifiez son contenu ou l’option ${option}.`,
+      { cause: error }
+    );
+  }
+}
+
+function loadControlledAnchorHints(citiesPath, chaptersPath) {
+  const { bytes: cityBytes, rows: cityRows } = parseControlledCsv(
+    citiesPath,
+    'des villes',
+    '--cities'
+  );
+  const { bytes: chapterBytes, rows: chapterRows } = parseControlledCsv(
+    chaptersPath,
+    'des chapitres',
+    '--chapters'
+  );
+  const anchors = new Map();
+  const sources = new Map();
+  const chaptersByLabel = new Map();
+  let globalOffsetMetres = 0;
+
+  for (const [rowIndex, row] of chapterRows.entries()) {
+    const slug = String(row['Slug chapitre'] ?? '').trim();
+    const label = String(row.Chapitre ?? '').trim();
+    const sourceSha256 = String(row['SHA-256 GPX'] ?? '').trim().toLowerCase();
+    const distanceMetres = Number(row['Distance GPX (m)']);
+    const validationErrors = [];
+    if (!slug) validationErrors.push('slug manquant');
+    if (!label) validationErrors.push('libellé manquant');
+    if (!/^[a-f0-9]{64}$/.test(sourceSha256)) validationErrors.push('SHA-256 invalide');
+    if (!Number.isFinite(distanceMetres) || distanceMetres <= 0) {
+      validationErrors.push('distance invalide');
+    }
+    if (slug && sources.has(slug)) validationErrors.push(`slug dupliqué « ${slug} »`);
+    if (label && chaptersByLabel.has(label)) {
+      validationErrors.push(`libellé dupliqué « ${label} »`);
+    }
+    if (validationErrors.length > 0) {
+      const identity = [slug, label].filter(Boolean).join(' / ') || 'chapitre inconnu';
+      throw new Error(
+        `La ligne ${rowIndex + 2} du référentiel contrôlé des chapitres (${identity}) `
+        + `est invalide : ${validationErrors.join(', ')}.`
+      );
+    }
+    sources.set(slug, { distanceMetres, sourceSha256 });
+    chaptersByLabel.set(label, { slug, globalOffsetMetres, distanceMetres });
+    globalOffsetMetres += distanceMetres;
+  }
+  if (sources.size === 0) throw new Error('Le référentiel contrôlé ne contient aucun chapitre GPX.');
+
+  for (const row of cityRows) {
+    const municipalityKey = String(row['ID commune'] ?? '').trim();
+    const cityName = String(row.Ville ?? '').trim();
+    const chapterLabel = String(row['Premier chapitre'] ?? '').trim();
+    const globalChainageMetres = Number(row['Chaînage premier passage (m)']);
+    const expectedOccurrences = Number(row['Nombre de passages']);
+    const chapter = chaptersByLabel.get(chapterLabel);
+    if (
+      !municipalityKey || !cityName || !chapter
+      || !Number.isFinite(globalChainageMetres)
+      || !Number.isInteger(expectedOccurrences) || expectedOccurrences < 1
+    ) {
+      throw new Error(`La ligne d’ancrage contrôlé de ${cityName || municipalityKey || 'ville inconnue'} est invalide.`);
+    }
+    const abChainageMetres = globalChainageMetres - chapter.globalOffsetMetres;
+    if (abChainageMetres < 0 || abChainageMetres > chapter.distanceMetres) {
+      throw new Error(`Le chaînage contrôlé de ${cityName} sort du chapitre ${chapter.slug}.`);
+    }
+    const key = `${chapter.slug}:${municipalityKey}`;
+    if (anchors.has(key)) throw new Error(`L’ancrage contrôlé ${key} est dupliqué.`);
+    anchors.set(key, {
+      abChainageMetres,
+      cityName,
+      expectedOccurrences,
+      municipalityKey,
+    });
+  }
+
+  return {
+    anchors,
+    sources,
+    source: {
+      chapterRows: chapterRows.length,
+      chaptersSha256: createHash('sha256').update(chapterBytes).digest('hex'),
+      cityRows: cityRows.length,
+      citiesSha256: createHash('sha256').update(cityBytes).digest('hex'),
+    },
+  };
+}
+
 function parseAnchorPreparationArguments(argv, cwd = process.cwd()) {
   const options = {
     allowSelfSignedTls: false,
@@ -37,6 +152,14 @@ function parseAnchorPreparationArguments(argv, cwd = process.cwd()) {
     cleverApp: 'gthdf-cms',
     confirmApply: false,
     confirmRemote: false,
+    citiesPath: resolve(
+      cwd,
+      '../gthdf-frontend/documentation/data/gthf_villes_et_produits_seo/csv/villes.csv'
+    ),
+    chaptersPath: resolve(
+      cwd,
+      '../gthdf-frontend/documentation/data/gthf_villes_et_produits_seo/csv/chapitres.csv'
+    ),
     help: false,
     remote: false,
     reportPath: resolve(cwd, '.tmp/gpx-anchor-report.json'),
@@ -56,6 +179,8 @@ function parseAnchorPreparationArguments(argv, cwd = process.cwd()) {
       argument === '--report'
       || argument === '--resolutions'
       || argument === '--clever-app'
+      || argument === '--cities'
+      || argument === '--chapters'
     ) {
       const value = argv[index + 1];
       if (!value || value.startsWith('--')) {
@@ -64,6 +189,8 @@ function parseAnchorPreparationArguments(argv, cwd = process.cwd()) {
       index += 1;
       if (argument === '--report') options.reportPath = resolve(cwd, value);
       else if (argument === '--resolutions') options.resolutionsPath = resolve(cwd, value);
+      else if (argument === '--cities') options.citiesPath = resolve(cwd, value);
+      else if (argument === '--chapters') options.chaptersPath = resolve(cwd, value);
       else options.cleverApp = value;
     } else {
       throw new Error(`Option inconnue : ${argument}`);
@@ -390,6 +517,7 @@ function resolutionForAnchor(resolutions, chapterSlug, direction, passageIndex) 
 
 async function runGpxAnchorPreparation({
   adapter,
+  controlledHints = null,
   fetchMediaBytes,
   resolutions = emptyResolutions(),
   apply = false,
@@ -400,6 +528,7 @@ async function runGpxAnchorPreparation({
     generatedAt,
     mode: apply ? 'apply' : 'dry-run',
     algorithmVersion: 'gpx-anchor-v1',
+    ...(controlledHints ? { controlledHintSource: controlledHints.source } : {}),
     summary: {},
     chapters: [],
     errors: [],
@@ -431,6 +560,7 @@ async function runGpxAnchorPreparation({
       if (!Array.isArray(chapter.cityPassages) || chapter.cityPassages.length < 2) {
         throw new Error('Le chapitre doit contenir au moins deux passages de ville.');
       }
+      let abReferences = null;
 
       for (const direction of ['AB', 'BA']) {
         const media = direction === 'AB' ? chapter.gpxFileAB : chapter.gpxFileBA;
@@ -438,17 +568,64 @@ async function runGpxAnchorPreparation({
         const bytes = await fetchMediaBytes(media, chapter, direction);
         const source = parseOfficialGpxBytes(bytes);
         sources.set(`${chapter.slug}:${direction}`, source);
-        const orderedPassages = chapter.cityPassages.map((passage, passageIndex) => ({
-          passageIndex,
-          city: passage.city,
-        }));
+        if (controlledHints && direction === 'AB') {
+          const controlledSource = controlledHints.sources.get(chapter.slug);
+          if (!controlledSource) {
+            throw new Error(`Le chapitre ${chapter.slug} est absent du référentiel GPX contrôlé.`);
+          }
+          if (controlledSource.sourceSha256 !== source.sourceSha256) {
+            throw new Error(`Le GPX AB de ${chapter.slug} ne correspond plus au référentiel contrôlé.`);
+          }
+        }
+        const orderedPassages = chapter.cityPassages.map((passage, passageIndex) => {
+          const municipalityKey = String(passage.city?.municipalityKey ?? '').trim();
+          const isBoundary = passageIndex === 0
+            || passageIndex === chapter.cityPassages.length - 1;
+          const controlledHint = controlledHints?.anchors.get(
+            `${chapter.slug}:${municipalityKey}`
+          ) ?? null;
+          if (controlledHints && !isBoundary && !controlledHint) {
+            throw new Error(
+              `Le passage ${chapter.slug}:${passageIndex} n’a pas de chaînage AB contrôlé.`
+            );
+          }
+          const prepared = {
+            passageIndex,
+            city: passage.city,
+          };
+          if (!isBoundary && controlledHint && direction === 'AB') {
+            prepared.chainageHintMetres = controlledHint.abChainageMetres;
+          }
+          if (!isBoundary && controlledHint && direction === 'BA') {
+            const referencePoint = abReferences?.get(passageIndex);
+            if (!referencePoint) {
+              throw new Error(
+                `Le passage ${chapter.slug}:${passageIndex} n’a pas de référence AB relue.`
+              );
+            }
+            prepared.referencePoint = referencePoint;
+          }
+          return prepared;
+        });
         if (direction === 'BA') orderedPassages.reverse();
         const proposal = proposeOrderedAnchors({ source, passages: orderedPassages });
+        if (direction === 'AB') {
+          abReferences = new Map(proposal.anchors.map((anchor) => [
+            anchor.passageIndex,
+            {
+              latitude: anchor.projectedLatitude,
+              longitude: anchor.projectedLongitude,
+            },
+          ]));
+        }
         const resolvedByPassage = new Map();
         const outcomes = [];
 
         for (const proposedAnchor of proposal.anchors) {
           const passage = chapter.cityPassages[proposedAnchor.passageIndex];
+          const controlledHint = controlledHints?.anchors.get(
+            `${chapter.slug}:${String(passage.city?.municipalityKey ?? '').trim()}`
+          ) ?? null;
           const existing = direction === 'AB' ? passage.gpxAnchorAB : passage.gpxAnchorBA;
           const resolution = resolutionForAnchor(
             resolutions,
@@ -472,6 +649,7 @@ async function runGpxAnchorPreparation({
             ambiguityReasons: proposedAnchor.ambiguityReasons,
             outcome: resolved.outcome,
             candidates: proposedAnchor.candidates,
+            ...(controlledHint ? { controlledHint } : {}),
           });
         }
         chapterReport.directions[direction] = {
@@ -699,6 +877,8 @@ Usage : npm run prepare:gpx-anchors -- [options]
 Options :
   --report <fichier>       Rapport JSON (défaut : .tmp/gpx-anchor-report.json)
   --resolutions <fichier>  Décisions relues au format JSON v1
+  --cities <fichier>       CSV contrôlé des villes et premiers chaînages AB
+  --chapters <fichier>     CSV contrôlé des chapitres et empreintes AB
   --apply                  Met à jour uniquement les brouillons de chapitre
   --confirm-apply          Confirmation obligatoire avec --apply
   --remote                 Lit l’accès PostgreSQL DIRECT avec la CLI Clever
@@ -734,6 +914,10 @@ async function main(argv = process.argv.slice(2)) {
     console.log(`Base distante ciblée : ${target.host} / ${target.database}`);
   }
   const resolutions = loadAnchorResolutions(options.resolutionsPath);
+  const controlledHints = loadControlledAnchorHints(
+    options.citiesPath,
+    options.chaptersPath
+  );
   const { createStrapi, compileStrapi } = require('@strapi/strapi');
   const appContext = await compileStrapi();
   const app = await createStrapi(appContext).load();
@@ -743,6 +927,7 @@ async function main(argv = process.argv.slice(2)) {
   try {
     report = await runGpxAnchorPreparation({
       adapter: createStrapiAdapter(app),
+      controlledHints,
       fetchMediaBytes: fetchOfficialMediaBytes,
       resolutions,
       apply: options.apply,
@@ -765,6 +950,7 @@ module.exports = {
   emptyResolutions,
   fetchOfficialMediaBytes,
   loadAnchorResolutions,
+  loadControlledAnchorHints,
   parseAnchorPreparationArguments,
   resolveAnchor,
   resolveJunction,

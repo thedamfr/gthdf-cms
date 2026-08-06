@@ -309,6 +309,16 @@ npm run prepare:gpx-anchors -- \
   --resolutions /chemin/gpx-anchor-resolutions.json
 ```
 
+Dans chaque sens, le premier et le dernier passage ordonnés sont ancrés
+directement sur les deux extrémités du média GPX officiel. Leur ville sert à
+nommer la frontière de chapitre, pas à reprojeter cette frontière vers le
+centre de la commune. Pour chaque passage intermédiaire, le chaînage du
+premier passage AB vient du jeu contrôlé du 19 juillet 2026 et est interpolé
+sur le segment original, jamais sur une coordonnée saisie à la main. Le point
+BA est ensuite rapproché de ce même arrêt AB sur le média directionnel BA,
+sous contrainte d'ordre. Les empreintes AB du jeu contrôlé doivent correspondre
+exactement aux médias courants, sinon la commande bloque le chapitre.
+
 Une frontière de chapitre correspond à un même lieu éditorial dans les deux
 sens, même si les médias et leurs extrémités restent directionnels. Le tableau
 `junctionPairs` permet donc de renseigner une seule fois la ville, le repère
@@ -322,6 +332,11 @@ Les cinq écarts actuellement relevés sont préparés, mais pas appliqués, dan
 et Lille utilisent leur gare ; Condé-sur-l’Escaut utilise le point près des
 fortifications. Ce fichier ne valide aucun des 466 ancrages de passage et ne
 doit donc pas être utilisé avec `--apply` avant leur revue.
+
+Le fichier `scripts/gpx-anchor-resolutions.gthf.json` contient la revue
+complète liée aux empreintes courantes : 466 ancrages directionnels et les
+cinq décisions de jonction partagées. Il reste inutilisable si un candidat ou
+un média change, car la clé de candidat inclut le SHA-256 de la source.
 
 Après revue du nouveau rapport, l’application locale exige une double option
 et ne modifie que les brouillons de chapitre :
@@ -353,8 +368,10 @@ npm run prepare:gpx-anchors:remote -- \
 Comme la migration PRD 02, la commande distante lit avec la CLI Clever
 l’endpoint PostgreSQL externe `DIRECT_*` et conserve les secrets uniquement
 en mémoire. Elle ne demande ni variables `*_REMOTE` dans `.env`, ni saisie de
-coordonnées GPS. L’exception TLS reste explicite parce que l’endpoint externe
-actuel présente un certificat auto-signé.
+coordonnées GPS. Les options `--cities` et `--chapters` permettent d’indiquer
+les deux CSV si les dépôts ne sont pas voisins à leurs emplacements habituels.
+L’exception TLS reste explicite parce que l’endpoint externe actuel présente
+un certificat auto-signé.
 
 Le script ne publie aucun chapitre et n’active jamais le Builder. Après
 application, relire les brouillons, publier l’ensemble cohérent, exécuter les
@@ -380,10 +397,14 @@ d’ancrage : il ne doit pas être transformé en `--apply` avant leur revue.
 
 Après déploiement du schéma, la commande distante utilisant l’endpoint
 PostgreSQL externe Clever a inspecté les dix chapitres et calculé les 466
-ancrages sans écriture, blocage ni erreur. Les dix jonctions exactes et les
-dix jonctions acceptées correspondant aux cinq lieux éditoriaux ont également
-été retrouvées. Les 179 alertes d’ambiguïté restent à contrôler à partir du
-rapport calculé ; elles n’impliquent aucune saisie manuelle de coordonnées.
+ancrages sans écriture, blocage ni erreur. Le jeu contrôlé couvre les 426
+passages intermédiaires directionnels ; les 40 frontières reprennent les
+extrémités exactes. Le rapprochement BA reste inférieur à 362 m pour tous les
+arrêts. Les trois concurrences restantes — Marœuil, Avesnes-sur-Helpe et
+Cayeux-sur-Mer en BA — ont été résolues par proximité avec l’arrêt AB et
+cohérence de chaînage. Le dry run final retrouve 466 résolutions `validated`,
+dix jonctions exactes et dix jonctions acceptées correspondant aux cinq lieux
+éditoriaux, avec zéro proposition, blocage, ancrage périmé ou erreur.
 
 ### Validation locale
 
