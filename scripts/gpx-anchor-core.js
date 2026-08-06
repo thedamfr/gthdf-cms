@@ -211,7 +211,7 @@ function candidateKey(sourceSha256, candidate) {
   return createHash('sha256').update(payload).digest('hex');
 }
 
-function passageCandidates(source, passage) {
+function passageCityPoint(passage) {
   const latitude = finiteNumber(passage.city?.latitude);
   const longitude = finiteNumber(passage.city?.longitude);
   if (
@@ -221,7 +221,115 @@ function passageCandidates(source, passage) {
   ) {
     throw new Error(`La ville ${passage.city?.name ?? passage.passageIndex} n’a pas de coordonnées complètes.`);
   }
-  const city = { latitude, longitude };
+  return { latitude, longitude };
+}
+
+function passageReferencePoint(passage, city) {
+  if (passage.referencePoint === undefined) return city;
+  const latitude = finiteNumber(passage.referencePoint?.latitude);
+  const longitude = finiteNumber(passage.referencePoint?.longitude);
+  if (
+    latitude === null || longitude === null
+    || latitude < -90 || latitude > 90
+    || longitude < -180 || longitude > 180
+  ) {
+    throw new Error(`Le point de référence de ${passage.city?.name ?? passage.passageIndex} est invalide.`);
+  }
+  return { latitude, longitude };
+}
+
+function boundaryCandidate(source, passage, side) {
+  const city = passageCityPoint(passage);
+  const segment = side === 'start' ? source.segments[0] : source.segments.at(-1);
+  const pointIndex = side === 'start'
+    ? 0
+    : Math.max(0, segment.points.length - 2);
+  const fraction = side === 'end' && segment.points.length > 1 ? 1 : 0;
+  const projectedPointIndex = side === 'start' ? 0 : segment.points.length - 1;
+  const projected = segment.points[projectedPointIndex];
+  const candidate = {
+    trackIndex: segment.trackIndex,
+    segmentIndex: segment.segmentIndex,
+    pointIndex,
+    fraction,
+    chainageMetres: segment.pointChainages[projectedPointIndex],
+    projectedLatitude: projected.latitude,
+    projectedLongitude: projected.longitude,
+    distanceToCityMetres: distanceWgs84Metres(city, projected),
+    selectionDistanceMetres: 0,
+  };
+  return {
+    ...candidate,
+    candidateKey: candidateKey(source.sourceSha256, candidate),
+  };
+}
+
+function chainageCandidate(source, passage, rawChainageMetres) {
+  const city = passageCityPoint(passage);
+  const chainageMetres = finiteNumber(rawChainageMetres);
+  if (
+    chainageMetres === null
+    || chainageMetres < 0
+    || chainageMetres > source.distanceMetres
+  ) {
+    throw new Error(`Le chaînage contrôlé de ${passage.city?.name ?? passage.passageIndex} est invalide.`);
+  }
+
+  for (const segment of source.segments) {
+    const firstChainage = segment.pointChainages[0];
+    const lastPointIndex = segment.points.length - 1;
+    const lastChainage = segment.pointChainages[lastPointIndex];
+    if (chainageMetres < firstChainage || chainageMetres > lastChainage) continue;
+
+    if (segment.points.length === 1) {
+      const projected = segment.points[0];
+      const candidate = {
+        trackIndex: segment.trackIndex,
+        segmentIndex: segment.segmentIndex,
+        pointIndex: 0,
+        fraction: 0,
+        chainageMetres,
+        projectedLatitude: projected.latitude,
+        projectedLongitude: projected.longitude,
+        distanceToCityMetres: distanceWgs84Metres(city, projected),
+        selectionDistanceMetres: 0,
+      };
+      return { ...candidate, candidateKey: candidateKey(source.sourceSha256, candidate) };
+    }
+
+    for (let pointIndex = 0; pointIndex < lastPointIndex; pointIndex += 1) {
+      const edgeStart = segment.pointChainages[pointIndex];
+      const edgeEnd = segment.pointChainages[pointIndex + 1];
+      if (chainageMetres > edgeEnd) continue;
+      const edgeLength = edgeEnd - edgeStart;
+      const fraction = edgeLength === 0 ? 0 : (chainageMetres - edgeStart) / edgeLength;
+      const first = segment.points[pointIndex];
+      const second = segment.points[pointIndex + 1];
+      const projected = {
+        latitude: first.latitude + (second.latitude - first.latitude) * fraction,
+        longitude: first.longitude + (second.longitude - first.longitude) * fraction,
+      };
+      const candidate = {
+        trackIndex: segment.trackIndex,
+        segmentIndex: segment.segmentIndex,
+        pointIndex,
+        fraction,
+        chainageMetres,
+        projectedLatitude: projected.latitude,
+        projectedLongitude: projected.longitude,
+        distanceToCityMetres: distanceWgs84Metres(city, projected),
+        selectionDistanceMetres: 0,
+      };
+      return { ...candidate, candidateKey: candidateKey(source.sourceSha256, candidate) };
+    }
+  }
+
+  throw new Error(`Le chaînage contrôlé de ${passage.city?.name ?? passage.passageIndex} ne désigne aucun segment.`);
+}
+
+function passageCandidates(source, passage) {
+  const city = passageCityPoint(passage);
+  const reference = passageReferencePoint(passage, city);
   const candidates = [];
 
   for (const segment of source.segments) {
@@ -236,6 +344,7 @@ function passageCandidates(source, passage) {
         projectedLatitude: only.latitude,
         projectedLongitude: only.longitude,
         distanceToCityMetres: distanceWgs84Metres(city, only),
+        selectionDistanceMetres: distanceWgs84Metres(reference, only),
       });
       continue;
     }
@@ -243,7 +352,7 @@ function passageCandidates(source, passage) {
     for (let pointIndex = 0; pointIndex < segment.points.length - 1; pointIndex += 1) {
       const first = segment.points[pointIndex];
       const second = segment.points[pointIndex + 1];
-      const projection = projectOnEdge(city, first, second);
+      const projection = projectOnEdge(reference, first, second);
       const projected = {
         latitude: projection.projectedLatitude,
         longitude: projection.projectedLongitude,
@@ -258,12 +367,13 @@ function passageCandidates(source, passage) {
         projectedLatitude: projection.projectedLatitude,
         projectedLongitude: projection.projectedLongitude,
         distanceToCityMetres: distanceWgs84Metres(city, projected),
+        selectionDistanceMetres: distanceWgs84Metres(reference, projected),
       });
     }
   }
 
   const orderedByDistance = candidates.sort((first, second) => (
-    first.distanceToCityMetres - second.distanceToCityMetres
+    first.selectionDistanceMetres - second.selectionDistanceMetres
     || first.chainageMetres - second.chainageMetres
   ));
   const geographicallyDistinct = [];
@@ -297,7 +407,7 @@ function passageCandidates(source, passage) {
 function chooseOrderedCandidates(candidateSets) {
   const costs = [];
   const previousIndexes = [];
-  costs[0] = candidateSets[0].map((candidate) => candidate.distanceToCityMetres);
+  costs[0] = candidateSets[0].map((candidate) => candidate.selectionDistanceMetres);
   previousIndexes[0] = candidateSets[0].map(() => -1);
 
   for (let passageIndex = 1; passageIndex < candidateSets.length; passageIndex += 1) {
@@ -306,7 +416,8 @@ function chooseOrderedCandidates(candidateSets) {
     candidateSets[passageIndex].forEach((candidate, candidateIndex) => {
       candidateSets[passageIndex - 1].forEach((previous, previousIndex) => {
         if (previous.chainageMetres + ORDER_EPSILON_METRES > candidate.chainageMetres) return;
-        const nextCost = costs[passageIndex - 1][previousIndex] + candidate.distanceToCityMetres;
+        const nextCost = costs[passageIndex - 1][previousIndex]
+          + candidate.selectionDistanceMetres;
         if (nextCost < costs[passageIndex][candidateIndex]) {
           costs[passageIndex][candidateIndex] = nextCost;
           previousIndexes[passageIndex][candidateIndex] = previousIndex;
@@ -331,19 +442,47 @@ function chooseOrderedCandidates(candidateSets) {
   return selected;
 }
 
+function reviewCandidates(selected, candidates) {
+  const reviewed = [selected];
+  for (const candidate of candidates) {
+    if (candidate.candidateKey === selected.candidateKey) continue;
+    if (reviewed.every((item) => (
+      Math.abs(item.chainageMetres - candidate.chainageMetres)
+        >= MINIMUM_CANDIDATE_SEPARATION_METRES
+    ))) {
+      reviewed.push(candidate);
+      if (reviewed.length === 8) break;
+    }
+  }
+  return reviewed;
+}
+
 function proposeOrderedAnchors({ bytes, source, passages }) {
   if (!Array.isArray(passages) || passages.length < 2) {
     throw new Error('Au moins deux passages ordonnés sont requis.');
   }
   const parsedSource = source ?? parseOfficialGpxBytes(bytes);
-  const candidateSets = passages.map((passage) => passageCandidates(parsedSource, passage));
+  const candidateSets = passages.map((passage, index) => {
+    if (index === 0) return [boundaryCandidate(parsedSource, passage, 'start')];
+    if (index === passages.length - 1) {
+      return [boundaryCandidate(parsedSource, passage, 'end')];
+    }
+    if (passage.chainageHintMetres !== undefined) {
+      return [chainageCandidate(parsedSource, passage, passage.chainageHintMetres)];
+    }
+    return passageCandidates(parsedSource, passage);
+  });
   const selected = chooseOrderedCandidates(candidateSets);
   const anchors = selected.map((candidate, index) => {
     const ambiguityReasons = [];
-    if (candidate.distanceToCityMetres > 1000) ambiguityReasons.push('distance_to_city_over_1000m');
-    if (candidateSets[index].some((alternative) => (
+    const isBoundary = index === 0 || index === passages.length - 1;
+    if (!isBoundary && candidate.distanceToCityMetres > 1000) {
+      ambiguityReasons.push('distance_to_city_over_1000m');
+    }
+    if (!isBoundary && candidateSets[index].some((alternative) => (
       alternative.candidateKey !== candidate.candidateKey
-      && alternative.distanceToCityMetres <= candidate.distanceToCityMetres + AMBIGUOUS_DISTANCE_DELTA_METRES
+      && alternative.selectionDistanceMetres
+        <= candidate.selectionDistanceMetres + AMBIGUOUS_DISTANCE_DELTA_METRES
       && Math.abs(alternative.chainageMetres - candidate.chainageMetres)
         >= AMBIGUOUS_CHAINAGE_DELTA_METRES
     ))) {
@@ -365,10 +504,7 @@ function proposeOrderedAnchors({ bytes, source, passages }) {
       algorithmVersion: ALGORITHM_VERSION,
       candidateKey: candidate.candidateKey,
       ambiguityReasons,
-      candidates: [
-        candidate,
-        ...candidateSets[index].filter((item) => item.candidateKey !== candidate.candidateKey),
-      ].slice(0, 8),
+      candidates: reviewCandidates(candidate, candidateSets[index]),
     };
   });
 

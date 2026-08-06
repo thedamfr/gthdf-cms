@@ -1,0 +1,3781 @@
+{
+  "version": 1,
+  "anchors": [
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 0,
+      "candidateKey": "6b0adb9d438c098ee076d2f490f255806e9101a52a2370d4dc6afe2cc545e56e",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 1,
+      "candidateKey": "a66b813ff1984bffc803c73f3a99302048818941b419894f6db8506c7fe81887",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 2,
+      "candidateKey": "406d630768851fad048b542cd84f3bc5556b8fb46d06e81e98cf6b8b7519157d",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 3,
+      "candidateKey": "8378527548e6619ea35fe08798a59b39c494a76268bde933658fd5e1afe9853a",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 4,
+      "candidateKey": "6f0c3beecfd7d2b0c9f2347fbdddb6a60948c8b8b45e3c4b57cf30a42b335ba8",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 5,
+      "candidateKey": "816b5a4abac018feb829bc3a35211ceeb2dba0f2ef9e8d2b65705ef9473aa91b",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 6,
+      "candidateKey": "0eabadf34b71d30b0c0b7917b291cb44c2ba599eaa6511c76382d6cdea1e362f",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (7 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 7,
+      "candidateKey": "1bfcd73969a846964e6e3a77ab9b3cc357167e867ee215e74108b142142d12eb",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 8,
+      "candidateKey": "22a0cd7c96e353a855102788e05fa93f065ef1baeebf69f761a488edbf5be66a",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (4 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 9,
+      "candidateKey": "738cf4a94f4f1048a1a248450ba2fe6a6bc45186dd2c6a814681118dad5cbce6",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 10,
+      "candidateKey": "8349b893ed1d18022611688fd1e8fbb1efdb7564afa87d675d4dec116cd6f442",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 11,
+      "candidateKey": "ccf88edaddb0a90faebf50c7c2d8b0a829d6b60bc7246fc02ec7cc71535b51b2",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 12,
+      "candidateKey": "6de293923df3125a8aac7390a0d2ea6474b20823279b1c8cce085bb9d6da3b73",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 13,
+      "candidateKey": "ce17c79230a72832811f4213dbfb5e92b5ca365cc5d0cc3aa719317df8f037eb",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 14,
+      "candidateKey": "68f4f57fd123ebb7c62590c880f591d966d09de678a89096b07b3d9e2b11fdc6",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 15,
+      "candidateKey": "86c65eb08e7e295b8a43e78eec3d52a0a417827ffb0622cde569db3b54713698",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 16,
+      "candidateKey": "bb20cbe5377ea095f9129ec9962f77798d201c78b79ae24578e34be9f9fd9ca9",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 17,
+      "candidateKey": "6c260a1d7bc4ec841319412ea5bf995ef5fc28795f60b496cac7ada1752a9d06",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 18,
+      "candidateKey": "4620869e7eab5478d2c9d4c243ec2a06e41cdebb9d05507f6d18552e12cff443",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 19,
+      "candidateKey": "35e6559f7f4e2b046f3e5bf665abac40c7e3cc80c903f52ed29604641b436761",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (5 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 20,
+      "candidateKey": "a4ca66471b348de6137a1cba53550957229c28ebc1f004c433d3b049b865b5b9",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 21,
+      "candidateKey": "45a5ef3272bc6afb07f9de6dcd8809453a06b05a0d55860febd8f79e58984f3d",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 22,
+      "candidateKey": "242939a5938ab706b0876af4fbb5b88a8a5318c85188d1ad3aacb155058dd412",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 23,
+      "candidateKey": "cbb5e87ace79e207263083e546e25e7ff0b7d918e41aa668f04f4830ad6bb1be",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 24,
+      "candidateKey": "b5b6125f443fec299642ed36dfc9e0a3af7db86b1e081dedb72ffa281c1717b9",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 25,
+      "candidateKey": "0bbb8ceca2b7070b92ecc6a45b788cb433ef3ed0d2f04cd627bef53edfdd7a3d",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 26,
+      "candidateKey": "b1cd59e9e5959f63e7f2b2265cda53456f43ddca6b0149c2446592ca597c4e1a",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 27,
+      "candidateKey": "80d72b57889734fb752f46f0a2bccd4f313cb87ff513a31cbe3df5c3d89bbf8a",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 28,
+      "candidateKey": "111c053511ecf8b1388fd8996dc54c9199968f33c1192127f252c7b22a88779d",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 29,
+      "candidateKey": "0e426376b719eabe6d23d6ed101b33eeb5d312ffb5742ade670ed8dd9dcaa0b5",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 30,
+      "candidateKey": "28274965d6b669c2824deb41300e141b01578af2a23c8a0e3bd547c927e49270",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 31,
+      "candidateKey": "10a724e22fb7dd0b34b4a0d64839f64d48ab86607ee2bc48b42ee3c295b3ff73",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (6 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 32,
+      "candidateKey": "340aea0609da412faf62a870291a1e89a0bfdba438431d8b9b1ab2bb5a1782bc",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 33,
+      "candidateKey": "7aae0be3fe72fc84a78b68f6bf71be698377d88b3e326f346e3b32af76de87a1",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 34,
+      "candidateKey": "fc7a82b8249789d912287970d9dfafc4736e4aa625820ec4cd83b15119493dd1",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 35,
+      "candidateKey": "ebf4eb231d75300d534a9249cc26a43309b6d503ad6ee43c8cc4a7bc1e92cb5a",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 36,
+      "candidateKey": "0e07727ad1607ecb2e6814b653bfb78874a63363a0846ea27730a223b7ca7169",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 37,
+      "candidateKey": "0fb52e0b463e6b26814f36a08cf76b361943856a762e60a33cb72b7f6a3b3993",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "AB",
+      "passageIndex": 38,
+      "candidateKey": "73288938050f1ae54468cccb69a442f1ca4db447c849ce359f7473b41caf8db8",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 38,
+      "candidateKey": "03d0990bf0efd8b3b7668a81441123e952dd0c91c7a76c13fda717b96bd14735",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 37,
+      "candidateKey": "3931aa5b7ca33c36d3572ad1117cf11409a463d83dc2298056e30fe410442496",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 36,
+      "candidateKey": "325ecf639d183e3509f92a70e20fcc7e34ebca1b83e7bb8daaa4bb525abc98f8",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 35,
+      "candidateKey": "9a3f503805c015266b4cd09045fde922b5c4a9d5846cff5a38f4813b46d66836",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 34,
+      "candidateKey": "2a14233feb84f2299ba2b2bdc79bbecc6d59efbfc87dca3316e854aee8381c40",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA de Marœuil la plus proche de l’arrêt AB contrôlé ; cohérence de chaînage inverse vérifiée."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 33,
+      "candidateKey": "0eebc975813ec3cf1ccdcfc09a753fe0d5bcb55276f58f4768248403d590516e",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 32,
+      "candidateKey": "e3978cef91a174c1dd8d578623a0fc7761568aa2f33228aa279216ed8c6dbece",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 31,
+      "candidateKey": "a5caee2dc0feb7c66ccc36e75a04b3909e202ebb3751f073f21b37407467bae4",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 30,
+      "candidateKey": "85fe1288c03eced4dd37597edb837941dfde650d156bb68e89cc21a504cadb93",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 29,
+      "candidateKey": "492da1d148eb9c163c0ce4b421d4b791d30c99f10c8ded922909fc14d36360ca",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 28,
+      "candidateKey": "2d3bc886489ab955e9eef07b9a52d8e50a22f9dcd93ea148bd46b69a2bb96b34",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 27,
+      "candidateKey": "ec01ec46febd618bbb91f10b1c1f3e06cb27f299b370f8cf11e4ad5d96960f63",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 26,
+      "candidateKey": "93d7dfca30cef9d3d2c8af1f11fb84d906ffe422bb7a1bc6a8c9243748cd3280",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 25,
+      "candidateKey": "ed9cd19f1945515a264e72787bca1378e4ec2492e98d3e0418f3b88bc4bb4c37",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 24,
+      "candidateKey": "0af6eeb7777b02f2301e15b237791586b149c621f0b208987cec9f17390c04dd",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 23,
+      "candidateKey": "4252559d8db516e1e73677e2034a99dae9457d93be7c46579ba4aabd6c0c5d3c",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 22,
+      "candidateKey": "985c588f95221a0457a8b02596f8e9258e9f524a91ef23a0abb0460634acc319",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 21,
+      "candidateKey": "aa8e1d327cdccaab75433c62e3ca37386c8a75841aa761f6becfd4bf00ef532a",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 20,
+      "candidateKey": "2d0d90b19077f635bf39bc4509f28daff875aa835298dbd08d25c2e4fcc368ed",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 19,
+      "candidateKey": "a25665975f2cef91c92ea9d60eb2076182a4aae8ebf7cf477ec32880c035a868",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 18,
+      "candidateKey": "a58d344f9245b162edc6f0be6175c2cb6264cb36df2a16d987b4f10513410ff7",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 17,
+      "candidateKey": "07cceff02c7d3a961c2cb45681368cfb60a0e1fade5e60d906d098129c731928",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 16,
+      "candidateKey": "b5a4f92d4bbfbbc5cffe45643ea6a8e71d87480157712368782cd9c09bc330cc",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 15,
+      "candidateKey": "9c21f3ade9ad98c434740c6e56d42c01b189e7875e4796abbb1bfe4a998e9498",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 14,
+      "candidateKey": "b98bcd9e40b43df9405938e9608de0b62c4b3331ce4b051951bed60781adaac8",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 13,
+      "candidateKey": "71a42950cbecdd86e96bf99888eecbd47942b087e33ac706c372509814596321",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 105 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 12,
+      "candidateKey": "38b9649a63c806cfb15aaf97faa861556b98b7502eae0b95c0b2bb60da44172e",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 11,
+      "candidateKey": "400dde7450619a64e85a9833c0d09484453d80fd7024947d57239933fc992ad3",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 10,
+      "candidateKey": "c30a81a48c27d01519fe6b55056cd1ffabd06fd602661aa7f190e5bcfa5d5b5e",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 11 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 9,
+      "candidateKey": "67dd902fcfcf9b74aeb978872acae0055d98d890089b9a0b5a5337c2776fb692",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 8,
+      "candidateKey": "84250983764dcd5c30a7f15441ac104832d85794385e3c42237bb175efe33000",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 7,
+      "candidateKey": "cb14c601bf4f7ae4ae21f0db516da9c9d9c978fbc7dc2f584f3c6963b8cb4a58",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 6,
+      "candidateKey": "0853c3c46d6a00ec370843bb085b9cf748315e58614178a1ef669f0137287f97",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 5,
+      "candidateKey": "2edc609ad4fa00d339e4a591465dcf342896d25f27f043396ea906c2d7ac1c2f",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 4,
+      "candidateKey": "274a2ea69c60b2650c303a21d53176128c5cba8f553398b988b1e83f5b5178a6",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 3,
+      "candidateKey": "7c533c535eea4f8f6e470ba92312c17e413c25b24e8820b9b3bff7ff799cfe57",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 2,
+      "candidateKey": "2b2d072440542232d47d37c943254c4e9f396b828b83a6ea9f2473551110a8fc",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 36 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 1,
+      "candidateKey": "4c0079e15771d7e2a2612b324e6b76f17d7c31ae8050af73a5a97da5ae8ad90e",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 35 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "lille-a-arras",
+      "direction": "BA",
+      "passageIndex": 0,
+      "candidateKey": "2a73d6176e342bc76fcc37ffbf15edebaffd82897303f6c3ad7e18bf77f4fd2d",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 0,
+      "candidateKey": "5dbbd1988db9205aa4eaffd742dbee50badec498af50a03ce6b70b7492e88aba",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 1,
+      "candidateKey": "3dc42baa7b9816dd99830cd831a9e3248be443b4566d7a70ead5cd1224526939",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 2,
+      "candidateKey": "6f2881a3390a38df38d74ca6fa9ec7cdfc3a8112b9c5b99367b5dfa273cf4be3",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 3,
+      "candidateKey": "241048477407c6c83af22d9cbb3b30dd4148214f6118bd685b9fb32287ae9112",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 4,
+      "candidateKey": "80cd7d29c4cd90f711da5d55e219477b049010dfe0e4de4357817608cc682391",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 5,
+      "candidateKey": "0b0e9e4432526b87839971c36a127e4f3ad5210b3125bf8167d6e4fe1094c91d",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 6,
+      "candidateKey": "c4875f05207b0aa3e4ee484518340467ab23a12cfc04c5992fc6bf5123c9fbbe",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 7,
+      "candidateKey": "92bf7c6ce331bee48f9009642c8d94a3bd5a8c435f9db74ecf1a1202b8b24dde",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 8,
+      "candidateKey": "5e28039b2e8cf409d3538260a0af7b8e29da0bfc399919b6eb675a8d96fd4c3f",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 9,
+      "candidateKey": "ee72324ab8943139fd0255346842182caad068f37ebfd430214322851f177894",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 10,
+      "candidateKey": "7953fafd5b5dc9e5d7b6e18947c02a8d225deab42e68fc98f4a8678408d840e5",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (7 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 11,
+      "candidateKey": "7ab4af225cf45ddd1a22b00675c36b356cc65c64c003973e2f534a808f834a51",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 12,
+      "candidateKey": "ecb1973b9e6c0fbe56efbf4b111c8830458700290ac5676f2435f9a7e091330b",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 13,
+      "candidateKey": "4e02b3a886185175662555b764e740c7034d79d057a5da630e98b67cc1fb9747",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 14,
+      "candidateKey": "62ab535e7dc283766a38ec9b467c10c0e69949ed0054cb61481e6e9cb258def7",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 15,
+      "candidateKey": "00579e753001c370cd8f827d8eb267c220554400520258ee4e1bddbc45e7f7d7",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 16,
+      "candidateKey": "d52f42d65716a82186ee2a0b4fc84ebcd7def23d546b0fea4fdf9eec53c322ab",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 17,
+      "candidateKey": "754606e96089bb620ce639bd4cdda7a57bf79410424b416fa64d1075d583e905",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 18,
+      "candidateKey": "b738f370c63a1f4723b83068b40ea66c69b8de86b3b6107a71b9c9f6786f5a99",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 19,
+      "candidateKey": "fdcab153858b52881047d2ce62f5303da2aee735e3e7370028a74738ff4ed673",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (6 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 20,
+      "candidateKey": "5a5ed1ae580c0e45a5d22be335eee5bdc334ee42b352ea34d8557ca07aa9924e",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (5 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 21,
+      "candidateKey": "a079c683878cf90e6fdfddffef9a8bb24a18799b0d92db20edc401773a396a09",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "AB",
+      "passageIndex": 22,
+      "candidateKey": "74c461362d13fdd2884df60e232b9cf084e98f3f7c15dad5955b0267bf314ae5",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 22,
+      "candidateKey": "19285dc8857c20f7b2a7505e77a7442f1e8b485f646a1847c226b6de3d64c13b",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 21,
+      "candidateKey": "4e05a9da1ef3f48af52c6c53e752e55dcd9410f6e5258cded5b0f8681be99d4d",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 20,
+      "candidateKey": "36eb500a0661b17d64cca5d340a5ba4bf1da6e0f5734a38a87bc0e69a81326ae",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 19,
+      "candidateKey": "fd1084a3a24ff6f2fd9f0d033dc680441147b52ea450a5e9099dd022a9c623e3",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 18,
+      "candidateKey": "1e88b48fda07cf3f660a7be554c5ecce4fa6c082d15c963d1c80f55b6f48162f",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 17,
+      "candidateKey": "63a6daf5d88a90183f6b6646a6126b15a044f6969cb655b832a6f1b9d33d72ad",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 16,
+      "candidateKey": "588e47b0eb927e7865fa1fabf4cb4bc1f5ec2fee2d47a8c9aaae11477e35688f",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 15,
+      "candidateKey": "c53e4d438af7bb1888d588044f19208be4778793805881393fd3aaf9f0248e00",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 14,
+      "candidateKey": "601ca31f3b75429b5ac03873ebf9ff30fdbc2ee0c6dd8ff66ccec75600c80874",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 13,
+      "candidateKey": "1919c58c79687d3a3b4643a05489fe5f3c24a4a7ef714a926ac7b10bd6d10770",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 7 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 12,
+      "candidateKey": "b0d99b4057938d8d7fbc6da332d3981775a76ba8040c53fa438a243c9f4a535c",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 22 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 11,
+      "candidateKey": "122cd4697a146f7001cc1c32e703b6cf64650989ea79f87bac92ef5ab6118258",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 10,
+      "candidateKey": "6a9bde9e9bfabf5a46e56da1e32b281a919f980d30601999e3e4d0cd47dcd8a6",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 9,
+      "candidateKey": "9dc400a0d8151d1248ccbe000043d07f406d6f638f948a248f2c3829b4fd3ad7",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 8,
+      "candidateKey": "113aa6e68f450285376b836f9a5f802dd23f785fd40d9498d8427a847fe24d70",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 7,
+      "candidateKey": "7ff5d93ec11e453bbfac1a3e68fecd72cc4225fdabe46d80ad7275c742b6a47d",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 6,
+      "candidateKey": "60ab7d564a16f8859268b1e11f8e31ffb76ca96cef24f2d3f1bd89fda4cc1b8d",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 5,
+      "candidateKey": "67fe1b431ac346acbf78a0d7ec27f67ce745e8f821574e8c615706d87d3e5454",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 4,
+      "candidateKey": "d6d2f9ec1835eedc69561603f73556ff1f565f2c1215e4e11624960d886982e4",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 3,
+      "candidateKey": "966edfccab45e744eac12d7a9efa615851451be1ee28a80858fb7802311e3ae5",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 2,
+      "candidateKey": "2901efa3a3b1d7fcc3b0e7d081c9fcb0f527b791021eb1e77aa3e292d013ae2b",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 1,
+      "candidateKey": "cc7135a896c9038bec4fc6247d56fa90b36a23c72a565300bb24af874429af10",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "arras-a-conde-sur-l-escaut",
+      "direction": "BA",
+      "passageIndex": 0,
+      "candidateKey": "af9b046d424e1fd75ce6f3335f060e5fff3c00835a2e8a39ab4a3067d5722adf",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 0,
+      "candidateKey": "56c7f5bd7f36d853360c9b06a2f08048dcfb8c43742c3d29206ad36616cf7192",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 1,
+      "candidateKey": "9a95d1fae5cd8389482657abc613933415030b09204de973a99b28b39d38f04c",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 2,
+      "candidateKey": "eaf8d6e33bf0f38c7e1199b2b2bd6da79489050e59e3b4eeeac19223bac94076",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 3,
+      "candidateKey": "70625f50bbbc045ab667299089291a5e454c066262004a0ce9cce735805f5950",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 4,
+      "candidateKey": "b3904d645ed6c44561193fbaa70c8fc78ef6eb0aad9848c4a18b5b3716d5dd72",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 5,
+      "candidateKey": "ed0e8058517671088fe65e3ced794b2a07afa896ad885bfda1bf13b25d58a549",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 6,
+      "candidateKey": "9c39035192863b3c1969e9f7824d6220555d6d13e11d52580591ddb2c7a28d25",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 7,
+      "candidateKey": "e84f1d15c195ab9c08041d4734f94b442127413484ff1178a42e8765ca00df78",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 8,
+      "candidateKey": "bc528b3c5b02e6fd814eb5a05e37738c43d94ff480a76af06227899e652c7a1d",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 9,
+      "candidateKey": "6de81b73a083ed38eb483a37ea1d3f8aac4a46c26b78424cd091bc873f9348e8",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 10,
+      "candidateKey": "3bb8c2a24fa3eeae7cb31023bb486c880c37372c739021822d77817a34b12bd9",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 11,
+      "candidateKey": "c2fdd896cbb2affce111b52de7ad7658ac5ac816ba3b748af9a5e73fc3ce8888",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 12,
+      "candidateKey": "1dd80004212088f2e95e88d70ce22b946c6a67548c3e30ebc456d565e20f5f3a",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 13,
+      "candidateKey": "b2604a2dacfc4e02d8cfd72976f43d09c3d5d4c2d79f2bbd0a14ac87844d86cb",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 14,
+      "candidateKey": "aafbd1605b48daad3c6008f7f91de1122856fd8a266b81e7ccc81e6b6203151c",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (4 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 15,
+      "candidateKey": "e81722cee0fd888588e3baa77feb494d7bc30bdc0589b3fa7a668eda33850f36",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (6 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 16,
+      "candidateKey": "238f515c26a72d6b07569fd26598bd78e8d8f0b760663e84f2a04d4b943a96a8",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 17,
+      "candidateKey": "826f0cf6ab174a02f6e41863afbaf38af67cae6196f24bbd0796f3ff6254933d",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 18,
+      "candidateKey": "03cd7c8f0446ea7a7d86fe61d35c9e515c1c5e346684c6711001d09d68282f6c",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 19,
+      "candidateKey": "4dcbbf2aeb5ec5d1488318b4d110a91c83d19ca4cde6ce5fcaaf6d9eccaef8b9",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (6 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 20,
+      "candidateKey": "1cbc313e5f9669a695c64873b215814ca986df744b51c5611d5461414bcc3ccd",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 21,
+      "candidateKey": "a18b4a58f3a135ac75084b5dd7db352fbebb027e31abbf31189bb20d7b0c57b2",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 22,
+      "candidateKey": "858e10417d8dfe41b4d38358837cd0804eae64c744ce9573413d503752b42369",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "AB",
+      "passageIndex": 23,
+      "candidateKey": "cd4c99792d49ff7ed9f8e3513c4f601e7b8cb555ef115d66aa7499397d6cdd82",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 23,
+      "candidateKey": "758e22211f027ed31b481cf27e138fe44aebfd8c40bf0088a98ae8c260d96126",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 22,
+      "candidateKey": "81eddaf76c0a9d3e7d3c1695115ae5a45b0afc2c41cd59190d6d1e24a9e80c93",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 21,
+      "candidateKey": "0193d830e75ae72139222127efff3d995e8f2d3804ddb27643a59b8c4f47eee9",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 20,
+      "candidateKey": "86397757fe27bd3f9751c8d607daa12db96d9ca3d53e34ea362f22ef3d8f76a3",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 19,
+      "candidateKey": "1574dcf2ddb2cb4a60e407023fd4208432192e1fe9f2703d730ad6be16f9c08c",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 18,
+      "candidateKey": "2d123158cbcbbb13d50a55ef376dfb501b29e05218af18a829b02321709a826a",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 95 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 17,
+      "candidateKey": "66549fe81a6a5cdc2b7c579594b8e9c21f789ae5121a6ecaa72dd8645d80e11e",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 16,
+      "candidateKey": "56b52c18615acf65a99f4086f88e277de0b0c0b1b857c710170b2cef56bb68a1",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 15,
+      "candidateKey": "3ada334c9b4d210f6f43ccba223037cc56a1aaa97ca520f49664782988467407",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 14,
+      "candidateKey": "865180351aa4681023bded6f32bfa6356c7ff2c9628f4bcb01c9dbd3b11fff50",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 13,
+      "candidateKey": "34f12da416cbceb7fd66909d2584226e536217f52cd7b509eae97ad64d4ba744",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 69 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 12,
+      "candidateKey": "c595ed0dfa195f05bbde833f34be59e90bdd7ff8eee62ff1ec1e33b0810a383f",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA d’Avesnes-sur-Helpe la plus proche de l’arrêt AB contrôlé ; ordre avec les passages voisins vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 11,
+      "candidateKey": "b3cd657b6699e763fd6d70c6cc9edd876a01148cbfb2a708ad24be18371a5571",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 1 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 10,
+      "candidateKey": "7ee2184f2b2afeeadae83ca1ac1d062ec9d04bf46cec120038f93477cb403249",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 1 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 9,
+      "candidateKey": "c605a22bd8577ece7009689f2f6e95367529ae097d187badccf48f5f5563b79a",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 8,
+      "candidateKey": "748064d95a12a8a39068267d6c033c32858f892d2283ba71a9f9dda5d8a73eb3",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 8 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 7,
+      "candidateKey": "3b330502d92e4c25792a392855748da925af5de6b6ada3967f16f73ef25764e6",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 174 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 6,
+      "candidateKey": "afcc222a91bf0636982a49559c6ccd8bb3d3302ec8374df6d96c4e6665922e9c",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 5,
+      "candidateKey": "8066f86a2e5faf99fe1f4e4f039074afe707676fe9f815d40a1e8abde43ad9a2",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 4,
+      "candidateKey": "554432ca818f83c6f3fff4f51d2cee2fb235f3a4ec42c5bafa06746f54e51553",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 3,
+      "candidateKey": "9e1b2466f4e233bf3c4087f12be8772d3d5d9224e800aa595bb438993d3cc611",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 2,
+      "candidateKey": "781c542ce76fe45eebec5b8932b42532ef0b196193e49396e3bb6bf55b1e6d9f",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 1,
+      "candidateKey": "cd01782c61ebd5aaee8fe3023d6be359a34554164dbf890e77a662c2de3babf8",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "conde-sur-l-escaut-a-hirson",
+      "direction": "BA",
+      "passageIndex": 0,
+      "candidateKey": "c5867b619cf2a1ceec6f467f9a8d95a730e5d3f4f9dc36b116431604951be187",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "AB",
+      "passageIndex": 0,
+      "candidateKey": "61726d34432626469be5f36988c4316bd298dfb6de9b58a58c75e20e1860dd18",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "AB",
+      "passageIndex": 1,
+      "candidateKey": "196f21d41de38b24372dc347e655cbd4fb59cefaba49ee4b9bb36f0a1912b991",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "AB",
+      "passageIndex": 2,
+      "candidateKey": "3e2752c3424af7ac8c547a5958be5e2dcba7546eded1ef541e55ebdb0da6a7f0",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "AB",
+      "passageIndex": 3,
+      "candidateKey": "36a8a244625ce11be0d137200055488d22f9aa68056fe0e687df7699bdb7242c",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "AB",
+      "passageIndex": 4,
+      "candidateKey": "91b6bdb0f92f8b245ad4135dfc5b1a805d9fc445fd193a4714c9b6f49d3ab5a1",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "AB",
+      "passageIndex": 5,
+      "candidateKey": "7a9ddf7fc5fc951a7ae639150ea9c89793982275d7b7218f2506a3b83d9c95d3",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "AB",
+      "passageIndex": 6,
+      "candidateKey": "d78211a4562e51a998ac7df170a7bc4a7beab7e802a8cc74dace0c2ef8f0ba3f",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "AB",
+      "passageIndex": 7,
+      "candidateKey": "3aef8f3cef87e7208602beb516c768ffde3e846f88289685c7a91b3df1708ed4",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "AB",
+      "passageIndex": 8,
+      "candidateKey": "2a4b10c74ab7ccbc78f2114692a4ecc4274a9219ece59e873c74dba2a00888a7",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "AB",
+      "passageIndex": 9,
+      "candidateKey": "e14e5f6353386086efe6e1d06ff9dbd5b97c971abf442bba1534943cd73eba8c",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "AB",
+      "passageIndex": 10,
+      "candidateKey": "bbb54670496d96bc42d8b3223acc6df896219dc28aac966986f12fcc5629ec8f",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "AB",
+      "passageIndex": 11,
+      "candidateKey": "46bb3bc4fa2c03f35766c27a9e3c52cb9bf511d4eaf52a4acb93d0d94d9908eb",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "AB",
+      "passageIndex": 12,
+      "candidateKey": "21072bf0842fec78c05e37337e7fd3bf082621c99c0584811384a95be4a65110",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "AB",
+      "passageIndex": 13,
+      "candidateKey": "403356a8ba95049d92a7d8862b854d0154a04f83dff7f843682806646be69393",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (4 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "AB",
+      "passageIndex": 14,
+      "candidateKey": "1c784c3f7230e2e01dd1a9605d6ceb95dcf42cc60fda301c8957a62b63683800",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "AB",
+      "passageIndex": 15,
+      "candidateKey": "60e4d42b6e75951a8a8ff255080f86e5e74b6daa1111ce6b4edaf97f9a82a293",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (4 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "AB",
+      "passageIndex": 16,
+      "candidateKey": "104e282a6b5777fe41372ae581c7b220013cef9f30fdd09b3033d13a64801450",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (4 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "AB",
+      "passageIndex": 17,
+      "candidateKey": "89a080cd1db7e274fd1c7a41ebb2e399c9030f9eecd0683bde05edf0089e8b4c",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "BA",
+      "passageIndex": 17,
+      "candidateKey": "7ed57ccfc622198ca2211bef1eece31c6f3ae2a369631f91eebb801892890b4c",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "BA",
+      "passageIndex": 16,
+      "candidateKey": "2219eefe33d7e1ad85b8e0a2045bddf50ba6f5c05653b56fbff8d467c59dd841",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "BA",
+      "passageIndex": 15,
+      "candidateKey": "f9cafe8c496b79cb9ade54e172905f30fcc6e1079e105956ff7c8057b035b34a",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "BA",
+      "passageIndex": 14,
+      "candidateKey": "f5cc45a8806c4d4ef52e26e8177ca6cb486f8efede7a3b7eed738e05552fa563",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "BA",
+      "passageIndex": 13,
+      "candidateKey": "56efc395ea5bdf13f6e188c3d77a400b556288a8829e009c0ddf997a089a238a",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "BA",
+      "passageIndex": 12,
+      "candidateKey": "24958f3dceac18f85ef1d383bd881aab5a00e67dd2ed89c4463b668a643fa8fc",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "BA",
+      "passageIndex": 11,
+      "candidateKey": "bcae7092daa054c1569eeb334003d6d82f668fa3f294ecca2b68af988407732b",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "BA",
+      "passageIndex": 10,
+      "candidateKey": "e5622a9e067da132d37897cfe4b8113d142fb03b85276ba0671c5699cbd9f390",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "BA",
+      "passageIndex": 9,
+      "candidateKey": "908c874aa24a0148bf2f73e9952530f2ad67ca1e8585757ea7c73a8d14952a79",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "BA",
+      "passageIndex": 8,
+      "candidateKey": "12660bcbf6779b622de38f4148fa7fc6bd761c8ce4ba539fa642ae3cdd9761fa",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "BA",
+      "passageIndex": 7,
+      "candidateKey": "4d5ce3cd9ef08820b55f8303f2b8d155ebb64852f2a35b521e74c47745f6e497",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "BA",
+      "passageIndex": 6,
+      "candidateKey": "4bf2617f6cce0f701bc72ce669831c397a6fcce5be8d81710646b061c9eec985",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "BA",
+      "passageIndex": 5,
+      "candidateKey": "0e356c74d27e1f968f762c6f000184658d9ca3b4223676c603d7011a08eb7435",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "BA",
+      "passageIndex": 4,
+      "candidateKey": "62f9f5488fa4ea87e50c7d220c18166b0fe48ec2748495b431c1b8e4edc5be08",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "BA",
+      "passageIndex": 3,
+      "candidateKey": "fc24329de59e8c4e00945cc24ae0ad8a28e16809d3b34b9f2560f993b0d904a3",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "BA",
+      "passageIndex": 2,
+      "candidateKey": "a3aea8aebfe95a21e99889e8efd6791c009d5368f39ca5ba5b7d44ea69dc2812",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "BA",
+      "passageIndex": 1,
+      "candidateKey": "91de13fdf98bb9c299910208ef44ff9dd9d7ebb80d3d219f01724d8ea7b01060",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "hirson-a-soissons",
+      "direction": "BA",
+      "passageIndex": 0,
+      "candidateKey": "f2557756e10f306a5e38037bdea2fe616fbb55afe0c9c8d5471367d542496c3c",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 0,
+      "candidateKey": "37fe1663076e3b6c0fad0fb664a9b9baca90cd31a168f85d163dc87b66016af6",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 1,
+      "candidateKey": "9fae84f626d5c3964af59609358208a085909b5ff0905b42d9623d6529b3ff1a",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 2,
+      "candidateKey": "447d04be0c11e100f1408982c20ae36c84cd0c5b1a523fab9516b66fbafa4a76",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 3,
+      "candidateKey": "158f1e10432a5c3638b22e6a2cdd03892a3d5744bec2ffdcf77c5dce62abb716",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (5 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 4,
+      "candidateKey": "1014de89d45782a493ddb68343351237416f07669d75f40dd736ddb47613e7e0",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (5 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 5,
+      "candidateKey": "fbf44299136bcf571eebc5890f814cc75ffb3c458ab58733dd4ff19648a2f5a8",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 6,
+      "candidateKey": "86eacdc1e265e489089648b112684f5701c8243ac50acab96e69f45cfaf27e63",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (4 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 7,
+      "candidateKey": "a4170aa3e26e18875e61d505dd456173d294f8e78dea0a8e25107d73595344be",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (4 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 8,
+      "candidateKey": "8a1862119bae38bb3418be4a616ac9f0875eb22478b67e4d1497870a0c6e9e95",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 9,
+      "candidateKey": "2b5d33f38a2cc8f8d1c27d2c8d441130c27e2935314f7a5599e7a8bc15ba7ffd",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 10,
+      "candidateKey": "0ebf3b4663ce202f2ae2218b301b9bf2d31d047425f88e3e174416c5c5b62806",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 11,
+      "candidateKey": "2f27fd13b0f09ad981f3eab3304b70aa311f25c3ffa0e4881348215d1d5548b4",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 12,
+      "candidateKey": "c830deb63c57183c6b81b88230759133b785b045bb12e7333cf292ccdb759f25",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 13,
+      "candidateKey": "614c4cf036b4c9dfbe44128c07c17a7cd29bbef61f429743aeaa757f4011f266",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 14,
+      "candidateKey": "09efbc985fc0ec69fd37f8eec90eef4c52150b5cf0595c21bf3df85354b991e3",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 15,
+      "candidateKey": "b771c902d87363822f0201f5194b926bb50c6da71e72eebbe824bd2ee938ee79",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 16,
+      "candidateKey": "fae9391cb763b8aa25e69ccdead6ea800248aff0d2769aab83552d6f0783f33d",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 17,
+      "candidateKey": "fa90c81d3fd0b181629b87927c03071cac2f0604a16063664b62954fc044ccc9",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 18,
+      "candidateKey": "815ad595fd25349186f75c9db5dd931205780e43c5e56cb58b9c69d35e3d021b",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (4 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 19,
+      "candidateKey": "9150d9dabf8b4e90552bed021608c7af26e1ce28ec88818ec3dd7d83d3d9cfbd",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 20,
+      "candidateKey": "ba066f85cfa7e12caed42a147a7c4408aa4e1801dd036c8f2105b677c5614be3",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 21,
+      "candidateKey": "61694cd5f02846648edfa22ee7f27d6f46498552e2db0fa08114898ee564b0a7",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "AB",
+      "passageIndex": 22,
+      "candidateKey": "cf422d989263d3667d8943d7c997228ce88717413cb4f1df3304b06b3ea8afa5",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 22,
+      "candidateKey": "68d1bcc6e02696feb64c3bd7c7b2613cabcb2a728a6a1018948d08a140f335fa",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 21,
+      "candidateKey": "5e943aef1cf2ad0135fa25a545363325f46ed427d580fda6560262a24ac9ccca",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 20,
+      "candidateKey": "8c70ac83502a04d6d4da2f11a8f5b4418739ac19e88b679f4be0c81a7e84fe92",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 19,
+      "candidateKey": "f5db0ba430c24ab7d17baa7ba1f80ca0a51795dd96b3ee1cabae7ffd1203eea7",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 9 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 18,
+      "candidateKey": "38108c5cf6c85bd56454e1bbaa02ac6c6569e4479886b4618db1b4358c1ef3f0",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 17,
+      "candidateKey": "7ce3fa19c2e181336f6b0dd3b359a01fa66c14d2b4b504d350e8fa548acccca2",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 48 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 16,
+      "candidateKey": "22d5ed9e2caa10a4038534e4c0ad5a6444353bbf5546427f010a4dbab6ac7684",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 15,
+      "candidateKey": "0495bf09f35e79dbdf06fbc9fe4b3461af030dbf53b9f9aa365f7bd18772bcb3",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 14,
+      "candidateKey": "63c30c605f29003af09e5278152eb2ed0bd157fa4917e2b261c28885bbfb4cb6",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 13,
+      "candidateKey": "698b0cb6d8fc8242c0480bf33e4bfb7b62eed9111984c16d9d50209921555cb9",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 14 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 12,
+      "candidateKey": "2ebcb7630ea070a0f92bcbd32efd5cfb76559282972d58d13fe22d6388918202",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 11,
+      "candidateKey": "8ee27e4954fad43efca2a1717985145d6aa4beb66c3ecbeca1095238606effce",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 10,
+      "candidateKey": "af998a35643aad6351eca5381bd22e3d398d43fa4926797c0d048ad9d8149848",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 9,
+      "candidateKey": "96f0ec1b5c3f60710ceeb362019d1fdd74f091291a00a1fb15c10844553a61a1",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 4 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 8,
+      "candidateKey": "9ce7f28c62c85a1bc5dffce9c49f2f98bd02f31d6d638fdb66e95d323a1d1fda",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 7,
+      "candidateKey": "bc2d80c14839f8571e9b8686a13ef49327efdc3a90ab5fe6fca08dabdbb066cf",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 6,
+      "candidateKey": "751b684bdb76e848f0dc909ec2237f36aed67517fa8fc88d387c41e72782351c",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 5,
+      "candidateKey": "4f78c4a0d52cd62df16e5d433f9e16910f8685fe7c9917370552b0a51126b879",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 4,
+      "candidateKey": "f985b587568aa29995d2d713a14625192bd39ca0356713a676a0fd4b062a74c0",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 3,
+      "candidateKey": "7f6fe9af51a24707b17a249f56da25f0d063160dd250769b3bfe2e12cc9d17e6",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 2,
+      "candidateKey": "c58c2610e893cb882e97e0205b564634526b9adbdd7d20419bee1d1fce47b4bc",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 1,
+      "candidateKey": "63e4416b93fee98e475ebb6df9d098832185fae2cd11e83618b82df320c11a1e",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "soissons-a-beauvais",
+      "direction": "BA",
+      "passageIndex": 0,
+      "candidateKey": "3d0c51ea0592d4ff96aa5c99363dd5217bcf342da19abe14de585649806d9e06",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "AB",
+      "passageIndex": 0,
+      "candidateKey": "7b56599c027870cac042e5d4aca38951fe208d2bbc377d1ce2035e98e5ac51ae",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "AB",
+      "passageIndex": 1,
+      "candidateKey": "3403d155f0a423baaea8cae4b2d47f0d3c5e897ba45e8c5e07df4cddff972d1a",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "AB",
+      "passageIndex": 2,
+      "candidateKey": "0fedc84103a2dac9d4352b2d2a272dd964517d3da8a1fd1e551554c4a923b65b",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "AB",
+      "passageIndex": 3,
+      "candidateKey": "b29af4bf60fbeff9cf1dce7fc0648029431fc7943bee9aeec013e6b81665a0c9",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "AB",
+      "passageIndex": 4,
+      "candidateKey": "a6162fef2384219dd07154d95aeb144d79969f58e68eb98b63a9b57d21da7054",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "AB",
+      "passageIndex": 5,
+      "candidateKey": "c3655f023118f6054d809a4a6958a111b5b1874102e5239096e4acaa21064975",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "AB",
+      "passageIndex": 6,
+      "candidateKey": "76abcb2c942e590ff49e6d7f02135ba02646d0e179cf2a065e412f6f192608f7",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "AB",
+      "passageIndex": 7,
+      "candidateKey": "cd37798a42483b6e84658fe88d2aba1900107d8cb9cb0947bae6e818ea95fdc3",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "AB",
+      "passageIndex": 8,
+      "candidateKey": "c833a80b1d18785957793139ceea0854dcd3e3282dc4eaef48956f30069c2cd3",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "AB",
+      "passageIndex": 9,
+      "candidateKey": "ded1e757eda069b2332f9fe018d7864e3f899111f7b6f07881db6badfee1aab6",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "AB",
+      "passageIndex": 10,
+      "candidateKey": "9f90ae6be6b0063aabfbd131e272a252a4ba7bc76369781518b1943be24e122a",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "AB",
+      "passageIndex": 11,
+      "candidateKey": "df65e457308f6c6185a569d5f80be07861f8e2915d33aa192d18f5b0446ae5f2",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "AB",
+      "passageIndex": 12,
+      "candidateKey": "650a3f061c1052717e4ccc0d410decb6c10b47986e0369ab152123cb963c9a71",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "AB",
+      "passageIndex": 13,
+      "candidateKey": "c24e3ad552df86575788653e399f363fd8c036a6c82823770caccdca02ac65fb",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "AB",
+      "passageIndex": 14,
+      "candidateKey": "3c213c63e6b6c22d99c2c2d305029be984f49389bf2394a3c4d7c90acd0dd6de",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "AB",
+      "passageIndex": 15,
+      "candidateKey": "b0488cc82918894357c0e56999f5f799920bddff9fda7f7f34e39f59e9ce8c2a",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "AB",
+      "passageIndex": 16,
+      "candidateKey": "5d97992cb3bc3f75f21b8e4e64d327bed8bbfe8add3b3b677e3d1a2a3e5545b8",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "AB",
+      "passageIndex": 17,
+      "candidateKey": "98cf52157f9362e08ccd1d5e382f43b6f3ff8fc0b292af1c803db5b5c09258f5",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "BA",
+      "passageIndex": 17,
+      "candidateKey": "11fb8d09fa594ae28f3ac104aa6415d460a9b4a5b6e8e70e1ba3c57fae8a2e8f",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "BA",
+      "passageIndex": 16,
+      "candidateKey": "37c22fc224ff0e9a01b9a81225ca2cd7a9ac75c5510bc62613ab24ba393fd580",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "BA",
+      "passageIndex": 15,
+      "candidateKey": "c3b11d00a68658bb8424ce12cb20698d4bd9ee5716ded989e3e4b39a5fe7b62a",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "BA",
+      "passageIndex": 14,
+      "candidateKey": "f03415e50b8039685559629743583693986b8d726fddd556c78e6a5062ffb662",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "BA",
+      "passageIndex": 13,
+      "candidateKey": "b7e9df82d1a896d2a96bb8698c8edda7d263a63b68ae52a6f2ed4f643b34567a",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "BA",
+      "passageIndex": 12,
+      "candidateKey": "bf3aa771be0994ade1b7a3fbfd08d02d3c827821208c5b78bf479707b2d20eb7",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "BA",
+      "passageIndex": 11,
+      "candidateKey": "b3b839710398505f0f6c683dd2bc5425d151a961a12e69b32b932d04bf3d66a3",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "BA",
+      "passageIndex": 10,
+      "candidateKey": "5b8545a87b00c3c914d8811a3add118d5c047d5f2bb51ffed3c3fbe8f4c0fbf6",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 12 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "BA",
+      "passageIndex": 9,
+      "candidateKey": "3820b858014114c64f9d6f9b607205448fb39ab3fa4cace2fabfaad91a1cf093",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 57 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "BA",
+      "passageIndex": 8,
+      "candidateKey": "6856ddda426d80257930b01a9c80220964f483a94f1de0aa4d1494a6cf8cc5e5",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "BA",
+      "passageIndex": 7,
+      "candidateKey": "efe2b52c1668f50f7d8e761b2a4142bf22b4d13dce5ff6dc1ba8d11a4930131b",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "BA",
+      "passageIndex": 6,
+      "candidateKey": "639b04eee8bc9b7de358e0a1a9ae1798901e839a6d0cadc366d58ebf624b499c",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "BA",
+      "passageIndex": 5,
+      "candidateKey": "3a99ad56308be4c96c36178049e2aaeb7518d9f844ce284e3cc2b6b43fb76059",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "BA",
+      "passageIndex": 4,
+      "candidateKey": "3c7d88f503770f339066207a46e113c896a6b22246d438db251e7d565341b5f4",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "BA",
+      "passageIndex": 3,
+      "candidateKey": "98c5809db113ded7dc37a8bd7a6daa7409f5cda3137cc24c61c62cdaabd96ba1",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "BA",
+      "passageIndex": 2,
+      "candidateKey": "08f3e8916ac7348e3d645077fc4f0ad2cf7100676317de82b9670606549b9f98",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "BA",
+      "passageIndex": 1,
+      "candidateKey": "297f48daad60d84ce1a0ef30ca7f74c519489d9a76f496227da82d8aa65a32c3",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "beauvais-a-amiens",
+      "direction": "BA",
+      "passageIndex": 0,
+      "candidateKey": "597b15a2d25d2c160a4bf1eeafab04a760d73d2895b56b768ef02b75c0577840",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 0,
+      "candidateKey": "ead9c482c2cf57ee4749e571dedb048c8240fa3f702170a101c0fedec3301e3e",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 1,
+      "candidateKey": "765eaa0261d138f1ec95631b37c04201213b2aae917174ff8805ffc05a7db8a6",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 2,
+      "candidateKey": "d3b21787abadeb244839c571caf0d74c02d203b62b3fe9bf6cf59c7227522c6a",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 3,
+      "candidateKey": "3c8bb37980fcf63f940034166b699f02458675da438782f9db771e01609a8aff",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 4,
+      "candidateKey": "0220b591c1d88931b5b10b3790a8a382f1a3a631fc95f3f3bef9d8c20368c497",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 5,
+      "candidateKey": "ef9532cc8b89525e6de2b56c192bdd6bac11184e503cdfb5878cbaa5d6774293",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 6,
+      "candidateKey": "5077ec2924142ce7d0a186ebeb9882d6ee24d5289188f48528aecefa3eb2b1af",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 7,
+      "candidateKey": "50fd3256a25e22b2aef4427f7b535bceeb17a36727abe0e07b330f369e480e58",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 8,
+      "candidateKey": "81b9ef7b100eb05f976021d2df791ba322937d051106db10cfd362d92d299b6e",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 9,
+      "candidateKey": "b42b39ea28f0b4294411fd4a36866a3dbc9ba344f2178533bfef369bd144e5a3",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 10,
+      "candidateKey": "d6d35bd73ea3fb2d09a4c84d18a703ca47609c03d2c4ebf101c3892de63364b5",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 11,
+      "candidateKey": "f43ae95ebfbfce111f2a9460eca34f7adfcb44c1de16eba49ac88a83a71083c2",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 12,
+      "candidateKey": "2732704e963b90c325d7e1c3ef556bf9dec0456d4388a489eef078375a87f524",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 13,
+      "candidateKey": "0b973403bcd74400de99366cebf584d8207aa2f31afdad14b76e9c87f98a21da",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 14,
+      "candidateKey": "40724124107353528bd5f6bfbb21b23528079ac8f30a941440540d55dee0e38f",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 15,
+      "candidateKey": "919b402af93cf93a0de822a821500c0c6839b842ea3ca4ad0941b569d79d408f",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 16,
+      "candidateKey": "9f145dbf791fe474ed75b933a634a1de37c354ac691ae666cc2aa115c036b4b0",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 17,
+      "candidateKey": "9889d9e20edc44e2b154c0b362c2557a1021ae520eaee94224ea73c0b576ffb5",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 18,
+      "candidateKey": "1de13da7fd7408e8d7b268e35c43dca5388fed16dd00ffa4ab4851738767bd69",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 19,
+      "candidateKey": "4e68c0cb52fb45ae51c71990b8fad5491903dcabf08dcf89efe558ad74896fe7",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 20,
+      "candidateKey": "08d37259c2cb0ad37754f15bb952d0811b95b8ae8a0c927f472d00fb576f36dc",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 21,
+      "candidateKey": "52d71a6eb0df0e5e1372a13c78fc6f25cc363edcebec075afcfcb79d3f1acf95",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 22,
+      "candidateKey": "82626fa075fd237d6de8eabacfd758c6df5a7389ae036b749422a8ebfbd73452",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (5 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 23,
+      "candidateKey": "28cc45f3205edd469797e3b5539b9ba2c82017da9b88d6f4063e9f68538ca4a1",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 24,
+      "candidateKey": "36f2908741bc1529a0434d2a9cde7feb8866fab079527b9cb1271875fc3f08f3",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 25,
+      "candidateKey": "c700a0cbeac5a05bdb512b516e9084d177d42b8978a7450d66fdff046f86198e",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 26,
+      "candidateKey": "50ad2767c3a948b1fef13ed2fc466a27d3575c99682038560e56cb7ce79a7e20",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "AB",
+      "passageIndex": 27,
+      "candidateKey": "c4c8bc3609b93a146319aed45eb407517824d83d5995fd8a953134fb2eb596c0",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 27,
+      "candidateKey": "28645390031a0c59ccac3c930b8d32e2b831ef95802b8eb8fbf8184d28cc501f",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 26,
+      "candidateKey": "9573b8fb08e69d4c2bc035f7684f4198ef67a6c4d01a13bcde45526c67f9515f",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 47 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 25,
+      "candidateKey": "2e708471f0bf868deeea80d94bfffe6a79c4539188bd73a39e0aca8b9811c9d3",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 24,
+      "candidateKey": "21f71e13531db6dbcfb58dcaf447735b7ee2be4fe60c1dcbb511bfbf5cbcddc8",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 23,
+      "candidateKey": "af6f4f91f3c40dc6ed2278007fcac9c19068924cbcb29653b437b7c8a9c72f3c",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 22,
+      "candidateKey": "4bbd488d2a44d18160bb860c9a493de04aedcfeb538cdc53797412a519c88721",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 21,
+      "candidateKey": "f7ef819fbcb3dcabf7100dc004ddb4482274dbd86834b93c80a8e9f5a765bdc1",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 20,
+      "candidateKey": "c2325e1c4515972ff67c87734b4b76a12d69a728aeb6e0766dbf1044a9bbfc92",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 29 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 19,
+      "candidateKey": "3e8ad1c0baeadb862082e778295440b73137cceb75382f58b41a71bde67923d5",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 18,
+      "candidateKey": "e03b740c8d3730383fc8f0c8d0bbc053d3667108f4e77cf2d2a4be8cd8621f85",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 17,
+      "candidateKey": "15419deaaa296306798a0f7b9b2ec1a956699a815486015215a8db62dc71ae00",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 16,
+      "candidateKey": "8b120931fcbb3dc8f4eaec338ce69fbedf037eb6729ef4c199900bf9ae9adda1",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 15,
+      "candidateKey": "b09e814884d52f6bc0861432536ee797695d0a5943c9695e776d844a621c9ba8",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 14,
+      "candidateKey": "ca215090f6c28b4259f0390af9abe1e7b5fceeecda9987d4a8ab53be75fd80f5",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 12 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 13,
+      "candidateKey": "76bc8732e9fa3115656bea08449b00934e541f60ee4b54a3ec9dcb7556ca2855",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 17 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 12,
+      "candidateKey": "3beb3db2ae995502ce4bbb25899173b8506d49f93cd8dabb311ecc4265207e06",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 11,
+      "candidateKey": "e7414933322c6735958a7ef52cba035bfd16709b3c5215f79cf4edce7895cab1",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA de Cayeux-sur-Mer retenue par correspondance de chaînage inverse parmi deux points superposés."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 10,
+      "candidateKey": "1eb4e6c3a688f07504ee5f20589f95767b5ff6252462334f8c5559b87ee5bf9a",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 9,
+      "candidateKey": "15364ffd94a81b8d7f0bd9bd33630c70f0dcbfbb0a2c5319fd1acd01f854c711",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 8,
+      "candidateKey": "373a65015492d68a3c6ef6c637ab38b5945dfdeaa516c0342c57905ffb2e3c80",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 7,
+      "candidateKey": "09cf3572a8d8441e8dc4a2f5f7fc5a8df7b0c4bcdaa2cc80581ab69e13937066",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 6,
+      "candidateKey": "5fc67a41b911af9ebe5f329931ebd2841f7e5d37f632b2ded491d5429c2ab044",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 5,
+      "candidateKey": "70c28966c701b0a38b88d12c13a04ef5b1c8dfc9af84e41fee51c226d1b4df54",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 4,
+      "candidateKey": "97f419a3b66dad3de9ddad85db11581ce62581006faa10ed0a28af9a84773775",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 3,
+      "candidateKey": "30e62c12079ab21e3ca034130c7860db18627bd9b83cb535c86fd996bc341371",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 2,
+      "candidateKey": "fad07d3588019b7d8fb116fd0ed59d9bc309be2ee86677e7e3007d1f207be7a3",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 1,
+      "candidateKey": "4cc194d099b74bd30ebf0d3d0a81096ad0863075668618fcea4fcc19fee66b30",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "amiens-a-etaples",
+      "direction": "BA",
+      "passageIndex": 0,
+      "candidateKey": "4762920b32df70cef7b6e8eccc68f26d1cd027347efc3d254958b84a748645bd",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "AB",
+      "passageIndex": 0,
+      "candidateKey": "14eb34c58b49ef04b91ac1d83f471f74834698190aa40b4b063edf0e918328c6",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "AB",
+      "passageIndex": 1,
+      "candidateKey": "1e54936d3a54db6d33cd7c4a2d2510304c05b952b61cf316bc16c19e6129a0f4",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "AB",
+      "passageIndex": 2,
+      "candidateKey": "1ae55b0c712146afbb62f1a81e5bae11d5bc541e43be4ee03f4b6ee5449ab841",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (4 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "AB",
+      "passageIndex": 3,
+      "candidateKey": "8b27634c3ee48e2a0100e2e595a67a889c76984b21e0644dd63bd64162096df1",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "AB",
+      "passageIndex": 4,
+      "candidateKey": "02f46ae090639551b7415f82f1ada62b5d5431e888afa3ca626b2b3883456648",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "AB",
+      "passageIndex": 5,
+      "candidateKey": "e2fcc651bd40c14d1d673edfbea5427e9b59b4406d0931e6faa3efa0573cd398",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "AB",
+      "passageIndex": 6,
+      "candidateKey": "6dc090f775259f422015cf729c8954b460880961697972db1e30c5fd002553a2",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "AB",
+      "passageIndex": 7,
+      "candidateKey": "6132e4ebec089c87a0af568eadf9e3fb30c74547243561b0e91c7cb8225eb6b7",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "AB",
+      "passageIndex": 8,
+      "candidateKey": "f0ac1fa67103634418029913fa9c320c28d52b1c97ffd915d2b59bb329dd5610",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "AB",
+      "passageIndex": 9,
+      "candidateKey": "bafadec2c216d5c6c836c251badcd531695036906dad31373b09491054770904",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "AB",
+      "passageIndex": 10,
+      "candidateKey": "d579e179e14bd95473073b17358774b6635f69c9ce594a15c491a9b0b54a0c24",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "AB",
+      "passageIndex": 11,
+      "candidateKey": "7b5f2483ea4866763b2c1094c7b4600091a9a0dbfa761604bfc164eddd972cd2",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "AB",
+      "passageIndex": 12,
+      "candidateKey": "da2ffb6069694c805e0ce16421c50dc11c2727317ca6fcd1c39475c3c3956699",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "AB",
+      "passageIndex": 13,
+      "candidateKey": "879b4e19e5a1dbb8fe6b7a91d30938f4f97ba4e542adae66678a86c733946594",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "AB",
+      "passageIndex": 14,
+      "candidateKey": "c25659f4fa55cc8febdec9e631bba8a92c50f785fb788e83370794a788c835d6",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "BA",
+      "passageIndex": 14,
+      "candidateKey": "c9cff78669bcdea043751afa740a213851df4a9826ff848bc5eeef96937b143e",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "BA",
+      "passageIndex": 13,
+      "candidateKey": "c3fa281b72b24138fcfc632c1d9167e31f01a40eeefe19d00e0e0a524525f622",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 10 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "BA",
+      "passageIndex": 12,
+      "candidateKey": "6272048251f68c7ddc1621841fd76048ecfa6131dbd6dc146928bf93e99229bd",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 58 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "BA",
+      "passageIndex": 11,
+      "candidateKey": "c3fdba07174bad12d00bf2aa26df335beda0585f6b91f8e8d7f810e1eae7bad1",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "BA",
+      "passageIndex": 10,
+      "candidateKey": "2e3375f498dcedf3e585a74e344a2cb64a2c3396b783308376752e62fa8b1bce",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "BA",
+      "passageIndex": 9,
+      "candidateKey": "0ab9174df3f1549f7228f0b52fd530e8107249aa217e37fbacf343c2a5b6097a",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "BA",
+      "passageIndex": 8,
+      "candidateKey": "36307697a913dedc9dff78b5f920dde6595eea6c4d3c3e4503311358724c5e1c",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 15 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "BA",
+      "passageIndex": 7,
+      "candidateKey": "97df75671021c1b5a96c106af3dbe80076b99541e5d9e12ab9c9957847c07a7d",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "BA",
+      "passageIndex": 6,
+      "candidateKey": "9ca41544b96f4aca6a93ec49fdae39129ed244805aa4e1ef4c0cbeb3cb7c5850",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "BA",
+      "passageIndex": 5,
+      "candidateKey": "65fc4058d9d3c2623fb7c7de219d88702809b18a66d95414bb50d0ae24b52cd2",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "BA",
+      "passageIndex": 4,
+      "candidateKey": "200a6a5a31243a66e9a6419b9e505fbda4b039143917b2e777c75d947deca959",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "BA",
+      "passageIndex": 3,
+      "candidateKey": "e921b9be4a5cb94e647e68ab9b0e82d64bc3a718f6575f625feed235163908ea",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "BA",
+      "passageIndex": 2,
+      "candidateKey": "f00d6c41fd9520362a67f9e5c7197823ea785bafd145517dbef8e746991f8c28",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 22 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "BA",
+      "passageIndex": 1,
+      "candidateKey": "ec6434193e8151eb37fdab7cc828753a868fd802fdcda6c2bb29ede584e70912",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "BA",
+      "passageIndex": 0,
+      "candidateKey": "44ef32d0d26c82211013393545573bda73c02efd0ba80300d29aa5e94aec5d99",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 0,
+      "candidateKey": "f2221a8bd9eea63a352a249acd7ae66b727b5e03ee914a4e856b23e5134bae0f",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 1,
+      "candidateKey": "1f96c9599e8b10ae4f4f0867be6ecc4c862229911916bc08599ca8e9bbc5340f",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (7 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 2,
+      "candidateKey": "8acac9d3acd91b5158cbf7517fd133164bfd395f83ac28c88840c54525636f6f",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 3,
+      "candidateKey": "00bc5123813e7f9293e4a2567b09d1bc7ca077f10d2ee872e305b12d2e150e98",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 4,
+      "candidateKey": "becc74cc3beb841001df00018e99e69d0ac0d1ae2aee862f375aa066e0fe4d11",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 5,
+      "candidateKey": "249714088c027252296cc25a8320a649abae3d76e835bf5c121cbb59f67cf8c5",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 6,
+      "candidateKey": "837d1557882ebd8cf7d9576b04f0009538e1bac89b20af52b485d249d0936b43",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 7,
+      "candidateKey": "29e8fb80ac0824132f3bd51526c86ca928d1479161ac45e0d7f000c4f23cdc4a",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (4 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 8,
+      "candidateKey": "513738b6826174e4f49b8c9fc278d012c6a8f3b93bbeec30e7ca97ed646e8d36",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 9,
+      "candidateKey": "cb31f7bea6618ac77703c9542ec804b4ab1e0b9422b71578daebd506b7684ab3",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 10,
+      "candidateKey": "3eecc3a472190b917af672345efee960b9768506a69b751c4357eb73d15bf44c",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 11,
+      "candidateKey": "063e67cf7ffc3fbe4ba06110389bfad0966f1dcf6992d096ef82f0bddd3aa56b",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 12,
+      "candidateKey": "94bcca2996161ec0f2599878b306eb1f43520ece44094c1b085baf067d4dbdff",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (5 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 13,
+      "candidateKey": "aeef25f1bd4148cd7c6873b3c49a39df87cee22a2653f94dbe78d5bd095b9246",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (7 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 14,
+      "candidateKey": "b7818a6680b8d5ae23f918cf37921ecc653f28002ee7863aa7c84164e6dea1e6",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 15,
+      "candidateKey": "1967e78989208754d8090da84847a1a4ec0ef3a2eafdabb7a4613be3a4679987",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 16,
+      "candidateKey": "1a88628fc41b6b5aa2cb9be75b7902c1d025176503464a6c2772232c1fb6fa97",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 17,
+      "candidateKey": "fd517158c43f185c95199dfefde38eb8d9265cb9d5cdda8194f8c903c5d8b9ce",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (4 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 18,
+      "candidateKey": "e8885c72424ef10ea361968728f4055d9e99b4fbeba69705392f903f48418786",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 19,
+      "candidateKey": "9f7d8ebdf94799e441f03b9297c0a353064ceab085bca218044608935464f85b",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 20,
+      "candidateKey": "0e3e5b9fac7e5a91c5517642ccda9ec9776f0df87ba2d39bb1a447304b275402",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "AB",
+      "passageIndex": 21,
+      "candidateKey": "1d050cedc363826690e675d0905ad9cca8d1bdfe988b6f72821a83f74cae96b7",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 21,
+      "candidateKey": "5831a043ba85d38fbeb293720f3ad455c8c4a6d66bd796b224879b79ed56d42b",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 20,
+      "candidateKey": "08ab633af5ccd1766b07a4affc1dc8c651ffad5b82142c0ed840d3faedad3a44",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 19,
+      "candidateKey": "702c412f2f2d39a50abfa5778ff0a4ba69e0f2079b175a652b29fed22390e27d",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 18,
+      "candidateKey": "77341ec509c34ec51cd933d55da12ebe1a9e228d6c8510ea1759cb013f3a07bc",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 17,
+      "candidateKey": "b0a9c342a32d679b61f9cfc339c507f23be9a10ba5830b217759b0046e6f1cae",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 16,
+      "candidateKey": "e010e4dff8eb06a8865297b0fe434f6362a14c0d1ef9c92c532f42d190e9b5c6",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 15,
+      "candidateKey": "01f1071a7c07305a36da2d0dde06e9255d6f1d0538a41ed4bda9f67a82f52c05",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 14,
+      "candidateKey": "7dacf5893919a8be243d560243fbeab3fc7131c0955f167d3500f71446a6330c",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 13,
+      "candidateKey": "4d83a7ccf2fd45722b85a23897f307d06ca351d2c7b51fe2098e15a1d413a452",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 12,
+      "candidateKey": "bd5779778f534daf08b41a57253506124cbef0669a78cb437c96b929f545c110",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 11,
+      "candidateKey": "c2199de103ad8eb9bd268273cb09ea5080297a0cdb1c6defa9d59dc648a0fe52",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 10,
+      "candidateKey": "4f22173ec48ee2d829ecf8619ea38ae45aff75c75308df5e80cf883eb825e547",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 9,
+      "candidateKey": "5ed616c6cff8c98a9acc48672dfb0d354fc80ee47794d328ad08aa95b3ef3641",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 8,
+      "candidateKey": "a4ae5dbd5f5c639b67d6f00dac00ccc00cbcf3036da63ecc347f75d1e182b1a9",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 7,
+      "candidateKey": "31a86a7d6d781756237819fec57ab7a96d0fc83ab91d92ad0fd6a145f14ddcf1",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 6,
+      "candidateKey": "af21a00ba4bb743d8530272f5c71a157c122bbadc984b848adf120003b77a273",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 5,
+      "candidateKey": "00a1a5df6585a195152088939c035825f2fbdb3de71354a441963d2c038d9d17",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 4,
+      "candidateKey": "f406b68006a92a8c8419b6d39e64926c2bec265904c0acd131bb5d3bf9281fb9",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 68 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 3,
+      "candidateKey": "aff214eeda631cae5dd6fb846291b2db0cbaaa33432017c8c5b5d68a23acd37e",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 2,
+      "candidateKey": "7fb92427cf0b3886c320b2020ff8c593cb87d6e8a0b6f8f1105e9439f0141420",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 1,
+      "candidateKey": "15b9f2517a43586e0a50754c646ec01d237748c511d002c290c5b6e6788cc55d",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "calais-a-saint-omer",
+      "direction": "BA",
+      "passageIndex": 0,
+      "candidateKey": "350c04689ec0b1fa425ef8ea4356dbc12d20036f7b72afbfdf2a986b963cd2c1",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 0,
+      "candidateKey": "f95db74785de0c054a84f5538b39a98830a4e9f8faae54774639aad49622db9a",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 1,
+      "candidateKey": "4edf07b5a779e9a4a048e84aabbb2c1cbff05a916141859a524cd599c8274d9b",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (4 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 2,
+      "candidateKey": "1b566de13911bed210089a6948b1fc375504afe016f42cf242df8871f7b571ae",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 3,
+      "candidateKey": "31647350c671bb44c473c9b62501e50836ca8400ef16f0ced8fdf4547716d5fb",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 4,
+      "candidateKey": "f9bd4e5d1d2f6cb776e5270db771eff104196dbc371cc4d6405d4bf6d481c139",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 5,
+      "candidateKey": "fdcdf333c50784dc861519c884c1dc1bd16931bdd89493678ec0a67fe2977007",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 6,
+      "candidateKey": "7262e026bb1579dda7fc041e6d62dcf6b3989eeae8645c15f1fc341dbb422b48",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 7,
+      "candidateKey": "4d99b0d2da90b91d0fe3a4cec5d50ddf569e6a6ccc81e4d3aefb2c857f7cafbb",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 8,
+      "candidateKey": "f0efd86535aa48f9fa1e9494bdbec0e91b4d1837b5c4cbcf563d97e34c04a9da",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 9,
+      "candidateKey": "bfdca01161565f8975b93be14ee096130e9a049d4fc48c334f8f7934e49c8c21",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 10,
+      "candidateKey": "6105b947ae8d3c5ba5566f6705c69b474387fcf07dd8ea9cc481d77891608daa",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (5 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 11,
+      "candidateKey": "b886866c3276ac0aece5d3ec4db1a23b63c9d8b986c3875174869b285c9dc6a3",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 12,
+      "candidateKey": "cafb56692e7969563bf4053c782382c966e71ac6331c9dbd0c8ff794584a3248",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (10 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 13,
+      "candidateKey": "f2fe957b18485be0b4940c0f6cdac75053acad843749d47bba055f292edd9a77",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 14,
+      "candidateKey": "8f9caec8dd7993cc3dfed90ed6ceedfbd5dc3fd8a1bae1f976fde80270d94c31",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (12 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 15,
+      "candidateKey": "c2528bfc9121ac3d9106e6ef4bf9879eb65a374ef921d2a49205dd1b83a9cc2a",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (3 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 16,
+      "candidateKey": "2fa6ba0c45b9e15960409443c2c6a66c411e3baba1a3a264b91f60f07c699025",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 17,
+      "candidateKey": "30ec773b14bf3b47e9ea67fea161cbaff232941d5c69309072a00ff9173d9006",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 18,
+      "candidateKey": "771b021e213e8feb9b67cb8039cfdb37e73377521555748a6618e0579d81d621",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (2 occurrences recensées) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 19,
+      "candidateKey": "c4b9269f540af5c81621996feed8bc27c4675ae8acfb33f49ef60ae18034748a",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 20,
+      "candidateKey": "b0c069e196e69fa5720aed9261919c8c89e514d28f2287aa6eddd6b8ba337b5d",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 21,
+      "candidateKey": "e399428a444e3a7035e0fe05de2b6a80947dcafdff54bdaa4a0dffb10f2093ae",
+      "decision": "validated",
+      "reviewNote": "Premier passage AB du jeu contrôlé du 19 juillet 2026 (1 occurrence recensée) ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "AB",
+      "passageIndex": 22,
+      "candidateKey": "963a0c13fd887243b0ba779139c881b23529fe919ebb63a9b909e9d53f0acf34",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 22,
+      "candidateKey": "b994caea775acb49e9ba964fb05696471ed83c6a29a8630166848d4564fb6c51",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 21,
+      "candidateKey": "458a5cd6e52c21ed01364bd058b07ecaccbfc69b80268623ddbd2a0662652f91",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 20,
+      "candidateKey": "e53735859caa6e500d1f4a3d4ee855a249c944ce0b13095a3364641ffbe32d60",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 361 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 19,
+      "candidateKey": "fc32febd6ba7731171f131f9bf001b9c5a76dde6a830563e0bd44514a4a8eb02",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 18,
+      "candidateKey": "8ae9f50cb6837938cf42ee77c7c58d3b34252b461b179c78caac45397d273a98",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 7 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 17,
+      "candidateKey": "f755fede59e38ea69634dbe15e02f7282a6d7da936918575f39abb4eae74a4d2",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 16,
+      "candidateKey": "6a390f950d7a4d642c3eac03e654ca346426327a485c8d767937b7824bd702d1",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 15,
+      "candidateKey": "4842580302d057eff73f88be53e957d9e67394028d70c3286b592c3d7a75935f",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 14,
+      "candidateKey": "8ac96480a027c864bd28a00aee18b8808acaa098eff00b55319c54c2c2ee39c1",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 13,
+      "candidateKey": "fe881d66c5a2b52ad10123f0928b9af75c38a0688d875315597093a81fd9f468",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 12,
+      "candidateKey": "2f54c52856b65d4cafbfa56f607f73b2e1b27214e63bfbfc9ab3939c70e22060",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 11,
+      "candidateKey": "26aa5820c10b07b67f5caf75c426e826bc11c496f9552e66c25fdfbb2fc3c9d3",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 10,
+      "candidateKey": "46611c55b40bf68f67f16a18e955a45c1cc417e8c351a5b83ef88a673b66f5aa",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 9,
+      "candidateKey": "cc425df6ba8b62045c55d9a4fb66f32a4a072d91584b6f2484ca87c23175164b",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 8,
+      "candidateKey": "d661012be6ef21d1a0b9bb580ba4ebb68777da18257b04c2531486ce74066971",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 79 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 7,
+      "candidateKey": "3e9e7fcf83bada444c97ce8a464b87cce582a150899cfc08ff55fef19c97b3a7",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 6,
+      "candidateKey": "4939dbec0fe888b65df16abf7dcc664f2fc23579095f24c546f723e45499f62d",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 5,
+      "candidateKey": "54627e7b4a0e857e508c4e62aca69d805eb2b4707b9f9b79b11f06bf15364f8f",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 1 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 4,
+      "candidateKey": "47416bdaca97091cc1452709b7c654328b5529858b0b103e906c536d276cd797",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 3,
+      "candidateKey": "bccd17eee5625b86f79c6b47fb4fcc0e622925b9c8f7f3ea469e66506ee9d310",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 2,
+      "candidateKey": "49f5c0239785be73b5af82a48a96618c57b7ed3ab605668e90ed69cd19da461f",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 2 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 1,
+      "candidateKey": "dcdd99013cc2789b956a2541cb18dcc30c65bd7511aba62a686c5faf3b68ccde",
+      "decision": "validated",
+      "reviewNote": "Occurrence BA rapprochée de l’arrêt primaire AB contrôlé (écart 0 m) ; ordre directionnel vérifié."
+    },
+    {
+      "chapterSlug": "st-omer-lille",
+      "direction": "BA",
+      "passageIndex": 0,
+      "candidateKey": "74e1e5968c26cfbc1d9de3006b7dc92418e7057792e6868e2dd23e111ac89bba",
+      "decision": "validated",
+      "reviewNote": "Extrémité exacte du GPX officiel retenue pour la frontière de chapitre ; empreinte et ordre vérifiés."
+    }
+  ],
+  "junctions": [],
+  "junctionPairs": [
+    {
+      "cityName": "Arras",
+      "referenceKind": "train_station",
+      "referenceLabel": "Gare SNCF d’Arras",
+      "abChapterSlug": "lille-a-arras",
+      "baChapterSlug": "arras-a-conde-sur-l-escaut",
+      "decision": "accepted_gap",
+      "reviewNote": "Lieu de jonction éditorial commun aux sens AB et BA ; l’écart relu reste représenté par deux séquences GPX."
+    },
+    {
+      "cityName": "Condé-sur-l’Escaut",
+      "referenceKind": "landmark",
+      "referenceLabel": "Point de jonction près des fortifications de Condé-sur-l’Escaut",
+      "abChapterSlug": "arras-a-conde-sur-l-escaut",
+      "baChapterSlug": "conde-sur-l-escaut-a-hirson",
+      "decision": "accepted_gap",
+      "reviewNote": "Lieu de jonction éditorial commun aux sens AB et BA ; l’écart relu reste représenté par deux séquences GPX."
+    },
+    {
+      "cityName": "Hirson",
+      "referenceKind": "train_station",
+      "referenceLabel": "Gare SNCF d’Hirson",
+      "abChapterSlug": "conde-sur-l-escaut-a-hirson",
+      "baChapterSlug": "hirson-a-soissons",
+      "decision": "accepted_gap",
+      "reviewNote": "Lieu de jonction éditorial commun aux sens AB et BA ; l’écart relu reste représenté par deux séquences GPX."
+    },
+    {
+      "cityName": "Soissons",
+      "referenceKind": "train_station",
+      "referenceLabel": "Gare SNCF de Soissons",
+      "abChapterSlug": "hirson-a-soissons",
+      "baChapterSlug": "soissons-a-beauvais",
+      "decision": "accepted_gap",
+      "reviewNote": "Lieu de jonction éditorial commun aux sens AB et BA ; l’écart relu reste représenté par deux séquences GPX."
+    },
+    {
+      "cityName": "Lille",
+      "referenceKind": "train_station",
+      "referenceLabel": "Gare de Lille-Flandres",
+      "abChapterSlug": "st-omer-lille",
+      "baChapterSlug": "lille-a-arras",
+      "decision": "accepted_gap",
+      "reviewNote": "Lieu de jonction éditorial commun aux sens AB et BA ; l’écart relu reste représenté par deux séquences GPX."
+    }
+  ]
+}
