@@ -488,7 +488,10 @@ function normalizeBuilderState(value, field = null) {
   if (!value || typeof value !== 'object') return value;
   return Object.fromEntries(
     Object.entries(value)
-      .filter(([key]) => key !== 'id')
+      .filter(([key, item]) => (
+        key !== 'id'
+        && !(key === 'reviewNote' && (item === null || item === undefined))
+      ))
       .map(([key, item]) => [key, normalizeBuilderState(item, key)])
   );
 }
