@@ -35,6 +35,17 @@ test('validateGpxBuilderChapter requires a validated anchor in both directions',
   );
 });
 
+test('validateGpxBuilderChapter rejects a disconnected official GPX media relation', () => {
+  assert.throws(
+    () => validateGpxBuilderChapter({
+      title: 'Étaples → Calais',
+      gpxFileAB: { disconnect: [{ id: 1 }] },
+      gpxFileBA: { id: 2 },
+    }),
+    /deux médias GPX officiels/
+  );
+});
+
 test('validateGpxBuilderRoute accepts ordered AB and BA anchors with cyclic junction hashes', () => {
   const hashes = {
     firstAB: 'a'.repeat(64),

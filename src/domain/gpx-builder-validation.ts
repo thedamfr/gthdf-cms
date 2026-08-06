@@ -67,6 +67,32 @@ function finiteNumber(value: unknown): number | null {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
+function hasMediaReference(value: unknown): boolean {
+  if (typeof value === 'number' || typeof value === 'string') {
+    return true;
+  }
+  if (Array.isArray(value)) {
+    return value.some(hasMediaReference);
+  }
+  if (typeof value !== 'object' || value === null) {
+    return false;
+  }
+
+  const relation = value as Record<string, unknown>;
+  if ('set' in relation) {
+    return hasMediaReference(relation.set);
+  }
+  if ('connect' in relation) {
+    return hasMediaReference(relation.connect);
+  }
+  if ('disconnect' in relation) {
+    return false;
+  }
+  return typeof relation.id === 'number'
+    || typeof relation.documentId === 'string'
+    || typeof relation.url === 'string';
+}
+
 function anchorForDirection(
   passage: GpxBuilderPassage,
   direction: AnchorDirection
@@ -197,7 +223,7 @@ function validateJunction(
 export function validateGpxBuilderChapter(
   chapter: GpxBuilderChapter
 ): ValidatedChapterContract {
-  if (!chapter.gpxFileAB || !chapter.gpxFileBA) {
+  if (!hasMediaReference(chapter.gpxFileAB) || !hasMediaReference(chapter.gpxFileBA)) {
     throw new Error(`Le chapitre${chapterLabel(chapter)} doit disposer des deux médias GPX officiels.`);
   }
   const passages = Array.isArray(chapter.cityPassages)
