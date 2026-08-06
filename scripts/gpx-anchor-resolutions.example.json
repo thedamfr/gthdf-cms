@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "anchors": [
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "AB",
+      "passageIndex": 4,
+      "candidateKey": "0000000000000000000000000000000000000000000000000000000000000000",
+      "decision": "validated",
+      "reviewNote": "Remplacer la clé par celle du candidat relu dans le rapport."
+    }
+  ],
+  "junctions": [],
+  "junctionPairs": [
+    {
+      "cityName": "Arras",
+      "referenceKind": "train_station",
+      "referenceLabel": "Gare SNCF d’Arras",
+      "abChapterSlug": "lille-a-arras",
+      "baChapterSlug": "arras-a-conde-sur-l-escaut",
+      "decision": "accepted_gap",
+      "reviewNote": "Même lieu de jonction éditorial en AB et BA ; l’écart relu reste deux séquences GPX."
+    }
+  ]
+}

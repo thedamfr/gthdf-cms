@@ -30,23 +30,35 @@ const publishedChapters = [
 
 function createStrapiMock() {
   let queryCount = 0;
+  const findManyArguments: unknown[] = [];
+  const globalFindOneArguments: unknown[] = [];
 
   return {
     strapi: {
       db: {
-        query: () => ({
-          findMany: async () => {
+        query: (uid: string) => ({
+          findMany: async (options: unknown) => {
             queryCount += 1;
+            findManyArguments.push(options);
             return publishedChapters;
+          },
+          findOne: async (options: unknown) => {
+            if (uid === 'api::global.global') {
+              globalFindOneArguments.push(options);
+              return { gpxBuilderEnabled: false };
+            }
+            return null;
           },
         }),
       },
     },
     getQueryCount: () => queryCount,
+    getFindManyArguments: () => findManyArguments,
+    getGlobalFindOneArguments: () => globalFindOneArguments,
   };
 }
 
-function createSerializedStrapiMock(events: string[]) {
+function createSerializedStrapiMock(events: string[], globalEnabled = false) {
   const draft = {
     ...publishedChapters[2],
     cityPassages: [
@@ -73,13 +85,16 @@ function createSerializedStrapiMock(events: string[]) {
         events.push('transaction:end');
         return result;
       },
-      query: () => ({
+      query: (uid: string) => ({
         findMany: async () => {
           events.push('validation:read-published');
           return publishedChapters;
         },
         findOne: async () => {
           events.push('validation:read-one');
+          if (uid === 'api::global.global') {
+            return { gpxBuilderEnabled: globalEnabled };
+          }
           return draft;
         },
       }),
@@ -110,6 +125,26 @@ test('validateChapterDocument accepts deleting the highest published order', asy
     contentType: { uid: 'api::chapter.chapter' },
     params: { documentId: 'chapter-3' },
   }));
+});
+
+test('validateChapterDocument keeps disabled-builder reads lean and scopes the Global lookup', async () => {
+  const {
+    strapi,
+    getFindManyArguments,
+    getGlobalFindOneArguments,
+  } = createStrapiMock();
+
+  await validateChapterDocument(strapi as never, {
+    action: 'delete',
+    contentType: { uid: 'api::chapter.chapter' },
+    params: { documentId: 'chapter-3' },
+  });
+
+  assert.deepEqual(getGlobalFindOneArguments(), [{
+    where: {},
+    select: ['gpxBuilderEnabled'],
+  }]);
+  assert.equal('populate' in (getFindManyArguments()[0] as Record<string, unknown>), false);
 });
 
 test('validateChapterDocument ignores discardDraft without querying published chapters', async () => {
@@ -180,6 +215,58 @@ const publishedMutationCases = [
 
 test('CHAPTER_PUBLICATION_LOCK_KEY is a stable GTHF namespace', () => {
   assert.equal(CHAPTER_PUBLICATION_LOCK_KEY, 0x47544846);
+});
+
+test('runDocumentMiddleware refuses to enable the GPX Builder with incomplete chapters', async () => {
+  const events: string[] = [];
+  const strapi = createSerializedStrapiMock(events);
+
+  await assert.rejects(
+    () => runDocumentMiddleware(strapi as never, {
+      action: 'update',
+      contentType: { uid: 'api::global.global' },
+      params: { data: { gpxBuilderEnabled: true } },
+    } as never, async () => {
+      events.push('next');
+    }),
+    /deux médias GPX officiels/
+  );
+  assert.equal(events.includes('lock:advisory'), true);
+  assert.equal(events.includes('next'), false);
+});
+
+test('runDocumentMiddleware ignores unrelated Global updates while the builder remains enabled', async () => {
+  const events: string[] = [];
+  const strapi = createSerializedStrapiMock(events, true);
+
+  await runDocumentMiddleware(strapi as never, {
+    action: 'update',
+    contentType: { uid: 'api::global.global' },
+    params: { data: { siteName: 'GTHF' } },
+  } as never, async () => {
+    events.push('next');
+  });
+
+  assert.equal(events.includes('transaction:start'), false);
+  assert.equal(events.includes('validation:read-published'), false);
+  assert.equal(events.includes('next'), true);
+});
+
+test('runDocumentMiddleware does not revalidate an already enabled builder', async () => {
+  const events: string[] = [];
+  const strapi = createSerializedStrapiMock(events, true);
+
+  await runDocumentMiddleware(strapi as never, {
+    action: 'update',
+    contentType: { uid: 'api::global.global' },
+    params: { data: { gpxBuilderEnabled: true, siteName: 'GTHF' } },
+  } as never, async () => {
+    events.push('next');
+  });
+
+  assert.equal(events.includes('lock:advisory'), true);
+  assert.equal(events.includes('validation:read-published'), false);
+  assert.equal(events.includes('next'), true);
 });
 
 for (const { label, context } of publishedMutationCases) {

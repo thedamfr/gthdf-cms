@@ -34,6 +34,14 @@
     "llmsTxt": {
       "type": "text",
       "required": false
+    },
+    "gpxBuilderEnabled": {
+      "type": "boolean",
+      "required": true,
+      "default": false,
+      "info": {
+        "description": "Active le Builder ville à ville uniquement lorsque tous les ancrages et jonctions publiés sont qualifiés."
+      }
     }
   }
 }

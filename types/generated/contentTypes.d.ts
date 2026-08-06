@@ -622,6 +622,14 @@ export interface ApiChapterChapter extends Struct.CollectionTypeSchema {
     endStation: Schema.Attribute.String & Schema.Attribute.Required;
     gpxFileAB: Schema.Attribute.Media<'files'>;
     gpxFileBA: Schema.Attribute.Media<'files'>;
+    gpxJunctionAfterAB: Schema.Attribute.Component<
+      'chapter.gpx-junction',
+      false
+    >;
+    gpxJunctionAfterBA: Schema.Attribute.Component<
+      'chapter.gpx-junction',
+      false
+    >;
     horizons: Schema.Attribute.Component<'homepage.horizon-card', true>;
     introSentence: Schema.Attribute.Text & Schema.Attribute.Required;
     komootEmbedAB: Schema.Attribute.Text;
@@ -831,6 +839,9 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     defaultSeo: Schema.Attribute.Component<'shared.seo', false>;
     favicon: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
+    gpxBuilderEnabled: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
     llmsTxt: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<

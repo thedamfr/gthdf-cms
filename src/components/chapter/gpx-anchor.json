@@ -1,0 +1,76 @@
+{
+  "collectionName": "components_chapter_gpx_anchors",
+  "info": {
+    "displayName": "Ancrage GPX directionnel",
+    "icon": "pinMap",
+    "description": "Position validée d’un passage de ville sur un média GPX officiel"
+  },
+  "options": {},
+  "attributes": {
+    "status": {
+      "type": "enumeration",
+      "enum": ["proposed", "validated", "stale"],
+      "required": true,
+      "default": "proposed"
+    },
+    "sourceSha256": {
+      "type": "string",
+      "required": true,
+      "minLength": 64,
+      "maxLength": 64,
+      "regex": "^[A-Fa-f0-9]{64}$"
+    },
+    "trackIndex": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "segmentIndex": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "pointIndex": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "fraction": {
+      "type": "decimal",
+      "required": true,
+      "min": 0,
+      "max": 1
+    },
+    "chainageMetres": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "projectedLatitude": {
+      "type": "decimal",
+      "required": true,
+      "min": -90,
+      "max": 90
+    },
+    "projectedLongitude": {
+      "type": "decimal",
+      "required": true,
+      "min": -180,
+      "max": 180
+    },
+    "distanceToCityMetres": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "algorithmVersion": {
+      "type": "string",
+      "required": true,
+      "maxLength": 80
+    },
+    "reviewNote": {
+      "type": "text",
+      "maxLength": 300
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "collectionName": "components_chapter_gpx_junctions",
+  "info": {
+    "displayName": "Jonction GPX directionnelle",
+    "icon": "link",
+    "description": "Qualification de la jonction vers le chapitre suivant dans un sens officiel"
+  },
+  "options": {},
+  "attributes": {
+    "status": {
+      "type": "enumeration",
+      "enum": ["proposed", "exact", "accepted_gap", "blocked", "stale"],
+      "required": true,
+      "default": "proposed"
+    },
+    "sourceSha256": {
+      "type": "string",
+      "required": true,
+      "minLength": 64,
+      "maxLength": 64,
+      "regex": "^[A-Fa-f0-9]{64}$"
+    },
+    "nextSourceSha256": {
+      "type": "string",
+      "required": true,
+      "minLength": 64,
+      "maxLength": 64,
+      "regex": "^[A-Fa-f0-9]{64}$"
+    },
+    "gapMetres": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "reviewNote": {
+      "type": "text",
+      "maxLength": 300
+    }
+  }
+}
