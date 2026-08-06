@@ -11,6 +11,7 @@ const { parseOfficialGpxBytes, proposeOrderedAnchors } = anchorCore;
 const {
   configuredMediaOrigins,
   emptyResolutions,
+  fetchOfficialMediaBytes,
   loadAnchorResolutions,
   parseAnchorPreparationArguments,
   runGpxAnchorPreparation,
@@ -133,6 +134,20 @@ test('configuredMediaOrigins trims comma-separated environment values', () => {
   } finally {
     if (previous === undefined) delete process.env.STRAPI_MEDIA_ORIGINS;
     else process.env.STRAPI_MEDIA_ORIGINS = previous;
+  }
+});
+
+test('fetchOfficialMediaBytes reports an invalid public Strapi URL clearly', async () => {
+  const previous = process.env.STRAPI_PUBLIC_URL;
+  process.env.STRAPI_PUBLIC_URL = 'not-a-url';
+  try {
+    await assert.rejects(
+      () => fetchOfficialMediaBytes({ url: '/chapter.gpx' }),
+      /URL publique Strapi est invalide/
+    );
+  } finally {
+    if (previous === undefined) delete process.env.STRAPI_PUBLIC_URL;
+    else process.env.STRAPI_PUBLIC_URL = previous;
   }
 });
 

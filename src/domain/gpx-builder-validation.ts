@@ -109,6 +109,7 @@ function validateAnchor(
   passageIndex: number,
   chapter: GpxBuilderChapter
 ): { sourceSha256: string; chainageMetres: number } {
+  const anchorContext = `L’ancrage ${direction} du passage ${passageIndex + 1} du chapitre${chapterLabel(chapter)}`;
   if (!anchor || anchor.status !== 'validated') {
     throw new Error(
       `Le passage ${passageIndex + 1} du chapitre${chapterLabel(chapter)} doit avoir un ancrage ${direction} validé.`
@@ -116,7 +117,7 @@ function validateAnchor(
   }
 
   if (typeof anchor.sourceSha256 !== 'string' || !SHA_256.test(anchor.sourceSha256)) {
-    throw new Error(`L’ancrage ${direction} du passage ${passageIndex + 1} possède une empreinte SHA-256 invalide.`);
+    throw new Error(`${anchorContext} possède une empreinte SHA-256 invalide.`);
   }
   for (const [field, value] of [
     ['trackIndex', anchor.trackIndex],
@@ -124,7 +125,7 @@ function validateAnchor(
     ['pointIndex', anchor.pointIndex],
   ] as const) {
     if (!Number.isInteger(value) || Number(value) < 0) {
-      throw new Error(`L’ancrage ${direction} du passage ${passageIndex + 1} possède un ${field} invalide.`);
+      throw new Error(`${anchorContext} possède un ${field} invalide.`);
     }
   }
 
@@ -135,22 +136,22 @@ function validateAnchor(
   const distanceToCityMetres = finiteNumber(anchor.distanceToCityMetres);
 
   if (fraction === null || fraction < 0 || fraction > 1) {
-    throw new Error(`L’ancrage ${direction} du passage ${passageIndex + 1} possède une fraction invalide.`);
+    throw new Error(`${anchorContext} possède une fraction invalide.`);
   }
   if (chainageMetres === null || chainageMetres < 0) {
-    throw new Error(`L’ancrage ${direction} du passage ${passageIndex + 1} possède un chaînage invalide.`);
+    throw new Error(`${anchorContext} possède un chaînage invalide.`);
   }
   if (latitude === null || latitude < -90 || latitude > 90) {
-    throw new Error(`L’ancrage ${direction} du passage ${passageIndex + 1} possède une latitude invalide.`);
+    throw new Error(`${anchorContext} possède une latitude invalide.`);
   }
   if (longitude === null || longitude < -180 || longitude > 180) {
-    throw new Error(`L’ancrage ${direction} du passage ${passageIndex + 1} possède une longitude invalide.`);
+    throw new Error(`${anchorContext} possède une longitude invalide.`);
   }
   if (distanceToCityMetres === null || distanceToCityMetres < 0) {
-    throw new Error(`L’ancrage ${direction} du passage ${passageIndex + 1} possède une distance de contrôle invalide.`);
+    throw new Error(`${anchorContext} possède une distance de contrôle invalide.`);
   }
   if (typeof anchor.algorithmVersion !== 'string' || !anchor.algorithmVersion.trim()) {
-    throw new Error(`L’ancrage ${direction} du passage ${passageIndex + 1} doit préciser sa version d’algorithme.`);
+    throw new Error(`${anchorContext} doit préciser sa version d’algorithme.`);
   }
 
   return {

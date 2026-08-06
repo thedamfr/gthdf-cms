@@ -35,6 +35,26 @@ test('validateGpxBuilderChapter requires a validated anchor in both directions',
   );
 });
 
+test('validateGpxBuilderChapter identifies the chapter in invalid anchor diagnostics', () => {
+  assert.throws(
+    () => validateGpxBuilderChapter({
+      title: 'Étaples → Calais',
+      gpxFileAB: { id: 1 },
+      gpxFileBA: { id: 2 },
+      cityPassages: [
+        {
+          gpxAnchorAB: {
+            status: 'validated',
+            sourceSha256: 'invalid',
+          },
+        },
+        {},
+      ],
+    }),
+    /chapitre « Étaples → Calais ».*empreinte SHA-256 invalide/
+  );
+});
+
 test('validateGpxBuilderChapter rejects a disconnected official GPX media relation', () => {
   assert.throws(
     () => validateGpxBuilderChapter({

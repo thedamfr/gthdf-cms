@@ -619,7 +619,13 @@ async function fetchOfficialMediaBytes(media) {
   const baseUrl = process.env.STRAPI_PUBLIC_URL
     || process.env.URL
     || 'http://127.0.0.1:1337';
-  const url = new URL(media.url, `${new URL(baseUrl).origin}/`);
+  let baseOrigin;
+  try {
+    baseOrigin = new URL(baseUrl).origin;
+  } catch {
+    throw new Error('L’URL publique Strapi est invalide.');
+  }
+  const url = new URL(media.url, `${baseOrigin}/`);
   if (
     !['http:', 'https:'].includes(url.protocol)
     || url.username || url.password
