@@ -15,6 +15,7 @@ const {
   loadAnchorResolutions,
   parseAnchorPreparationArguments,
   runGpxAnchorPreparation,
+  warnAboutTlsException,
 } = preparation;
 
 test('loadAnchorResolutions expands one reviewed place into AB and BA junctions', () => {
@@ -183,6 +184,21 @@ test('parseAnchorPreparationArguments accepts the external Clever database optio
   assert.equal(options.remote, true);
   assert.equal(options.cleverApp, 'app_test');
   assert.equal(options.allowSelfSignedTls, true);
+});
+
+test('warnAboutTlsException makes the certificate exception visible', () => {
+  const warnings: string[] = [];
+
+  warnAboutTlsException({
+    allowSelfSignedTls: true,
+    remote: true,
+  }, {
+    warn: (message: string) => warnings.push(message),
+  });
+
+  assert.equal(warnings.length, 1);
+  assert.match(warnings[0], /certificat auto-signé/i);
+  assert.match(warnings[0], /vérification/i);
 });
 
 test('runGpxAnchorPreparation is dry-run first, applies drafts and becomes idempotent', async () => {

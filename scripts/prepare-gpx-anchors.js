@@ -711,6 +711,14 @@ Options :
 Le script ne publie aucun chapitre et ne modifie pas le coupe-circuit public.`);
 }
 
+function warnAboutTlsException(options, logger = console) {
+  if (!options.remote || !options.allowSelfSignedTls) return;
+  logger.warn(
+    'AVERTISSEMENT : le certificat auto-signé de l’endpoint PostgreSQL DIRECT '
+    + 'est accepté explicitement ; la vérification de son autorité est désactivée pour cette exécution.'
+  );
+}
+
 async function main(argv = process.argv.slice(2)) {
   const options = parseAnchorPreparationArguments(argv);
   if (options.help) {
@@ -718,6 +726,7 @@ async function main(argv = process.argv.slice(2)) {
     return 0;
   }
   if (options.remote) {
+    warnAboutTlsException(options);
     const target = configureCleverRemoteDatabaseEnvironment({
       allowSelfSignedTls: options.allowSelfSignedTls,
       cleverApp: options.cleverApp,
@@ -760,6 +769,7 @@ module.exports = {
   resolveAnchor,
   resolveJunction,
   runGpxAnchorPreparation,
+  warnAboutTlsException,
   writeReport,
 };
 
