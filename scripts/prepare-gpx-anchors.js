@@ -361,6 +361,7 @@ async function runGpxAnchorPreparation({
     report.errors.push({ message: 'Aucun chapitre brouillon n’est disponible.' });
   }
   const sources = new Map();
+  const resolvedAnchors = new Map();
 
   for (const chapter of chapters) {
     const chapterReport = {
@@ -392,7 +393,7 @@ async function runGpxAnchorPreparation({
           city: passage.city,
         }));
         if (direction === 'BA') orderedPassages.reverse();
-        const proposal = proposeOrderedAnchors({ bytes, passages: orderedPassages });
+        const proposal = proposeOrderedAnchors({ source, passages: orderedPassages });
         const resolvedByPassage = new Map();
         const outcomes = [];
 
@@ -428,8 +429,8 @@ async function runGpxAnchorPreparation({
           pointCount: proposal.pointCount,
           distanceMetres: proposal.distanceMetres,
           anchors: outcomes,
-          resolvedByPassage,
         };
+        resolvedAnchors.set(`${chapter.slug}:${direction}`, resolvedByPassage);
       }
       chapterReport.status = 'ready';
     } catch (error) {
@@ -465,8 +466,8 @@ async function runGpxAnchorPreparation({
         chapterReport.junctions[direction] = resolved;
       }
 
-      const anchorsAB = chapterReport.directions.AB.resolvedByPassage;
-      const anchorsBA = chapterReport.directions.BA.resolvedByPassage;
+      const anchorsAB = resolvedAnchors.get(`${chapter.slug}:AB`);
+      const anchorsBA = resolvedAnchors.get(`${chapter.slug}:BA`);
       const update = {
         cityPassages: chapter.cityPassages.map((passage, passageIndex) => (
           passageForWrite(passage, anchorsAB.get(passageIndex), anchorsBA.get(passageIndex))
@@ -484,8 +485,6 @@ async function runGpxAnchorPreparation({
       };
       chapterReport.changed = !sameBuilderState(chapter, update);
       chapterReport.update = update;
-      delete chapterReport.directions.AB.resolvedByPassage;
-      delete chapterReport.directions.BA.resolvedByPassage;
     }
   }
 
@@ -534,8 +533,14 @@ function configuredMediaOrigins(baseUrl) {
     baseUrl,
     process.env.AWS_CDN_URL,
     ...(process.env.STRAPI_MEDIA_ORIGINS ?? '').split(','),
-  ].filter(Boolean);
-  return new Set(values.map((value) => new URL(value).origin));
+  ]
+    .map((value) => typeof value === 'string' ? value.trim() : '')
+    .filter(Boolean);
+  try {
+    return new Set(values.map((value) => new URL(value).origin));
+  } catch {
+    throw new Error('La configuration des origines de médias GPX est invalide.');
+  }
 }
 
 async function readResponseBytesWithLimit(response, maximumBytes) {
@@ -682,6 +687,7 @@ async function main(argv = process.argv.slice(2)) {
 }
 
 module.exports = {
+  configuredMediaOrigins,
   createStrapiAdapter,
   emptyResolutions,
   fetchOfficialMediaBytes,

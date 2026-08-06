@@ -4,8 +4,9 @@ import test from 'node:test';
 import anchorCore from '../scripts/gpx-anchor-core.js';
 import preparation from '../scripts/prepare-gpx-anchors.js';
 
-const { proposeOrderedAnchors } = anchorCore;
+const { parseOfficialGpxBytes, proposeOrderedAnchors } = anchorCore;
 const {
+  configuredMediaOrigins,
   emptyResolutions,
   parseAnchorPreparationArguments,
   runGpxAnchorPreparation,
@@ -60,6 +61,39 @@ test('proposeOrderedAnchors keeps distant occurrences instead of 64 adjacent edg
   assert.ok(proposals.anchors[0].chainageMetres < proposals.anchors[1].chainageMetres);
   assert.ok(proposals.anchors[0].distanceToCityMetres < 20);
   assert.ok(proposals.anchors[1].distanceToCityMetres < 20);
+});
+
+test('proposeOrderedAnchors reuses an already parsed GPX source', () => {
+  const bytes = new TextEncoder().encode(`<gpx version="1.1"><trk><trkseg>
+    <trkpt lat="0" lon="0" />
+    <trkpt lat="0" lon="1" />
+  </trkseg></trk></gpx>`);
+  const source = parseOfficialGpxBytes(bytes);
+
+  const proposals = proposeOrderedAnchors({
+    source,
+    passages: [
+      { passageIndex: 0, city: { name: 'A', latitude: 0, longitude: 0.1 } },
+      { passageIndex: 1, city: { name: 'B', latitude: 0, longitude: 0.9 } },
+    ],
+  });
+
+  assert.equal(proposals.sourceSha256, source.sourceSha256);
+  assert.equal(proposals.anchors.length, 2);
+});
+
+test('configuredMediaOrigins trims comma-separated environment values', () => {
+  const previous = process.env.STRAPI_MEDIA_ORIGINS;
+  process.env.STRAPI_MEDIA_ORIGINS = 'https://media-one.example, https://media-two.example ';
+  try {
+    const origins = configuredMediaOrigins(' http://127.0.0.1:1337 ');
+    assert.equal(origins.has('https://media-one.example'), true);
+    assert.equal(origins.has('https://media-two.example'), true);
+    assert.equal(origins.has('http://127.0.0.1:1337'), true);
+  } finally {
+    if (previous === undefined) delete process.env.STRAPI_MEDIA_ORIGINS;
+    else process.env.STRAPI_MEDIA_ORIGINS = previous;
+  }
 });
 
 test('parseAnchorPreparationArguments keeps dry-run safe and requires confirmation for apply', () => {
@@ -183,4 +217,44 @@ test('runGpxAnchorPreparation is dry-run first, applies drafts and becomes idemp
   });
   assert.equal(secondApply.summary.unchanged, 2);
   assert.equal(updateCalls, 2);
+});
+
+test('runGpxAnchorPreparation never exposes internal Maps in a blocked JSON report', async () => {
+  const validBytes = new TextEncoder().encode('<gpx version="1.1"><trk><trkseg><trkpt lat="0" lon="0" /><trkpt lat="0" lon="1" /></trkseg></trk></gpx>');
+  const chapter = {
+    documentId: 'chapter-blocked',
+    slug: 'blocked',
+    title: 'Bloqué',
+    displayOrder: 1,
+    gpxFileAB: { url: '/valid.gpx' },
+    gpxFileBA: { url: '/invalid.gpx' },
+    cityPassages: [
+      {
+        id: 1,
+        role: 'start',
+        city: { documentId: 'city-a', name: 'A', latitude: 0, longitude: 0.1 },
+      },
+      {
+        id: 2,
+        role: 'end',
+        city: { documentId: 'city-b', name: 'B', latitude: 0, longitude: 0.9 },
+      },
+    ],
+  };
+
+  const report = await runGpxAnchorPreparation({
+    adapter: {
+      listChapters: async () => [chapter],
+      updateChapter: async () => assert.fail('Le dry-run ne doit rien écrire.'),
+    },
+    fetchMediaBytes: async (_media: unknown, _chapter: unknown, direction: string) => {
+      if (direction === 'BA') throw new Error('Source BA indisponible.');
+      return validBytes;
+    },
+    resolutions: emptyResolutions(),
+  });
+  const serialized = JSON.parse(JSON.stringify(report));
+
+  assert.equal(serialized.summary.blocked, 1);
+  assert.equal('resolvedByPassage' in serialized.chapters[0].directions.AB, false);
 });

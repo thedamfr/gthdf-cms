@@ -331,12 +331,12 @@ function chooseOrderedCandidates(candidateSets) {
   return selected;
 }
 
-function proposeOrderedAnchors({ bytes, passages }) {
+function proposeOrderedAnchors({ bytes, source, passages }) {
   if (!Array.isArray(passages) || passages.length < 2) {
     throw new Error('Au moins deux passages ordonnés sont requis.');
   }
-  const source = parseOfficialGpxBytes(bytes);
-  const candidateSets = passages.map((passage) => passageCandidates(source, passage));
+  const parsedSource = source ?? parseOfficialGpxBytes(bytes);
+  const candidateSets = passages.map((passage) => passageCandidates(parsedSource, passage));
   const selected = chooseOrderedCandidates(candidateSets);
   const anchors = selected.map((candidate, index) => {
     const ambiguityReasons = [];
@@ -353,7 +353,7 @@ function proposeOrderedAnchors({ bytes, passages }) {
       passageIndex: passages[index].passageIndex,
       cityName: passages[index].city?.name ?? null,
       status: 'proposed',
-      sourceSha256: source.sourceSha256,
+      sourceSha256: parsedSource.sourceSha256,
       trackIndex: candidate.trackIndex,
       segmentIndex: candidate.segmentIndex,
       pointIndex: candidate.pointIndex,
@@ -374,9 +374,9 @@ function proposeOrderedAnchors({ bytes, passages }) {
 
   return {
     algorithmVersion: ALGORITHM_VERSION,
-    sourceSha256: source.sourceSha256,
-    pointCount: source.pointCount,
-    distanceMetres: source.distanceMetres,
+    sourceSha256: parsedSource.sourceSha256,
+    pointCount: parsedSource.pointCount,
+    distanceMetres: parsedSource.distanceMetres,
     anchors,
   };
 }
