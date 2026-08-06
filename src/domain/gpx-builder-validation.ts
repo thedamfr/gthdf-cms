@@ -255,9 +255,25 @@ export function validateGpxBuilderRoute(chapters: GpxBuilderChapter[]): void {
   if (chapters.length === 0) {
     throw new Error('Le GPX Builder ne peut pas être activé sans chapitre publié.');
   }
-  const ordered = [...chapters].sort((first, second) => (
-    Number(first.displayOrder) - Number(second.displayOrder)
-  ));
+  const seenDisplayOrders = new Set<number>();
+  const sortable = chapters.map((chapter) => {
+    const displayOrder = finiteNumber(chapter.displayOrder);
+    if (
+      displayOrder === null
+      || !Number.isInteger(displayOrder)
+      || displayOrder < 1
+      || seenDisplayOrders.has(displayOrder)
+    ) {
+      throw new Error(
+        `Le chapitre${chapterLabel(chapter)} doit avoir un ordre d’affichage valide et unique.`
+      );
+    }
+    seenDisplayOrders.add(displayOrder);
+    return { chapter, displayOrder };
+  });
+  const ordered = sortable
+    .sort((first, second) => first.displayOrder - second.displayOrder)
+    .map(({ chapter }) => chapter);
   const contracts = ordered.map(validateGpxBuilderChapter);
 
   for (let index = 0; index < ordered.length; index += 1) {

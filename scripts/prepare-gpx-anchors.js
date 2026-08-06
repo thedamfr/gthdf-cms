@@ -293,25 +293,38 @@ function passageForWrite(passage, anchorAB, anchorBA) {
   };
 }
 
-function stripIds(value) {
-  if (Array.isArray(value)) return value.map(stripIds);
+const BUILDER_DECIMAL_FIELDS = new Set([
+  'fraction',
+  'chainageMetres',
+  'projectedLatitude',
+  'projectedLongitude',
+  'distanceToCityMetres',
+  'gapMetres',
+]);
+
+function normalizeBuilderState(value, field = null) {
+  if (BUILDER_DECIMAL_FIELDS.has(field) && value !== null && value !== '') {
+    const number = Number(value);
+    return Number.isFinite(number) ? number : value;
+  }
+  if (Array.isArray(value)) return value.map((item) => normalizeBuilderState(item, field));
   if (!value || typeof value !== 'object') return value;
   return Object.fromEntries(
     Object.entries(value)
       .filter(([key]) => key !== 'id')
-      .map(([key, item]) => [key, stripIds(item)])
+      .map(([key, item]) => [key, normalizeBuilderState(item, key)])
   );
 }
 
 function sameBuilderState(chapter, update) {
-  return JSON.stringify(stripIds({
+  return JSON.stringify(normalizeBuilderState({
     anchors: chapter.cityPassages.map((passage) => ({
       gpxAnchorAB: passage.gpxAnchorAB ?? null,
       gpxAnchorBA: passage.gpxAnchorBA ?? null,
     })),
     gpxJunctionAfterAB: chapter.gpxJunctionAfterAB,
     gpxJunctionAfterBA: chapter.gpxJunctionAfterBA,
-  })) === JSON.stringify(stripIds({
+  })) === JSON.stringify(normalizeBuilderState({
     anchors: update.cityPassages.map((passage) => ({
       gpxAnchorAB: passage.gpxAnchorAB ?? null,
       gpxAnchorBA: passage.gpxAnchorBA ?? null,

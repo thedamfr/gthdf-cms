@@ -157,6 +157,24 @@ test('runGpxAnchorPreparation is dry-run first, applies drafts and becomes idemp
   assert.equal(applied.summary.updated, 2);
   assert.equal(updateCalls, 2);
 
+  for (const chapter of chapters as any[]) {
+    for (const passage of chapter.cityPassages) {
+      for (const anchor of [passage.gpxAnchorAB, passage.gpxAnchorBA]) {
+        for (const field of [
+          'fraction',
+          'chainageMetres',
+          'projectedLatitude',
+          'projectedLongitude',
+          'distanceToCityMetres',
+        ]) {
+          anchor[field] = String(anchor[field]);
+        }
+      }
+    }
+    chapter.gpxJunctionAfterAB.gapMetres = String(chapter.gpxJunctionAfterAB.gapMetres);
+    chapter.gpxJunctionAfterBA.gapMetres = String(chapter.gpxJunctionAfterBA.gapMetres);
+  }
+
   const secondApply = await runGpxAnchorPreparation({
     adapter,
     fetchMediaBytes,

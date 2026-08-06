@@ -46,6 +46,13 @@ test('validateGpxBuilderChapter rejects a disconnected official GPX media relati
   );
 });
 
+test('validateGpxBuilderRoute rejects a missing display order before sorting junctions', () => {
+  assert.throws(
+    () => validateGpxBuilderRoute([{ title: 'Chapitre sans ordre' }]),
+    /ordre d’affichage valide/
+  );
+});
+
 test('validateGpxBuilderRoute accepts ordered AB and BA anchors with cyclic junction hashes', () => {
   const hashes = {
     firstAB: 'a'.repeat(64),
