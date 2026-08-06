@@ -28,7 +28,7 @@ Documents de référence :
 
 - [PRD 01 — Référentiel des villes et pages hubs](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/prd_01_referentiel_villes_pages_hubs.md), livré ;
 - [PRD 02 — Retrouver son chapitre sur mobile](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/prd_02_retrouver_chapitre_mobile.md), livré et validé en production ;
-- [PRD 03 — GPX Builder v2](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/prd_03_gpx_builder_fusion_decoupe.md), prêt pour revue ;
+- [PRD 03 — GPX Builder v2 ville à ville](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/prd_03_gpx_builder_ville_a_ville.md), implémenté localement, qualification éditoriale en attente ;
 - [PRD 04 — Catalogue d’itinéraires ville à ville](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/prd_04_catalogue_itineraires_ville_a_ville.md), prêt pour revue.
 
 ## 🐳 Development Setup
@@ -278,6 +278,79 @@ réussie a fait l’objet d’une autorisation explicite pour cette exécution
 précise. Cette exception historique ne change pas le runbook : toute nouvelle
 application distante doit être précédée d’une sauvegarde PostgreSQL réussie et
 contrôlée.
+
+## Préparation PRD 03 des ancrages et jonctions GPX
+
+Le CMS conserve deux ancrages qualifiés par `cityPassage`, un pour
+`gpxFileAB` et un pour `gpxFileBA`. Chaque chapitre porte également une
+jonction par sens vers le prochain chapitre réellement parcouru. Ces données
+sont liées au SHA-256 binaire des médias : remplacer un GPX les rend périmées
+et ferme le Builder jusqu’à une nouvelle revue.
+
+Le coupe-circuit `Global.gpxBuilderEnabled` est requis et vaut `false` par
+défaut. L’activer ou publier un chapitre alors qu’il est actif déclenche la
+validation de toute la boucle publiée. Le CMS refuse une ancre non validée,
+un ordre incohérent, une empreinte étrangère ou une jonction non qualifiée.
+
+Commencer obligatoirement par le dry run :
+
+```bash
+npm run prepare:gpx-anchors
+```
+
+Le rapport `.tmp/gpx-anchor-report.json` contient, par chapitre et par sens,
+les empreintes, candidats ordonnés, ambiguïtés, jonctions et snapshot `before`.
+Il ne contient pas de secret. Copier
+`scripts/gpx-anchor-resolutions.example.json`, puis renseigner uniquement les
+candidats et écarts effectivement relus :
+
+```bash
+npm run prepare:gpx-anchors -- \
+  --resolutions /chemin/gpx-anchor-resolutions.json
+```
+
+Après revue du nouveau rapport, l’application locale exige une double option
+et ne modifie que les brouillons de chapitre :
+
+```bash
+npm run prepare:gpx-anchors -- \
+  --resolutions /chemin/gpx-anchor-resolutions.json \
+  --apply \
+  --confirm-apply
+```
+
+L’exécution distante suit le même ordre après une sauvegarde PostgreSQL
+réussie. Le dry run reste sans écriture ; l’application distante exige les
+trois confirmations explicites :
+
+```bash
+npm run prepare:gpx-anchors:remote -- \
+  --resolutions /chemin/gpx-anchor-resolutions.json
+
+npm run prepare:gpx-anchors:remote -- \
+  --resolutions /chemin/gpx-anchor-resolutions.json \
+  --apply \
+  --confirm-apply \
+  --confirm-remote
+```
+
+Le script ne publie aucun chapitre et n’active jamais le Builder. Après
+application, relire les brouillons, publier l’ensemble cohérent, exécuter les
+recettes AB et BA depuis le frontend, puis seulement activer le coupe-circuit.
+Un second passage avec les mêmes résolutions doit être idempotent.
+
+Pour revenir en arrière, laisser ou remettre le coupe-circuit à `false`, puis
+restaurer les valeurs `before` du rapport conservé ou la sauvegarde PostgreSQL.
+Ne pas supprimer les champs additifs ni les médias dans un rollback immédiat.
+
+### Dry run local du 6 août 2026
+
+Sur la copie locale synchronisée, la commande a inspecté les dix chapitres et
+proposé 466 ancrages sans écriture, blocage ni erreur. Le rapport demande une
+revue renforcée pour 179 ancrages et une décision explicite pour dix jonctions
+non exactes ; les dix autres jonctions sont exactes. Ce résultat valide
+l’outil, pas les propositions éditoriales : il ne doit pas être transformé en
+`--apply` sans relecture du rapport et fichier de résolutions version 1.
 
 ### Validation locale
 

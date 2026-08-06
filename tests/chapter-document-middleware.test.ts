@@ -39,6 +39,7 @@ function createStrapiMock() {
             queryCount += 1;
             return publishedChapters;
           },
+          findOne: async () => ({ gpxBuilderEnabled: false }),
         }),
       },
     },
@@ -180,6 +181,24 @@ const publishedMutationCases = [
 
 test('CHAPTER_PUBLICATION_LOCK_KEY is a stable GTHF namespace', () => {
   assert.equal(CHAPTER_PUBLICATION_LOCK_KEY, 0x47544846);
+});
+
+test('runDocumentMiddleware refuses to enable the GPX Builder with incomplete chapters', async () => {
+  const events: string[] = [];
+  const strapi = createSerializedStrapiMock(events);
+
+  await assert.rejects(
+    () => runDocumentMiddleware(strapi as never, {
+      action: 'update',
+      contentType: { uid: 'api::global.global' },
+      params: { data: { gpxBuilderEnabled: true } },
+    } as never, async () => {
+      events.push('next');
+    }),
+    /deux médias GPX officiels/
+  );
+  assert.equal(events.includes('lock:advisory'), true);
+  assert.equal(events.includes('next'), false);
 });
 
 for (const { label, context } of publishedMutationCases) {

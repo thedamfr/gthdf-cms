@@ -13,6 +13,8 @@ export interface ChapterCityPassage extends Struct.ComponentSchema {
     featured: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
+    gpxAnchorAB: Schema.Attribute.Component<'chapter.gpx-anchor', false>;
+    gpxAnchorBA: Schema.Attribute.Component<'chapter.gpx-anchor', false>;
     note: Schema.Attribute.Text &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 300;
@@ -36,6 +38,142 @@ export interface ChapterDestination extends Struct.ComponentSchema {
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Que visiter'>;
+  };
+}
+
+export interface ChapterGpxAnchor extends Struct.ComponentSchema {
+  collectionName: 'components_chapter_gpx_anchors';
+  info: {
+    description: 'Position valid\u00E9e d\u2019un passage de ville sur un m\u00E9dia GPX officiel';
+    displayName: 'Ancrage GPX directionnel';
+    icon: 'pinMap';
+  };
+  attributes: {
+    algorithmVersion: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 80;
+      }>;
+    chainageMetres: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    distanceToCityMetres: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    fraction: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 1;
+          min: 0;
+        },
+        number
+      >;
+    pointIndex: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    projectedLatitude: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 90;
+          min: -90;
+        },
+        number
+      >;
+    projectedLongitude: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 180;
+          min: -180;
+        },
+        number
+      >;
+    reviewNote: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 300;
+      }>;
+    segmentIndex: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    sourceSha256: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 64;
+        minLength: 64;
+      }>;
+    status: Schema.Attribute.Enumeration<['proposed', 'validated', 'stale']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'proposed'>;
+    trackIndex: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+  };
+}
+
+export interface ChapterGpxJunction extends Struct.ComponentSchema {
+  collectionName: 'components_chapter_gpx_junctions';
+  info: {
+    description: 'Qualification de la jonction vers le chapitre suivant dans un sens officiel';
+    displayName: 'Jonction GPX directionnelle';
+    icon: 'link';
+  };
+  attributes: {
+    gapMetres: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    nextSourceSha256: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 64;
+        minLength: 64;
+      }>;
+    reviewNote: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 300;
+      }>;
+    sourceSha256: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 64;
+        minLength: 64;
+      }>;
+    status: Schema.Attribute.Enumeration<
+      ['proposed', 'exact', 'accepted_gap', 'blocked', 'stale']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'proposed'>;
   };
 }
 
@@ -217,6 +355,8 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'chapter.city-passage': ChapterCityPassage;
       'chapter.destination': ChapterDestination;
+      'chapter.gpx-anchor': ChapterGpxAnchor;
+      'chapter.gpx-junction': ChapterGpxJunction;
       'chapter.point-of-interest': ChapterPointOfInterest;
       'homepage.encounter-card': HomepageEncounterCard;
       'homepage.faq-item': HomepageFaqItem;

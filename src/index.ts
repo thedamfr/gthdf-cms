@@ -6,6 +6,10 @@ import {
   validatePublishedChapterRemoval,
 } from './domain/chapter-validation';
 import {
+  validateGpxBuilderRoute,
+  type GpxBuilderChapter,
+} from './domain/gpx-builder-validation';
+import {
   normalizeAlternativeNames,
   validateCityCoordinates,
   validateCityForPublication,
@@ -23,6 +27,7 @@ const SEO_CONTENT_TYPES = [
 ];
 const CITY_UID = 'api::city.city';
 const CHAPTER_UID = 'api::chapter.chapter';
+const GLOBAL_UID = 'api::global.global';
 
 // Valeur ASCII hexadécimale de « GTHF », réservée dans cette base PostgreSQL
 // à la sérialisation transactionnelle de l’ensemble des chapitres publiés.
@@ -180,6 +185,67 @@ async function getDraftForValidation(
   }) as Promise<Record<string, unknown> | null>;
 }
 
+const GPX_BUILDER_CHAPTER_POPULATE = {
+  gpxFileAB: true,
+  gpxFileBA: true,
+  gpxJunctionAfterAB: true,
+  gpxJunctionAfterBA: true,
+  cityPassages: {
+    populate: {
+      city: true,
+      gpxAnchorAB: true,
+      gpxAnchorBA: true,
+    },
+  },
+};
+
+async function isGpxBuilderEnabled(strapi: Core.Strapi): Promise<boolean> {
+  const settings = await strapi.db.query(GLOBAL_UID).findOne({
+    select: ['gpxBuilderEnabled'],
+  }) as Record<string, unknown> | null;
+
+  return settings?.gpxBuilderEnabled === true;
+}
+
+async function getPublishedChaptersForGpxBuilder(
+  strapi: Core.Strapi
+): Promise<GpxBuilderChapter[]> {
+  return strapi.db.query(CHAPTER_UID).findMany({
+    where: { publishedAt: { $ne: null } },
+    select: ['documentId', 'slug', 'title', 'displayOrder'],
+    populate: GPX_BUILDER_CHAPTER_POPULATE,
+  }) as Promise<GpxBuilderChapter[]>;
+}
+
+async function validateGlobalDocument(
+  strapi: Core.Strapi,
+  context: DocumentMiddlewareContext
+): Promise<void> {
+  if (!['create', 'update'].includes(context.action)) {
+    return;
+  }
+
+  const current = await strapi.db.query(GLOBAL_UID).findOne({
+    select: ['gpxBuilderEnabled'],
+  }) as Record<string, unknown> | null;
+  const nextEnabled = Object.prototype.hasOwnProperty.call(
+    context.params.data ?? {},
+    'gpxBuilderEnabled'
+  )
+    ? context.params.data?.gpxBuilderEnabled === true
+    : current?.gpxBuilderEnabled === true;
+
+  if (!nextEnabled) {
+    return;
+  }
+
+  try {
+    validateGpxBuilderRoute(await getPublishedChaptersForGpxBuilder(strapi));
+  } catch (error) {
+    throwApplicationError(error);
+  }
+}
+
 async function validateCityDocument(
   strapi: Core.Strapi,
   context: DocumentMiddlewareContext
@@ -242,16 +308,17 @@ export async function validateChapterDocument(
     return;
   }
 
-  const publishedChapters = await strapi.db.query(CHAPTER_UID).findMany({
-    where: {
-      publishedAt: { $ne: null },
-    },
-    select: ['documentId', 'slug', 'title', 'displayOrder'],
-  }) as Record<string, unknown>[];
+  const publishedChapters = await getPublishedChaptersForGpxBuilder(strapi);
+  const builderEnabled = await isGpxBuilderEnabled(strapi);
 
   if (isRemovingPublishedVersion) {
     try {
       validatePublishedChapterRemoval(publishedChapters, params.documentId);
+      if (builderEnabled) {
+        validateGpxBuilderRoute(
+          publishedChapters.filter((chapter) => chapter.documentId !== params.documentId)
+        );
+      }
     } catch (error) {
       throwApplicationError(error);
     }
@@ -262,13 +329,7 @@ export async function validateChapterDocument(
     strapi,
     CHAPTER_UID,
     params.documentId,
-    {
-      cityPassages: {
-        populate: {
-          city: true,
-        },
-      },
-    }
+    GPX_BUILDER_CHAPTER_POPULATE
   );
 
   const nextChapter = {
@@ -286,12 +347,19 @@ export async function validateChapterDocument(
   try {
     validateChapterForPublication(nextChapter);
     validatePublishedChapterOrder(nextPublishedSet);
+    if (builderEnabled) {
+      validateGpxBuilderRoute(nextPublishedSet);
+    }
   } catch (error) {
     throwApplicationError(error);
   }
 }
 
 function changesPublishedChapterSet(context: DocumentMiddlewareContext): boolean {
+  if (context.contentType.uid === GLOBAL_UID) {
+    return ['create', 'update'].includes(context.action);
+  }
+
   if (context.contentType.uid !== CHAPTER_UID) {
     return false;
   }
@@ -322,6 +390,10 @@ async function validateDocumentAndRunNext(
 
   if (context.contentType.uid === CHAPTER_UID) {
     await validateChapterDocument(strapi, context);
+  }
+
+  if (context.contentType.uid === GLOBAL_UID) {
+    await validateGlobalDocument(strapi, context);
   }
 
   if (SEO_CONTENT_TYPES.includes(context.contentType.uid)) {

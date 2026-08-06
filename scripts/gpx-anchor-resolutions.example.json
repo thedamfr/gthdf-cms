@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "anchors": [
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "AB",
+      "passageIndex": 4,
+      "candidateKey": "0000000000000000000000000000000000000000000000000000000000000000",
+      "decision": "validated",
+      "reviewNote": "Remplacer la clé par celle du candidat relu dans le rapport."
+    }
+  ],
+  "junctions": [
+    {
+      "chapterSlug": "etaples-a-calais",
+      "direction": "AB",
+      "decision": "accepted_gap",
+      "reviewNote": "Exemple uniquement : documenter la décision de continuité relue."
+    }
+  ]
+}

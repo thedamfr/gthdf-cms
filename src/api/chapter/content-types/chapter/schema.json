@@ -127,6 +127,16 @@
       "type": "component",
       "component": "chapter.city-passage",
       "repeatable": true
+    },
+    "gpxJunctionAfterAB": {
+      "type": "component",
+      "component": "chapter.gpx-junction",
+      "repeatable": false
+    },
+    "gpxJunctionAfterBA": {
+      "type": "component",
+      "component": "chapter.gpx-junction",
+      "repeatable": false
     }
   }
 }

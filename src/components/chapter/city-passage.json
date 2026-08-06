@@ -30,6 +30,16 @@
     "note": {
       "type": "text",
       "maxLength": 300
+    },
+    "gpxAnchorAB": {
+      "type": "component",
+      "component": "chapter.gpx-anchor",
+      "repeatable": false
+    },
+    "gpxAnchorBA": {
+      "type": "component",
+      "component": "chapter.gpx-anchor",
+      "repeatable": false
     }
   }
 }
