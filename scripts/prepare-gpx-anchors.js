@@ -32,35 +32,72 @@ const DEFAULT_MEDIA_ORIGINS = [
   'https://cms.gthf.fr',
 ];
 
+function parseControlledCsv(filePath, label, option) {
+  let bytes;
+  try {
+    bytes = readFileSync(filePath);
+  } catch (error) {
+    throw new Error(
+      `Impossible de lire le CSV contrôlé ${label} « ${filePath} ». Vérifiez l’option ${option}.`,
+      { cause: error }
+    );
+  }
+
+  try {
+    return {
+      bytes,
+      rows: parse(bytes, {
+        bom: true,
+        columns: true,
+        skip_empty_lines: true,
+      }),
+    };
+  } catch (error) {
+    throw new Error(
+      `Le CSV contrôlé ${label} « ${filePath} » est invalide. Vérifiez son contenu ou l’option ${option}.`,
+      { cause: error }
+    );
+  }
+}
+
 function loadControlledAnchorHints(citiesPath, chaptersPath) {
-  const cityBytes = readFileSync(citiesPath);
-  const chapterBytes = readFileSync(chaptersPath);
-  const cityRows = parse(cityBytes, {
-    bom: true,
-    columns: true,
-    skip_empty_lines: true,
-  });
-  const chapterRows = parse(chapterBytes, {
-    bom: true,
-    columns: true,
-    skip_empty_lines: true,
-  });
+  const { bytes: cityBytes, rows: cityRows } = parseControlledCsv(
+    citiesPath,
+    'des villes',
+    '--cities'
+  );
+  const { bytes: chapterBytes, rows: chapterRows } = parseControlledCsv(
+    chaptersPath,
+    'des chapitres',
+    '--chapters'
+  );
   const anchors = new Map();
   const sources = new Map();
   const chaptersByLabel = new Map();
   let globalOffsetMetres = 0;
 
-  for (const row of chapterRows) {
+  for (const [rowIndex, row] of chapterRows.entries()) {
     const slug = String(row['Slug chapitre'] ?? '').trim();
     const label = String(row.Chapitre ?? '').trim();
     const sourceSha256 = String(row['SHA-256 GPX'] ?? '').trim().toLowerCase();
     const distanceMetres = Number(row['Distance GPX (m)']);
-    if (
-      !slug || !label || !/^[a-f0-9]{64}$/.test(sourceSha256)
-      || !Number.isFinite(distanceMetres) || distanceMetres <= 0
-      || sources.has(slug) || chaptersByLabel.has(label)
-    ) {
-      throw new Error('Le référentiel contrôlé des chapitres GPX est invalide.');
+    const validationErrors = [];
+    if (!slug) validationErrors.push('slug manquant');
+    if (!label) validationErrors.push('libellé manquant');
+    if (!/^[a-f0-9]{64}$/.test(sourceSha256)) validationErrors.push('SHA-256 invalide');
+    if (!Number.isFinite(distanceMetres) || distanceMetres <= 0) {
+      validationErrors.push('distance invalide');
+    }
+    if (slug && sources.has(slug)) validationErrors.push(`slug dupliqué « ${slug} »`);
+    if (label && chaptersByLabel.has(label)) {
+      validationErrors.push(`libellé dupliqué « ${label} »`);
+    }
+    if (validationErrors.length > 0) {
+      const identity = [slug, label].filter(Boolean).join(' / ') || 'chapitre inconnu';
+      throw new Error(
+        `La ligne ${rowIndex + 2} du référentiel contrôlé des chapitres (${identity}) `
+        + `est invalide : ${validationErrors.join(', ')}.`
+      );
     }
     sources.set(slug, { distanceMetres, sourceSha256 });
     chaptersByLabel.set(label, { slug, globalOffsetMetres, distanceMetres });

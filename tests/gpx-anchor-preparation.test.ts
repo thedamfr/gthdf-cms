@@ -58,6 +58,57 @@ test('loadControlledAnchorHints converts global chainages to chapter-local hints
   }
 });
 
+test('loadControlledAnchorHints explains how to provide a missing controlled CSV', () => {
+  const directory = mkdtempSync(join(tmpdir(), 'gthdf-anchor-hints-missing-'));
+  const citiesPath = join(directory, 'villes.csv');
+  const chaptersPath = join(directory, 'chapitres.csv');
+
+  try {
+    assert.throws(
+      () => loadControlledAnchorHints(citiesPath, chaptersPath),
+      (error: unknown) => {
+        assert.ok(error instanceof Error);
+        assert.match(error.message, /CSV contrôlé des villes/);
+        assert.match(error.message, /--cities/);
+        assert.match(error.message, new RegExp(citiesPath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+        return true;
+      }
+    );
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test('loadControlledAnchorHints identifies every invalid chapter field', () => {
+  const directory = mkdtempSync(join(tmpdir(), 'gthdf-anchor-hints-invalid-'));
+  const citiesPath = join(directory, 'villes.csv');
+  const chaptersPath = join(directory, 'chapitres.csv');
+  writeFileSync(
+    citiesPath,
+    'ID commune,Ville,Premier chapitre,Chaînage premier passage (m),Nombre de passages\n'
+  );
+  writeFileSync(chaptersPath, [
+    'Slug chapitre,Chapitre,SHA-256 GPX,Distance GPX (m)',
+    'alpha-beta,Alpha → Beta,not-a-hash,-1',
+  ].join('\n'));
+
+  try {
+    assert.throws(
+      () => loadControlledAnchorHints(citiesPath, chaptersPath),
+      (error: unknown) => {
+        assert.ok(error instanceof Error);
+        assert.match(error.message, /ligne 2/i);
+        assert.match(error.message, /alpha-beta/);
+        assert.match(error.message, /SHA-256 invalide/);
+        assert.match(error.message, /distance invalide/);
+        return true;
+      }
+    );
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
 test('loadAnchorResolutions expands one reviewed place into AB and BA junctions', () => {
   const directory = mkdtempSync(join(tmpdir(), 'gthdf-junction-pair-'));
   const resolutionsPath = join(directory, 'resolutions.json');
