@@ -10,12 +10,16 @@
       "reviewNote": "Remplacer la clé par celle du candidat relu dans le rapport."
     }
   ],
-  "junctions": [
+  "junctions": [],
+  "junctionPairs": [
     {
-      "chapterSlug": "etaples-a-calais",
-      "direction": "AB",
+      "cityName": "Arras",
+      "referenceKind": "train_station",
+      "referenceLabel": "Gare SNCF d’Arras",
+      "abChapterSlug": "lille-a-arras",
+      "baChapterSlug": "arras-a-conde-sur-l-escaut",
       "decision": "accepted_gap",
-      "reviewNote": "Exemple uniquement : documenter la décision de continuité relue."
+      "reviewNote": "Même lieu de jonction éditorial en AB et BA ; l’écart relu reste deux séquences GPX."
     }
   ]
 }

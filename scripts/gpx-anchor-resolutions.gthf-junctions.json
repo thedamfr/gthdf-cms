@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "anchors": [],
+  "junctions": [],
+  "junctionPairs": [
+    {
+      "cityName": "Arras",
+      "referenceKind": "train_station",
+      "referenceLabel": "Gare SNCF d’Arras",
+      "abChapterSlug": "lille-a-arras",
+      "baChapterSlug": "arras-a-conde-sur-l-escaut",
+      "decision": "accepted_gap",
+      "reviewNote": "Lieu de jonction éditorial commun aux sens AB et BA ; l’écart relu reste représenté par deux séquences GPX."
+    },
+    {
+      "cityName": "Condé-sur-l’Escaut",
+      "referenceKind": "landmark",
+      "referenceLabel": "Point de jonction près des fortifications de Condé-sur-l’Escaut",
+      "abChapterSlug": "arras-a-conde-sur-l-escaut",
+      "baChapterSlug": "conde-sur-l-escaut-a-hirson",
+      "decision": "accepted_gap",
+      "reviewNote": "Lieu de jonction éditorial commun aux sens AB et BA ; l’écart relu reste représenté par deux séquences GPX."
+    },
+    {
+      "cityName": "Hirson",
+      "referenceKind": "train_station",
+      "referenceLabel": "Gare SNCF d’Hirson",
+      "abChapterSlug": "conde-sur-l-escaut-a-hirson",
+      "baChapterSlug": "hirson-a-soissons",
+      "decision": "accepted_gap",
+      "reviewNote": "Lieu de jonction éditorial commun aux sens AB et BA ; l’écart relu reste représenté par deux séquences GPX."
+    },
+    {
+      "cityName": "Soissons",
+      "referenceKind": "train_station",
+      "referenceLabel": "Gare SNCF de Soissons",
+      "abChapterSlug": "hirson-a-soissons",
+      "baChapterSlug": "soissons-a-beauvais",
+      "decision": "accepted_gap",
+      "reviewNote": "Lieu de jonction éditorial commun aux sens AB et BA ; l’écart relu reste représenté par deux séquences GPX."
+    },
+    {
+      "cityName": "Lille",
+      "referenceKind": "train_station",
+      "referenceLabel": "Gare de Lille-Flandres",
+      "abChapterSlug": "st-omer-lille",
+      "baChapterSlug": "lille-a-arras",
+      "decision": "accepted_gap",
+      "reviewNote": "Lieu de jonction éditorial commun aux sens AB et BA ; l’écart relu reste représenté par deux séquences GPX."
+    }
+  ]
+}

@@ -309,6 +309,20 @@ npm run prepare:gpx-anchors -- \
   --resolutions /chemin/gpx-anchor-resolutions.json
 ```
 
+Une frontière de chapitre correspond à un même lieu éditorial dans les deux
+sens, même si les médias et leurs extrémités restent directionnels. Le tableau
+`junctionPairs` permet donc de renseigner une seule fois la ville, le repère
+(`train_station` ou `landmark`), les chapitres porteurs AB et BA et la décision.
+La commande développe cette décision en deux jonctions techniques portant la
+même note de revue. Le format historique `junctions` reste accepté pour un cas
+réellement propre à un seul sens.
+
+Les cinq écarts actuellement relevés sont préparés, mais pas appliqués, dans
+`scripts/gpx-anchor-resolutions.gthf-junctions.json`. Arras, Hirson, Soissons
+et Lille utilisent leur gare ; Condé-sur-l’Escaut utilise le point près des
+fortifications. Ce fichier ne valide aucun des 466 ancrages de passage et ne
+doit donc pas être utilisé avec `--apply` avant leur revue.
+
 Après revue du nouveau rapport, l’application locale exige une double option
 et ne modifie que les brouillons de chapitre :
 
@@ -347,10 +361,12 @@ Ne pas supprimer les champs additifs ni les médias dans un rollback immédiat.
 
 Sur la copie locale synchronisée, la commande a inspecté les dix chapitres et
 proposé 466 ancrages sans écriture, blocage ni erreur. Le rapport demande une
-revue renforcée pour 179 ancrages et une décision explicite pour dix jonctions
-non exactes ; les dix autres jonctions sont exactes. Ce résultat valide
-l’outil, pas les propositions éditoriales : il ne doit pas être transformé en
-`--apply` sans relecture du rapport et fichier de résolutions version 1.
+revue renforcée pour 179 ancrages. Les dix jonctions exactes sont calculées
+automatiquement ; les dix jonctions non exactes correspondent à cinq lieux
+physiques. Le dry run avec le fichier de paires les qualifie toutes en
+`accepted_gap`, avec le même repère dans les deux sens, sans écriture ni
+erreur. Ce résultat valide la préparation des jonctions, pas les propositions
+d’ancrage : il ne doit pas être transformé en `--apply` avant leur revue.
 
 ### Validation locale
 

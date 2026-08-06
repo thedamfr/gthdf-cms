@@ -71,6 +71,13 @@ function emptyResolutions() {
   return { anchors: new Map(), junctions: new Map() };
 }
 
+function addJunctionResolution(resolutions, key, decision, reviewNote) {
+  if (resolutions.junctions.has(key)) {
+    throw new Error(`Résolution de jonction dupliquée : ${key}.`);
+  }
+  resolutions.junctions.set(key, { decision, reviewNote: reviewNote || null });
+}
+
 function loadAnchorResolutions(resolutionsPath) {
   if (!resolutionsPath) return emptyResolutions();
   const payload = JSON.parse(readFileSync(resolutionsPath, 'utf8'));
@@ -114,8 +121,41 @@ function loadAnchorResolutions(resolutionsPath) {
       throw new Error('Une résolution de jonction est incomplète ou invalide.');
     }
     const key = `${chapterSlug}:${direction}`;
-    if (resolutions.junctions.has(key)) throw new Error(`Résolution de jonction dupliquée : ${key}.`);
-    resolutions.junctions.set(key, { decision, reviewNote: reviewNote || null });
+    addJunctionResolution(resolutions, key, decision, reviewNote);
+  }
+
+  if (payload.junctionPairs !== undefined && !Array.isArray(payload.junctionPairs)) {
+    throw new Error('junctionPairs doit être un tableau lorsqu’il est renseigné.');
+  }
+  for (const item of payload.junctionPairs ?? []) {
+    const cityName = String(item.cityName ?? '').trim();
+    const referenceKind = String(item.referenceKind ?? '');
+    const referenceLabel = String(item.referenceLabel ?? '').trim();
+    const abChapterSlug = String(item.abChapterSlug ?? '').trim();
+    const baChapterSlug = String(item.baChapterSlug ?? '').trim();
+    const decision = String(item.decision ?? '');
+    const reviewNote = String(item.reviewNote ?? '').trim();
+    if (
+      !cityName || !['train_station', 'landmark'].includes(referenceKind)
+      || !referenceLabel || !abChapterSlug || !baChapterSlug
+      || !['accepted_gap', 'blocked'].includes(decision)
+      || (decision === 'accepted_gap' && !reviewNote)
+    ) {
+      throw new Error('Une paire de jonctions est incomplète ou invalide.');
+    }
+    const sharedReviewNote = `${referenceLabel} — ${reviewNote || `Jonction bloquée à ${cityName}.`}`;
+    addJunctionResolution(
+      resolutions,
+      `${abChapterSlug}:AB`,
+      decision,
+      sharedReviewNote
+    );
+    addJunctionResolution(
+      resolutions,
+      `${baChapterSlug}:BA`,
+      decision,
+      sharedReviewNote
+    );
   }
 
   return resolutions;

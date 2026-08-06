@@ -1,4 +1,7 @@
 import assert from 'node:assert/strict';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import test from 'node:test';
 
 import anchorCore from '../scripts/gpx-anchor-core.js';
@@ -8,9 +11,46 @@ const { parseOfficialGpxBytes, proposeOrderedAnchors } = anchorCore;
 const {
   configuredMediaOrigins,
   emptyResolutions,
+  loadAnchorResolutions,
   parseAnchorPreparationArguments,
   runGpxAnchorPreparation,
 } = preparation;
+
+test('loadAnchorResolutions expands one reviewed place into AB and BA junctions', () => {
+  const directory = mkdtempSync(join(tmpdir(), 'gthdf-junction-pair-'));
+  const resolutionsPath = join(directory, 'resolutions.json');
+  writeFileSync(resolutionsPath, JSON.stringify({
+    version: 1,
+    anchors: [],
+    junctions: [],
+    junctionPairs: [
+      {
+        cityName: 'Arras',
+        referenceKind: 'train_station',
+        referenceLabel: 'Gare SNCF d’Arras',
+        abChapterSlug: 'lille-a-arras',
+        baChapterSlug: 'arras-a-conde-sur-l-escaut',
+        decision: 'accepted_gap',
+        reviewNote: 'Même lieu de jonction éditorial en AB et BA.',
+      },
+    ],
+  }));
+
+  try {
+    const resolutions = loadAnchorResolutions(resolutionsPath);
+
+    assert.deepEqual(resolutions.junctions.get('lille-a-arras:AB'), {
+      decision: 'accepted_gap',
+      reviewNote: 'Gare SNCF d’Arras — Même lieu de jonction éditorial en AB et BA.',
+    });
+    assert.deepEqual(resolutions.junctions.get('arras-a-conde-sur-l-escaut:BA'), {
+      decision: 'accepted_gap',
+      reviewNote: 'Gare SNCF d’Arras — Même lieu de jonction éditorial en AB et BA.',
+    });
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
 
 test('proposeOrderedAnchors projects passages onto ordered GPX edges', () => {
   const bytes = new TextEncoder().encode(`<gpx version="1.1"><trk><trkseg>
