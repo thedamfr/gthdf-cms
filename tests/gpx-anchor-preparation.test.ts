@@ -510,6 +510,8 @@ test('runGpxAnchorPreparation is dry-run first, applies drafts and becomes idemp
     }
     chapter.gpxJunctionAfterAB.gapMetres = String(chapter.gpxJunctionAfterAB.gapMetres);
     chapter.gpxJunctionAfterBA.gapMetres = String(chapter.gpxJunctionAfterBA.gapMetres);
+    chapter.gpxJunctionAfterAB.reviewNote = null;
+    chapter.gpxJunctionAfterBA.reviewNote = null;
   }
 
   const secondApply = await runGpxAnchorPreparation({
