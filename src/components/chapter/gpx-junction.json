@@ -28,7 +28,7 @@
       "regex": "^[A-Fa-f0-9]{64}$"
     },
     "gapMetres": {
-      "type": "decimal",
+      "type": "float",
       "required": true,
       "min": 0
     },
