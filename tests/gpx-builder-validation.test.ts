@@ -66,6 +66,19 @@ test('validateGpxBuilderChapter rejects a disconnected official GPX media relati
   );
 });
 
+test('validateGpxBuilderChapter rejects empty media relation identifiers', () => {
+  for (const invalidReference of ['', 0, { id: 0 }, { documentId: '  ' }, { url: '' }]) {
+    assert.throws(
+      () => validateGpxBuilderChapter({
+        title: 'Étaples → Calais',
+        gpxFileAB: invalidReference,
+        gpxFileBA: { id: 2 },
+      }),
+      /deux médias GPX officiels/
+    );
+  }
+});
+
 test('validateGpxBuilderRoute rejects a missing display order before sorting junctions', () => {
   assert.throws(
     () => validateGpxBuilderRoute([{ title: 'Chapitre sans ordre' }]),

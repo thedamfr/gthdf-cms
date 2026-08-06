@@ -68,8 +68,11 @@ function finiteNumber(value: unknown): number | null {
 }
 
 function hasMediaReference(value: unknown): boolean {
-  if (typeof value === 'number' || typeof value === 'string') {
-    return true;
+  if (typeof value === 'number') {
+    return Number.isInteger(value) && value > 0;
+  }
+  if (typeof value === 'string') {
+    return value.trim().length > 0;
   }
   if (Array.isArray(value)) {
     return value.some(hasMediaReference);
@@ -88,9 +91,9 @@ function hasMediaReference(value: unknown): boolean {
   if ('disconnect' in relation) {
     return false;
   }
-  return typeof relation.id === 'number'
-    || typeof relation.documentId === 'string'
-    || typeof relation.url === 'string';
+  return (typeof relation.id === 'number' && Number.isInteger(relation.id) && relation.id > 0)
+    || (typeof relation.documentId === 'string' && relation.documentId.trim().length > 0)
+    || (typeof relation.url === 'string' && relation.url.trim().length > 0);
 }
 
 function anchorForDirection(
