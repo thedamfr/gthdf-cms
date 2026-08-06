@@ -54,7 +54,7 @@ export interface ChapterGpxAnchor extends Struct.ComponentSchema {
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 80;
       }>;
-    chainageMetres: Schema.Attribute.Decimal &
+    chainageMetres: Schema.Attribute.Float &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
@@ -62,7 +62,7 @@ export interface ChapterGpxAnchor extends Struct.ComponentSchema {
         },
         number
       >;
-    distanceToCityMetres: Schema.Attribute.Decimal &
+    distanceToCityMetres: Schema.Attribute.Float &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
@@ -70,7 +70,7 @@ export interface ChapterGpxAnchor extends Struct.ComponentSchema {
         },
         number
       >;
-    fraction: Schema.Attribute.Decimal &
+    fraction: Schema.Attribute.Float &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
@@ -87,7 +87,7 @@ export interface ChapterGpxAnchor extends Struct.ComponentSchema {
         },
         number
       >;
-    projectedLatitude: Schema.Attribute.Decimal &
+    projectedLatitude: Schema.Attribute.Float &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
@@ -96,7 +96,7 @@ export interface ChapterGpxAnchor extends Struct.ComponentSchema {
         },
         number
       >;
-    projectedLongitude: Schema.Attribute.Decimal &
+    projectedLongitude: Schema.Attribute.Float &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
@@ -145,7 +145,7 @@ export interface ChapterGpxJunction extends Struct.ComponentSchema {
     icon: 'link';
   };
   attributes: {
-    gapMetres: Schema.Attribute.Decimal &
+    gapMetres: Schema.Attribute.Float &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {

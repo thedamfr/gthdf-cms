@@ -378,6 +378,16 @@ application, relire les brouillons, publier l’ensemble cohérent, exécuter le
 recettes AB et BA depuis le frontend, puis seulement activer le coupe-circuit.
 Un second passage avec les mêmes résolutions doit être idempotent.
 
+Les mesures géométriques des composants `gpx-anchor` et `gpx-junction`
+utilisent le type Strapi `float`, stocké en `double precision` dans PostgreSQL.
+Le type Strapi `decimal` ne convient pas ici : sa précision par défaut
+`numeric(10,2)` arrondit notamment les coordonnées et la fraction de segment.
+Après le déploiement d’un changement de ce type, réappliquer les résolutions
+aux brouillons pour restaurer les valeurs issues des GPX, puis exiger un second
+passage entièrement inchangé avant toute publication. Un rollback immédiat
+désactive le Builder et conserve ces colonnes en double précision ; il ne les
+reconvertit pas en `decimal`.
+
 Pour revenir en arrière, laisser ou remettre le coupe-circuit à `false`, puis
 restaurer les valeurs `before` du rapport conservé ou la sauvegarde PostgreSQL.
 Ne pas supprimer les champs additifs ni les médias dans un rollback immédiat.
