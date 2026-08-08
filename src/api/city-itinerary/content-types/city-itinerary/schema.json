@@ -1,0 +1,114 @@
+{
+  "kind": "collectionType",
+  "collectionName": "city_itineraries",
+  "info": {
+    "singularName": "city-itinerary",
+    "pluralName": "city-itineraries",
+    "displayName": "Itinéraire ville à ville",
+    "description": "Document éditorial stable portant l’URL publique d’une paire"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "businessKey": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 300
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 180
+    },
+    "route": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::reference-route.reference-route",
+      "inversedBy": "itineraries",
+      "required": true
+    },
+    "cityA": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::city.city",
+      "required": true
+    },
+    "cityB": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::city.city",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "activeRevision": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::itinerary-revision.itinerary-revision"
+    },
+    "reviewStatus": {
+      "type": "enumeration",
+      "enum": ["to_review", "approved", "rejected"],
+      "required": true,
+      "default": "to_review"
+    },
+    "publicationNext": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "seoStatus": {
+      "type": "enumeration",
+      "enum": ["noindex", "indexable"],
+      "required": true,
+      "default": "noindex"
+    },
+    "featuredOnCityPages": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "editorialOrder": {
+      "type": "integer",
+      "min": 0
+    },
+    "introduction": {
+      "type": "text"
+    },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "shared.media",
+        "shared.quote",
+        "shared.rich-text",
+        "shared.slider"
+      ]
+    },
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "currentEvaluationHash": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "regex": "^[A-Fa-f0-9]{64}$",
+      "info": {
+        "description": "Empreinte système courante comparée directement à la dernière revérification active."
+      }
+    },
+    "revisions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::itinerary-revision.itinerary-revision",
+      "mappedBy": "itinerary"
+    }
+  }
+}

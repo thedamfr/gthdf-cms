@@ -1,0 +1,200 @@
+{
+  "kind": "collectionType",
+  "collectionName": "itinerary_revisions",
+  "info": {
+    "singularName": "itinerary-revision",
+    "pluralName": "itinerary-revisions",
+    "displayName": "Révision calculée d’itinéraire",
+    "description": "Résultat géométrique immuable et auditable"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "revisionKey": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 400
+    },
+    "itinerary": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::city-itinerary.city-itinerary",
+      "inversedBy": "revisions",
+      "required": true
+    },
+    "run": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::catalogue-run.catalogue-run",
+      "required": true
+    },
+    "departure": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::city.city",
+      "required": true
+    },
+    "arrival": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::city.city",
+      "required": true
+    },
+    "departureAnchor": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::route-anchor.route-anchor",
+      "required": true
+    },
+    "arrivalAnchor": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::route-anchor.route-anchor",
+      "required": true
+    },
+    "distanceMetres": {
+      "type": "float",
+      "required": true,
+      "min": 0
+    },
+    "asTheCrowFliesMetres": {
+      "type": "float",
+      "required": true,
+      "min": 0
+    },
+    "elevationGainMetres": {
+      "type": "float",
+      "min": 0
+    },
+    "elevationLossMetres": {
+      "type": "float",
+      "min": 0
+    },
+    "elevationAvailable": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "eligibleByRoute": {
+      "type": "boolean",
+      "required": true
+    },
+    "eligibleByDirect": {
+      "type": "boolean",
+      "required": true
+    },
+    "detourRatio": {
+      "type": "float",
+      "min": 0
+    },
+    "usesLoopOrigin": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "junctionWarnings": {
+      "type": "json"
+    },
+    "chaptersOnRoute": {
+      "type": "component",
+      "component": "catalogue.chapter-on-route",
+      "repeatable": true
+    },
+    "citiesOnRoute": {
+      "type": "component",
+      "component": "catalogue.city-on-route",
+      "repeatable": true
+    },
+    "generatedGpx": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["files"]
+    },
+    "generatedGpxSha256": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "regex": "^[A-Fa-f0-9]{64}$"
+    },
+    "generatedGpxObjectKey": {
+      "type": "string",
+      "private": true,
+      "maxLength": 500
+    },
+    "displayGeometry": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["files"]
+    },
+    "displayGeometrySha256": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "regex": "^[A-Fa-f0-9]{64}$"
+    },
+    "displayGeometryObjectKey": {
+      "type": "string",
+      "private": true,
+      "maxLength": 500
+    },
+    "sourceHash": {
+      "type": "string",
+      "required": true,
+      "minLength": 64,
+      "maxLength": 64,
+      "regex": "^[A-Fa-f0-9]{64}$"
+    },
+    "lastVerifiedEvaluationHash": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "regex": "^[A-Fa-f0-9]{64}$"
+    },
+    "lastVerifiedRun": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::catalogue-run.catalogue-run"
+    },
+    "algorithmVersion": {
+      "type": "string",
+      "required": true,
+      "maxLength": 80
+    },
+    "calculationStatus": {
+      "type": "enumeration",
+      "enum": ["ready", "warning", "error", "stale", "archived"],
+      "required": true
+    },
+    "warningApproved": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "warningApprovedAt": {
+      "type": "datetime"
+    },
+    "warningApprovedBy": {
+      "type": "string",
+      "maxLength": 160
+    },
+    "artifactIntegrityStatus": {
+      "type": "enumeration",
+      "enum": ["pending", "verified", "invalid"],
+      "required": true,
+      "default": "pending"
+    },
+    "artifactIntegrityHash": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "regex": "^[A-Fa-f0-9]{64}$"
+    },
+    "calculationReport": {
+      "type": "json",
+      "private": true
+    }
+  }
+}

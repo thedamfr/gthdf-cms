@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "itinerary_slug_redirects",
+  "info": {
+    "singularName": "itinerary-slug-redirect",
+    "pluralName": "itinerary-slug-redirects",
+    "displayName": "Redirection d’itinéraire",
+    "description": "Ancien slug explicitement relié à sa cible canonique"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "oldSlug": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "regex": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "itinerary": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::city-itinerary.city-itinerary",
+      "required": true
+    },
+    "enabled": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "reason": {
+      "type": "text",
+      "required": true,
+      "maxLength": 300
+    }
+  }
+}

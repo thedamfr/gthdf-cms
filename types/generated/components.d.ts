@@ -1,5 +1,74 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface CatalogueChapterOnRoute extends Struct.ComponentSchema {
+  collectionName: 'components_catalogue_chapters_on_route';
+  info: {
+    description: 'Chapitre inclus dans une r\u00E9vision, dans l\u2019ordre de la portion';
+    displayName: 'Chapitre travers\u00E9';
+    icon: 'layer';
+  };
+  attributes: {
+    chapter: Schema.Attribute.Relation<'oneToOne', 'api::chapter.chapter'> &
+      Schema.Attribute.Required;
+    direction: Schema.Attribute.Enumeration<['ab', 'ba']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'ab'>;
+    distanceMetres: Schema.Attribute.Float &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    routeOrder: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+  };
+}
+
+export interface CatalogueCityOnRoute extends Struct.ComponentSchema {
+  collectionName: 'components_catalogue_cities_on_route';
+  info: {
+    description: 'Premi\u00E8re occurrence d\u2019une ville sur une r\u00E9vision calcul\u00E9e';
+    displayName: 'Ville travers\u00E9e';
+    icon: 'pinMap';
+  };
+  attributes: {
+    chainageFromDepartureMetres: Schema.Attribute.Float &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    city: Schema.Attribute.Relation<'oneToOne', 'api::city.city'> &
+      Schema.Attribute.Required;
+    occurrenceIndex: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    routeOrder: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+  };
+}
+
 export interface ChapterCityPassage extends Struct.ComponentSchema {
   collectionName: 'components_chapter_city_passages';
   info: {
@@ -257,6 +326,51 @@ export interface HomepagePrincipleCard extends Struct.ComponentSchema {
   };
 }
 
+export interface RouteReferenceSegment extends Struct.ComponentSchema {
+  collectionName: 'components_route_reference_segments';
+  info: {
+    description: 'Chapitre et jonction dans l\u2019ordre canonique du catalogue';
+    displayName: 'Segment de parcours de r\u00E9f\u00E9rence';
+    icon: 'route';
+  };
+  attributes: {
+    chapter: Schema.Attribute.Relation<'oneToOne', 'api::chapter.chapter'> &
+      Schema.Attribute.Required;
+    direction: Schema.Attribute.Enumeration<['ab', 'ba']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'ab'>;
+    junctionAfterGapMetres: Schema.Attribute.Float &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    junctionAfterStatus: Schema.Attribute.Enumeration<
+      ['proposed', 'exact', 'accepted_gap', 'blocked', 'stale']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'proposed'>;
+    junctionNote: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 300;
+      }>;
+    nextSourceSha256: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 64;
+        minLength: 64;
+      }>;
+    sourceSha256: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 64;
+        minLength: 64;
+      }>;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -353,6 +467,8 @@ export interface SharedTestimonial extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export namespace Public {
     export interface ComponentSchemas {
+      'catalogue.chapter-on-route': CatalogueChapterOnRoute;
+      'catalogue.city-on-route': CatalogueCityOnRoute;
       'chapter.city-passage': ChapterCityPassage;
       'chapter.destination': ChapterDestination;
       'chapter.gpx-anchor': ChapterGpxAnchor;
@@ -362,6 +478,7 @@ declare module '@strapi/strapi' {
       'homepage.faq-item': HomepageFaqItem;
       'homepage.horizon-card': HomepageHorizonCard;
       'homepage.principle-card': HomepagePrincipleCard;
+      'route.reference-segment': RouteReferenceSegment;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

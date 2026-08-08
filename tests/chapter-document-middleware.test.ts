@@ -3,9 +3,12 @@ import test from 'node:test';
 
 import {
   CHAPTER_PUBLICATION_LOCK_KEY,
+  CATALOGUE_SOURCE_LOCK_KEY,
   runDocumentMiddleware,
+  validateCityItineraryDocument,
   validateChapterDocument,
 } from '../src/index.ts';
+import { computeArtifactIntegrityHash } from '../src/domain/catalogue-validation.ts';
 
 const publishedChapters = [
   {
@@ -77,8 +80,11 @@ function createSerializedStrapiMock(events: string[], globalEnabled = false) {
           trx: {
             raw: async (sql, bindings) => {
               assert.equal(sql, 'SELECT pg_advisory_xact_lock(?)');
-              assert.deepEqual(bindings, [CHAPTER_PUBLICATION_LOCK_KEY]);
-              events.push('lock:advisory');
+              assert.equal(
+                bindings[0] === CHAPTER_PUBLICATION_LOCK_KEY || bindings[0] === CATALOGUE_SOURCE_LOCK_KEY,
+                true,
+              );
+              events.push(bindings[0] === CHAPTER_PUBLICATION_LOCK_KEY ? 'lock:advisory' : 'lock:catalogue');
             },
           },
         });
@@ -96,6 +102,10 @@ function createSerializedStrapiMock(events: string[], globalEnabled = false) {
             return { gpxBuilderEnabled: globalEnabled };
           }
           return draft;
+        },
+        updateMany: async () => {
+          events.push(`catalogue:invalidate:${uid}`);
+          return { count: 1 };
         },
       }),
     },
@@ -337,3 +347,77 @@ for (const { label, context } of draftMutationCases) {
     assert.equal(events.includes('next'), true);
   });
 }
+
+test('validateCityItineraryDocument hydrate une activeRevision entrante avant activation', async () => {
+  const evaluationHash = 'a'.repeat(64);
+  const sourceHash = 'b'.repeat(64);
+  const generatedGpxSha256 = 'c'.repeat(64);
+  const displayGeometrySha256 = 'd'.repeat(64);
+  const businessKey = 'route-locale:FR-A:FR-B';
+  const revisionReads: unknown[] = [];
+  const revision = {
+    documentId: 'revision-doc',
+    itinerary: { documentId: 'itinerary-doc', businessKey },
+    departure: { documentId: 'city-a', municipalityKey: 'FR-A' },
+    arrival: { documentId: 'city-b', municipalityKey: 'FR-B' },
+    calculationStatus: 'ready',
+    warningApproved: false,
+    warningApprovedAt: null,
+    warningApprovedBy: null,
+    eligibleByRoute: true,
+    eligibleByDirect: true,
+    generatedGpx: { documentId: 'gpx-media', url: '/fixture.gpx' },
+    generatedGpxSha256,
+    displayGeometry: { documentId: 'geometry-media', url: '/fixture.json' },
+    displayGeometrySha256,
+    sourceHash,
+    lastVerifiedEvaluationHash: evaluationHash,
+    artifactIntegrityStatus: 'verified',
+    artifactIntegrityHash: computeArtifactIntegrityHash({
+      sourceHash,
+      generatedGpxSha256,
+      displayGeometrySha256,
+    }),
+  };
+  const draft = {
+    documentId: 'itinerary-doc',
+    businessKey,
+    title: 'Fixture locale',
+    slug: 'fixture-locale',
+    reviewStatus: 'approved',
+    publicationNext: false,
+    currentEvaluationHash: evaluationHash,
+    route: { documentId: 'route-doc', routeKey: 'route-locale', catalogueEnabled: true },
+    cityA: { documentId: 'city-a', municipalityKey: 'FR-A' },
+    cityB: { documentId: 'city-b', municipalityKey: 'FR-B' },
+    activeRevision: null,
+  };
+  const strapi = {
+    db: {
+      query: (uid: string) => ({
+        findOne: async (options: unknown) => {
+          if (uid === 'api::city-itinerary.city-itinerary') return draft;
+          if (uid === 'api::itinerary-revision.itinerary-revision') {
+            revisionReads.push(options);
+            return revision;
+          }
+          return null;
+        },
+      }),
+    },
+  };
+
+  await assert.doesNotReject(() => validateCityItineraryDocument(strapi as never, {
+    action: 'update',
+    contentType: { uid: 'api::city-itinerary.city-itinerary' },
+    params: {
+      documentId: 'itinerary-doc',
+      status: 'draft',
+      data: { activeRevision: 'revision-doc', publicationNext: true },
+    },
+  }));
+  assert.equal(revisionReads.length, 1);
+  assert.deepEqual((revisionReads[0] as any).where, { documentId: 'revision-doc' });
+  assert.equal((revisionReads[0] as any).populate.itinerary, true);
+  assert.equal((revisionReads[0] as any).populate.generatedGpx, true);
+});

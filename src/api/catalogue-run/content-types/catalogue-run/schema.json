@@ -1,0 +1,100 @@
+{
+  "kind": "collectionType",
+  "collectionName": "catalogue_runs",
+  "info": {
+    "singularName": "catalogue-run",
+    "pluralName": "catalogue-runs",
+    "displayName": "Exécution du catalogue",
+    "description": "Audit d’une application verrouillée et reprenable"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "runKey": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 160
+    },
+    "mode": {
+      "type": "enumeration",
+      "enum": ["import", "anchors", "calculate", "apply", "resume", "archive_check", "media_gc"],
+      "required": true
+    },
+    "scope": {
+      "type": "json",
+      "required": true,
+      "private": true
+    },
+    "operator": {
+      "type": "string",
+      "required": true,
+      "maxLength": 160,
+      "private": true
+    },
+    "startedAt": {
+      "type": "datetime",
+      "required": true
+    },
+    "completedAt": {
+      "type": "datetime"
+    },
+    "heartbeatAt": {
+      "type": "datetime"
+    },
+    "lockExpiresAt": {
+      "type": "datetime"
+    },
+    "leaseOwner": {
+      "type": "string",
+      "private": true,
+      "maxLength": 80
+    },
+    "codeVersion": {
+      "type": "string",
+      "required": true,
+      "maxLength": 120
+    },
+    "inputHash": {
+      "type": "string",
+      "required": true,
+      "minLength": 64,
+      "maxLength": 64,
+      "regex": "^[A-Fa-f0-9]{64}$",
+      "private": true
+    },
+    "reportHash": {
+      "type": "string",
+      "required": true,
+      "minLength": 64,
+      "maxLength": 64,
+      "regex": "^[A-Fa-f0-9]{64}$",
+      "private": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["planned", "running", "succeeded", "failed", "interrupted"],
+      "required": true,
+      "default": "planned"
+    },
+    "cursor": {
+      "type": "string",
+      "maxLength": 400,
+      "private": true
+    },
+    "counters": {
+      "type": "json",
+      "private": true
+    },
+    "errorSummary": {
+      "type": "json",
+      "private": true
+    },
+    "report": {
+      "type": "json",
+      "private": true
+    }
+  }
+}

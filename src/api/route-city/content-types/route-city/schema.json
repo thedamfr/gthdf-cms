@@ -1,0 +1,75 @@
+{
+  "kind": "collectionType",
+  "collectionName": "route_cities",
+  "info": {
+    "singularName": "route-city",
+    "pluralName": "route-cities",
+    "displayName": "Commune candidate du parcours",
+    "description": "Qualification administrative d’une commune pour un parcours"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "routeCityKey": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 200
+    },
+    "route": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::reference-route.reference-route",
+      "inversedBy": "routeCities",
+      "required": true
+    },
+    "city": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::city.city",
+      "required": true
+    },
+    "qualificationStatus": {
+      "type": "enumeration",
+      "enum": ["proposed", "validated", "rejected", "stale"],
+      "required": true,
+      "default": "proposed"
+    },
+    "qualificationSourceHash": {
+      "type": "string",
+      "required": true,
+      "minLength": 64,
+      "maxLength": 64,
+      "regex": "^[A-Fa-f0-9]{64}$"
+    },
+    "qualifiedAt": {
+      "type": "datetime"
+    },
+    "expectedOccurrences": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "qualificationEvidence": {
+      "type": "json",
+      "private": true
+    },
+    "currentInputFingerprint": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "regex": "^[A-Fa-f0-9]{64}$"
+    },
+    "reviewNote": {
+      "type": "text"
+    },
+    "anchors": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::route-anchor.route-anchor",
+      "mappedBy": "routeCity"
+    }
+  }
+}

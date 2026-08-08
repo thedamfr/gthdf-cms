@@ -1,0 +1,79 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reference_routes",
+  "info": {
+    "singularName": "reference-route",
+    "pluralName": "reference-routes",
+    "displayName": "Parcours de référence",
+    "description": "Boucle canonique et sources du catalogue ville à ville"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "routeKey": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "regex": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "isLoop": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "catalogueEnabled": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "algorithmVersion": {
+      "type": "string",
+      "required": true,
+      "maxLength": 80
+    },
+    "segments": {
+      "type": "component",
+      "component": "route.reference-segment",
+      "repeatable": true,
+      "required": true
+    },
+    "sourceManifestHash": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "regex": "^[A-Fa-f0-9]{64}$"
+    },
+    "currentInputFingerprint": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "regex": "^[A-Fa-f0-9]{64}$"
+    },
+    "notes": {
+      "type": "text"
+    },
+    "routeCities": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::route-city.route-city",
+      "mappedBy": "route"
+    },
+    "itineraries": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::city-itinerary.city-itinerary",
+      "mappedBy": "route"
+    }
+  }
+}

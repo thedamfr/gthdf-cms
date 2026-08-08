@@ -1,0 +1,52 @@
+{
+  "collectionName": "components_route_reference_segments",
+  "info": {
+    "displayName": "Segment de parcours de référence",
+    "icon": "route",
+    "description": "Chapitre et jonction dans l’ordre canonique du catalogue"
+  },
+  "options": {},
+  "attributes": {
+    "chapter": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::chapter.chapter",
+      "required": true
+    },
+    "direction": {
+      "type": "enumeration",
+      "enum": ["ab", "ba"],
+      "required": true,
+      "default": "ab"
+    },
+    "sourceSha256": {
+      "type": "string",
+      "required": true,
+      "minLength": 64,
+      "maxLength": 64,
+      "regex": "^[A-Fa-f0-9]{64}$"
+    },
+    "nextSourceSha256": {
+      "type": "string",
+      "required": true,
+      "minLength": 64,
+      "maxLength": 64,
+      "regex": "^[A-Fa-f0-9]{64}$"
+    },
+    "junctionAfterStatus": {
+      "type": "enumeration",
+      "enum": ["proposed", "exact", "accepted_gap", "blocked", "stale"],
+      "required": true,
+      "default": "proposed"
+    },
+    "junctionAfterGapMetres": {
+      "type": "float",
+      "required": true,
+      "min": 0
+    },
+    "junctionNote": {
+      "type": "text",
+      "maxLength": 300
+    }
+  }
+}
