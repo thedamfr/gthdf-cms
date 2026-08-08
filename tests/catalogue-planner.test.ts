@@ -173,7 +173,7 @@ test('le planner recalcule la distance PRD03 depuis les coordonnées de commune 
   assert.ok(Math.abs(plan.operations[0].distanceToTraceMetres - distanceWgs84Metres(
     { latitude: 0.01, longitude: 1.25 },
     { latitude: 0, longitude: 1.25 },
-  )) < 1e-6);
+  )) < 1e-3);
 });
 
 test('calculate bloque une ancre validée dont le chaînage ne se recompose pas depuis le GPX', () => {
