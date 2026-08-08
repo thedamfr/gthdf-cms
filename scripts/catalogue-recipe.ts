@@ -267,6 +267,83 @@ export function configureLocalRecipeConnectionPool(environment = process.env): v
   }
 }
 
+type RecipePool = {
+  numUsed(): number;
+  numPendingAcquires(): number;
+  numPendingCreates(): number;
+  numPendingValidations(): number;
+};
+
+type RecipePoolIdleOptions = {
+  timeoutMs?: number;
+  pollIntervalMs?: number;
+  stableSamples?: number;
+  now?: () => number;
+  sleep?: (delayMs: number) => Promise<void>;
+};
+
+function recipePool(app: any): RecipePool {
+  const pool = app?.db?.connection?.client?.pool;
+  for (const metric of [
+    'numUsed',
+    'numPendingAcquires',
+    'numPendingCreates',
+    'numPendingValidations',
+  ]) {
+    if (typeof pool?.[metric] !== 'function') {
+      throw new Error(`Le pool PostgreSQL local n’expose pas la métrique ${metric}.`);
+    }
+  }
+  return pool as RecipePool;
+}
+
+/**
+ * Strapi 5.51 programme le deep-populate des événements Documents dans un
+ * callback onCommit dont la promesse n’est pas attendue par le framework.
+ * Une commande autonome doit donc laisser ces lectures finir avant de fermer
+ * Knex, sinon app.destroy() peut vider le pool sous XtoOne.populateValue.
+ */
+export async function waitForLocalRecipeDatabaseIdle(
+  app: any,
+  options: RecipePoolIdleOptions = {},
+): Promise<void> {
+  const pool = recipePool(app);
+  const timeoutMs = options.timeoutMs ?? 60_000;
+  const pollIntervalMs = options.pollIntervalMs ?? 25;
+  const stableSamples = options.stableSamples ?? 3;
+  const now = options.now ?? Date.now;
+  const sleep = options.sleep ?? ((delayMs: number) => (
+    new Promise<void>((resolve) => setTimeout(resolve, delayMs))
+  ));
+  if (!Number.isSafeInteger(timeoutMs) || timeoutMs <= 0) {
+    throw new Error('Le timeout d’attente du pool local doit être un entier positif.');
+  }
+  if (!Number.isSafeInteger(pollIntervalMs) || pollIntervalMs < 0) {
+    throw new Error('L’intervalle d’attente du pool local doit être un entier positif ou nul.');
+  }
+  if (!Number.isSafeInteger(stableSamples) || stableSamples < 2) {
+    throw new Error('Le pool local doit être observé inactif au moins deux fois de suite.');
+  }
+
+  const deadline = now() + timeoutMs;
+  let consecutiveIdleSamples = 0;
+  do {
+    // Toujours céder au moins un tour : les callbacks onCommit démarrent juste
+    // après la résolution de l’opération Documents qui les a programmés.
+    await sleep(pollIntervalMs);
+    const active = pool.numUsed()
+      + pool.numPendingAcquires()
+      + pool.numPendingCreates()
+      + pool.numPendingValidations();
+    consecutiveIdleSamples = active === 0 ? consecutiveIdleSamples + 1 : 0;
+    if (consecutiveIdleSamples >= stableSamples) return;
+  } while (now() < deadline);
+
+  throw new Error(
+    `Le pool PostgreSQL local est resté actif plus de ${timeoutMs} ms après la recette.`,
+  );
+}
+
 function fixtureBusinessKey(): string {
   return buildBusinessKey(FIXTURE_ROUTE_KEY, 'FR-PRD04-A', 'FR-PRD04-B');
 }
@@ -849,12 +926,21 @@ export async function runCatalogueRecipe(argv = process.argv.slice(2)): Promise<
     recipeDebug(`échec: ${error instanceof Error ? error.stack ?? error.message : String(error)}`);
     throw error;
   } finally {
+    let shutdownError: unknown = null;
+    try {
+      await waitForLocalRecipeDatabaseIdle(app);
+    } catch (error) {
+      shutdownError = error;
+    }
     try {
       await app.destroy();
-    } catch (destroyError) {
+    } catch (error) {
+      shutdownError ??= error;
+    }
+    if (shutdownError) {
       // Ne jamais masquer l’erreur métier initiale avec l’annulation d’une
       // connexion encore en attente pendant la fermeture de Strapi.
-      if (!operationError) throw destroyError;
+      if (!operationError) throw shutdownError;
     }
   }
 }

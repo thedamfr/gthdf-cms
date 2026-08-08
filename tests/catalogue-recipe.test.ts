@@ -11,6 +11,7 @@ import {
   parseRecipeArguments,
   requireLocalFixtureMediaId,
   restoreLocalFixtureFingerprints,
+  waitForLocalRecipeDatabaseIdle,
 } from '../scripts/catalogue-recipe';
 import {
   parseOfficialGpx,
@@ -197,6 +198,58 @@ test('la recette réserve assez de connexions pour les publications relationnell
   const alreadySized = { DATABASE_POOL_MAX: '12' } as NodeJS.ProcessEnv;
   configureLocalRecipeConnectionPool(alreadySized);
   assert.equal(alreadySized.DATABASE_POOL_MAX, '12');
+});
+
+test('la recette attend la fin stable des deep-populates post-commit avant de fermer Strapi', async () => {
+  const samples = [
+    { used: 1, acquires: 2, creates: 0, validations: 0 },
+    { used: 0, acquires: 0, creates: 0, validations: 0 },
+    { used: 0, acquires: 1, creates: 0, validations: 0 },
+    { used: 0, acquires: 0, creates: 0, validations: 0 },
+    { used: 0, acquires: 0, creates: 0, validations: 0 },
+    { used: 0, acquires: 0, creates: 0, validations: 0 },
+  ];
+  let sampleIndex = -1;
+  const current = () => samples[Math.max(0, sampleIndex)];
+  const pool = {
+    numUsed: () => current().used,
+    numPendingAcquires: () => current().acquires,
+    numPendingCreates: () => current().creates,
+    numPendingValidations: () => current().validations,
+  };
+  const app = { db: { connection: { client: { pool } } } };
+
+  await waitForLocalRecipeDatabaseIdle(app, {
+    timeoutMs: 100,
+    pollIntervalMs: 0,
+    stableSamples: 3,
+    sleep: async () => { sampleIndex += 1; },
+  });
+
+  assert.equal(sampleIndex, 5);
+});
+
+test('la recette borne l’attente si le travail post-commit ne libère jamais le pool', async () => {
+  let clock = 0;
+  const pool = {
+    numUsed: () => 1,
+    numPendingAcquires: () => 0,
+    numPendingCreates: () => 0,
+    numPendingValidations: () => 0,
+  };
+  const app = { db: { connection: { client: { pool } } } };
+
+  await assert.rejects(
+    waitForLocalRecipeDatabaseIdle(app, {
+      timeoutMs: 10,
+      pollIntervalMs: 0,
+      stableSamples: 2,
+      now: () => clock,
+      sleep: async () => { clock += 5; },
+    }),
+    /resté actif plus de 10 ms/,
+  );
+  assert.equal(clock, 10);
 });
 
 test('la fixture restaure les fingerprints après la dernière mutation source', async () => {
