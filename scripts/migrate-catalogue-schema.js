@@ -62,6 +62,21 @@ function buildCatalogueSchemaStatements() {
   return [
     'ALTER TABLE "cities" ALTER COLUMN "latitude" TYPE double precision USING "latitude"::double precision',
     'ALTER TABLE "cities" ALTER COLUMN "longitude" TYPE double precision USING "longitude"::double precision',
+    `DO $catalogue$
+    BEGIN
+      IF EXISTS (
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_schema = current_schema()
+          AND table_name = 'globals'
+          AND column_name = 'publish_city_itineraries_to_next'
+      ) THEN
+        UPDATE "globals"
+        SET "publish_city_itineraries_to_next" = false
+        WHERE "publish_city_itineraries_to_next" IS NULL;
+      END IF;
+    END;
+    $catalogue$`,
     `CREATE TABLE IF NOT EXISTS "catalogue_apply_locks" (
       "lock_key" text PRIMARY KEY,
       "run_key" text NOT NULL,
@@ -136,6 +151,43 @@ async function readCoordinateSamples(client) {
   return result.rows;
 }
 
+async function readGlobalSwitchState(client) {
+  const existenceResult = await client.query(`
+    SELECT EXISTS (
+      SELECT 1
+      FROM information_schema.columns
+      WHERE table_schema = current_schema()
+        AND table_name = 'globals'
+        AND column_name = 'publish_city_itineraries_to_next'
+    ) AS "columnExists"
+  `);
+  if (existenceResult.rows[0]?.columnExists !== true) {
+    return {
+      columnExists: false,
+      totalRows: null,
+      nullRows: null,
+      falseRows: null,
+      trueRows: null,
+    };
+  }
+  const stateResult = await client.query(`
+    SELECT
+      COUNT(*)::integer AS "totalRows",
+      COUNT(*) FILTER (WHERE "publish_city_itineraries_to_next" IS NULL)::integer AS "nullRows",
+      COUNT(*) FILTER (WHERE "publish_city_itineraries_to_next" = false)::integer AS "falseRows",
+      COUNT(*) FILTER (WHERE "publish_city_itineraries_to_next" = true)::integer AS "trueRows"
+    FROM "globals"
+  `);
+  const row = stateResult.rows[0] ?? {};
+  return {
+    columnExists: true,
+    totalRows: Number(row.totalRows ?? 0),
+    nullRows: Number(row.nullRows ?? 0),
+    falseRows: Number(row.falseRows ?? 0),
+    trueRows: Number(row.trueRows ?? 0),
+  };
+}
+
 function hashReport(payload) {
   return createHash('sha256').update(JSON.stringify(payload)).digest('hex');
 }
@@ -154,18 +206,21 @@ async function runCatalogueSchemaMigration(options, dependencies = {}) {
   const client = dependencies.client ?? new Client(connectionOptions(process.env));
   if (!dependencies.client) await client.connect();
   const report = {
-    version: 1,
+    version: 2,
     mode: options.apply ? 'apply' : 'dry-run',
     remote: options.remote,
     backupReference: options.apply ? options.backupReference : null,
     statements: buildCatalogueSchemaStatements(),
     beforeColumnTypes: [],
     afterColumnTypes: [],
+    beforeGlobalSwitchState: null,
+    afterGlobalSwitchState: null,
     coordinateSampleCount: 0,
     status: 'pending',
   };
   try {
     report.beforeColumnTypes = await readColumnTypes(client);
+    report.beforeGlobalSwitchState = await readGlobalSwitchState(client);
     const before = await readCoordinateSamples(client);
     report.coordinateSampleCount = before.length;
     if (options.apply) {
@@ -193,6 +248,7 @@ async function runCatalogueSchemaMigration(options, dependencies = {}) {
       }
     }
     report.afterColumnTypes = await readColumnTypes(client);
+    report.afterGlobalSwitchState = await readGlobalSwitchState(client);
     report.status = options.apply ? 'applied' : 'ready_for_review';
     report.reportHash = hashReport(report);
     mkdirSync(dirname(options.reportPath), { recursive: true });
@@ -232,6 +288,7 @@ if (require.main === module) {
 module.exports = {
   buildCatalogueSchemaStatements,
   parseCatalogueSchemaMigrationArguments,
+  readGlobalSwitchState,
   runCatalogueSchemaMigration,
   validateCoordinatePrecision,
   validateMigrationSafety,

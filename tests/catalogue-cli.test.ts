@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
 import { EventEmitter } from 'node:events';
+import { resolve } from 'node:path';
 import test from 'node:test';
 
 import {
@@ -9,6 +11,23 @@ import {
   parseCatalogueArguments,
   resolveCatalogueCodeVersion,
 } from '../scripts/catalogue';
+
+test('le fichier CLI exécute réellement son point d’entrée sous le loader TypeScript', () => {
+  const result = spawnSync(process.execPath, [
+    '--import',
+    'tsx',
+    resolve(process.cwd(), 'scripts/catalogue.ts'),
+    'import',
+    '--help',
+  ], {
+    cwd: process.cwd(),
+    encoding: 'utf8',
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /Catalogue PRD04 — dry-run strict par défaut/);
+  assert.match(result.stdout, /npm run catalogue:import/);
+});
 
 test('le parseur conserve toutes les options consécutives avec valeur', () => {
   const hash = 'a'.repeat(64);

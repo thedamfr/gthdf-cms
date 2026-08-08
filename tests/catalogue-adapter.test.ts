@@ -73,6 +73,66 @@ test('les relations média Strapi utilisent toujours l’id numérique, jamais l
   );
 });
 
+test('la pagination Documents API utilise start/limit à plat et termine après la dernière page', async () => {
+  const source = Array.from({ length: 223 }, (_, index) => ({
+    id: index + 1,
+    documentId: `document-${String(index + 1).padStart(3, '0')}`,
+  }));
+  const calls: Array<Record<string, any>> = [];
+  const app = {
+    documents: (uid: string) => {
+      assert.equal(uid, 'api::city.city');
+      return {
+        findMany: async (options: Record<string, any>) => {
+          calls.push(options);
+          if (calls.length > 3) throw new Error('pagination non bornée');
+          // Strapi 5 ignore la clé REST imbriquée `pagination` dans son
+          // Document Service et ne transmet que les paramètres plats.
+          const start = Number(options.start ?? 0);
+          const limit = Number(options.limit ?? source.length);
+          return source.slice(start, start + limit);
+        },
+      };
+    },
+  };
+
+  const documents = await testing.listDocuments(app, 'api::city.city', {
+    status: 'draft',
+  });
+
+  assert.deepEqual(documents, source);
+  assert.deepEqual(calls.map(({ start, limit }) => ({ start, limit })), [
+    { start: 0, limit: 100 },
+    { start: 100, limit: 100 },
+    { start: 200, limit: 100 },
+  ]);
+  assert.equal(calls.every((options) => !Object.hasOwn(options, 'pagination')), true);
+});
+
+test('la lecture d’un document utilise aussi la pagination plate et bornée', async () => {
+  let received: Record<string, any> | null = null;
+  const app = {
+    documents: () => ({
+      findMany: async (options: Record<string, any>) => {
+        received = options;
+        return [{ documentId: 'first-document' }];
+      },
+    }),
+  };
+
+  const document = await testing.findDocument(app, 'api::reference-route.reference-route', {
+    status: 'published',
+  });
+
+  assert.equal(document.documentId, 'first-document');
+  assert.deepEqual(received, {
+    status: 'published',
+    sort: ['documentId:asc', 'id:asc'],
+    start: 0,
+    limit: 1,
+  });
+});
+
 test('une archive ferme l’empreinte de toutes les versions D&P du document', async () => {
   const writes: Array<{ uid: string; method: string; input: unknown }> = [];
   const draft = {
