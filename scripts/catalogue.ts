@@ -566,10 +566,15 @@ export async function runCatalogueCli(argv = process.argv.slice(2)): Promise<num
 }
 
 if (require.main === module) {
+  // Une Promise en attente ne garde pas, à elle seule, l'event loop Node active.
+  // Le timer évite donc un faux succès silencieux tant que la CLI n'est pas terminée.
+  const keepAlive = setInterval(() => undefined, 60_000);
   runCatalogueCli().then((exitCode) => {
     process.exitCode = exitCode;
   }).catch((error) => {
     process.stderr.write(`${error instanceof Error ? error.stack ?? error.message : String(error)}\n`);
     process.exitCode = 1;
+  }).finally(() => {
+    clearInterval(keepAlive);
   });
 }
