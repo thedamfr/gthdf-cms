@@ -29,6 +29,53 @@ test('le fichier CLI exécute réellement son point d’entrée sous le loader T
   assert.match(result.stdout, /npm run catalogue:import/);
 });
 
+test('le point d’entrée reste actif tant que sa Promise principale ne s’est pas terminée', () => {
+  const sentinel = 'catalogue-unref-compile-sentinel';
+  const preloadSource = `
+    import Module from 'node:module';
+
+    const originalLoad = Module._load;
+    Module._load = function (request, parent, isMain) {
+      if (request === '@strapi/strapi') {
+        return {
+          compileStrapi: () => new Promise((resolve, reject) => {
+            const timeout = setTimeout(() => reject(new Error('${sentinel}')), 250);
+            timeout.unref();
+          }),
+          createStrapi: () => {
+            throw new Error('createStrapi ne doit pas être appelée dans ce test.');
+          },
+        };
+      }
+      return originalLoad.call(this, request, parent, isMain);
+    };
+  `;
+  const result = spawnSync(process.execPath, [
+    '--import',
+    `data:text/javascript,${encodeURIComponent(preloadSource)}`,
+    '--import',
+    'tsx',
+    resolve(process.cwd(), 'scripts/catalogue.ts'),
+    'media-gc',
+    '--report',
+    resolve(process.cwd(), '.tmp/catalogue-entrypoint-liveness-test.json'),
+  ], {
+    cwd: process.cwd(),
+    encoding: 'utf8',
+    env: {
+      ...process.env,
+      NODE_ENV: 'test',
+      DATABASE_HOST: '127.0.0.1',
+      DATABASE_URL: '',
+      POSTGRESQL_ADDON_HOST: '',
+      POSTGRESQL_ADDON_URI: '',
+    },
+  });
+
+  assert.equal(result.status, 1, `stdout:\n${result.stdout}\nstderr:\n${result.stderr}`);
+  assert.match(result.stderr, new RegExp(sentinel));
+});
+
 test('le parseur conserve toutes les options consécutives avec valeur', () => {
   const hash = 'a'.repeat(64);
   const options = parseCatalogueArguments([
