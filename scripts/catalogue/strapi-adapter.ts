@@ -37,6 +37,7 @@ import {
   hashAnchorTargetState,
   hashImportResultState,
   hashImportTargetState,
+  isSafeLegacyCoordinateUpgrade,
   hashExistingItineraryState,
   materializeCalculationArtifacts,
   planCatalogueAnchors,
@@ -242,11 +243,12 @@ function objectKeyFromUrl(url: string): string {
 async function listDocuments(app: any, uid: string, options: Record<string, unknown>): Promise<any[]> {
   const values: any[] = [];
   const pageSize = 100;
-  for (let page = 1; ; page += 1) {
+  for (let start = 0; ; start += pageSize) {
     const batch = await app.documents(uid).findMany({
       ...options,
       sort: options.sort ?? ['documentId:asc', 'id:asc'],
-      pagination: { page, pageSize },
+      start,
+      limit: pageSize,
     });
     values.push(...batch);
     if (batch.length < pageSize) return values;
@@ -254,7 +256,12 @@ async function listDocuments(app: any, uid: string, options: Record<string, unkn
 }
 
 async function findDocument(app: any, uid: string, options: Record<string, unknown>): Promise<any | null> {
-  const values = await listDocuments(app, uid, { ...options, pagination: { page: 1, pageSize: 2 } });
+  const values = await app.documents(uid).findMany({
+    ...options,
+    sort: options.sort ?? ['documentId:asc', 'id:asc'],
+    start: 0,
+    limit: 1,
+  });
   return values[0] ?? null;
 }
 
@@ -1400,6 +1407,11 @@ export class CatalogueStrapiAdapter implements CatalogueApplyAdapter<any> {
       } });
       created = true;
     } else if (operation.action === 'enrich') {
+      const currentCity = cityFromEntity(city);
+      if (
+        operation.coordinateUpgrade === 'legacy_decimal_2'
+        && !isSafeLegacyCoordinateUpgrade(currentCity, source, operation.differences ?? [])
+      ) throw new Error(`La reprise des coordonnées historiques de ${source.municipalityKey} n’est plus sûre.`);
       const additions: Record<string, unknown> = {};
       for (const [field, value] of Object.entries({
         countryCode: source.countryCode,
@@ -1408,7 +1420,10 @@ export class CatalogueStrapiAdapter implements CatalogueApplyAdapter<any> {
         latitude: source.latitude,
         longitude: source.longitude,
         coordinateSource: source.coordinateSource,
-      })) if (city[field] === null || city[field] === undefined || city[field] === '') additions[field] = value;
+      })) if (
+        city[field] === null || city[field] === undefined || city[field] === ''
+        || (operation.coordinateUpgrade === 'legacy_decimal_2' && ['latitude', 'longitude'].includes(field))
+      ) additions[field] = value;
       if (Object.keys(additions).length) city = await app.documents(CITY_UID).update({
         documentId: city.documentId,
         status: 'draft',
@@ -1960,6 +1975,8 @@ export async function executeCataloguePlanOnStrapi(input: AdapterContext & {
 }
 
 export const testing = {
+  findDocument,
+  listDocuments,
   loadChapterContract,
   loadExistingItineraries,
   loadImportState,

@@ -129,6 +129,7 @@ export type ImportOperation = {
   action: 'create' | 'enrich' | 'reuse' | 'conflict';
   municipalityKey?: string;
   differences?: string[];
+  coordinateUpgrade?: 'legacy_decimal_2';
   expectedTargetHash: string;
   expectedResultHash: string;
 };
@@ -332,6 +333,49 @@ function importDifferences(city: RuntimeCity, source: CatalogueDatasetCity): str
   ].filter(([, current, proposed]) => meaningfulDifference(current, proposed)).map(([field]) => String(field));
 }
 
+/**
+ * Reproduit l’arrondi half-away-from-zero de PostgreSQL numeric(..., 2) sans
+ * dépendre des approximations de `value * 100` (1.005 doit donner 1.01).
+ */
+export function roundLegacyCoordinateToTwoDecimals(value: number): number {
+  if (!Number.isFinite(value)) throw new Error('Une coordonnée finie est requise pour l’arrondi historique.');
+  const [mantissa, exponentText = '0'] = Math.abs(value).toString().toLowerCase().split('e');
+  const [integerPart, fractionalPart = ''] = mantissa.split('.');
+  const digits = BigInt(`${integerPart}${fractionalPart}`);
+  const scaledPower = Number(exponentText) - fractionalPart.length + 2;
+  let roundedScaled: bigint;
+  if (scaledPower >= 0) {
+    roundedScaled = digits * (BigInt(10) ** BigInt(scaledPower));
+  } else {
+    const divisor = BigInt(10) ** BigInt(-scaledPower);
+    const quotient = digits / divisor;
+    const remainder = digits % divisor;
+    roundedScaled = quotient + (remainder * BigInt(2) >= divisor ? BigInt(1) : BigInt(0));
+  }
+  const signed = value < 0 ? -roundedScaled : roundedScaled;
+  const rounded = Number(signed) / 100;
+  return rounded === 0 ? 0 : rounded;
+}
+
+export function isSafeLegacyCoordinateUpgrade(
+  city: Pick<RuntimeCity, 'latitude' | 'longitude'>,
+  source: Pick<CatalogueDatasetCity, 'latitude' | 'longitude'>,
+  differences: readonly string[],
+): boolean {
+  if (
+    differences.length === 0
+    || differences.some((field) => field !== 'latitude' && field !== 'longitude')
+    || ![city.latitude, city.longitude, source.latitude, source.longitude].every(Number.isFinite)
+  ) return false;
+  const latitudeRounded = roundLegacyCoordinateToTwoDecimals(source.latitude);
+  const longitudeRounded = roundLegacyCoordinateToTwoDecimals(source.longitude);
+  const latitudeSafe = city.latitude === source.latitude || city.latitude === latitudeRounded;
+  const longitudeSafe = city.longitude === source.longitude || city.longitude === longitudeRounded;
+  const hasRoundedValueToUpgrade = (city.latitude !== source.latitude && city.latitude === latitudeRounded)
+    || (city.longitude !== source.longitude && city.longitude === longitudeRounded);
+  return latitudeSafe && longitudeSafe && hasRoundedValueToUpgrade;
+}
+
 export function hashImportTargetState(city: RuntimeCity | null | undefined, routeCity: RuntimeRouteCity | null | undefined): string {
   return hashCanonical({
     city: city ? {
@@ -403,6 +447,7 @@ function expectedImportResult(input: {
   routeKey: string;
   datasetHash: string;
   action: ImportOperation['action'];
+  coordinateUpgrade?: ImportOperation['coordinateUpgrade'];
 }): string {
   if (input.action === 'conflict' || input.action === 'reuse') {
     return hashImportResultState(input.city, input.routeCity);
@@ -416,7 +461,10 @@ function expectedImportResult(input: {
       latitude: input.source.latitude,
       longitude: input.source.longitude,
       coordinateSource: input.source.coordinateSource,
-    }).filter(([field]) => isMissing((input.city as Record<string, unknown>)[field]))) : {}),
+    }).filter(([field]) => (
+      isMissing((input.city as Record<string, unknown>)[field])
+      || (input.coordinateUpgrade === 'legacy_decimal_2' && ['latitude', 'longitude'].includes(field))
+    ))) : {}),
   } : {
     id: 0,
     documentId: '',
@@ -580,22 +628,29 @@ export function planCatalogueImport(input: {
     const city = cityByKey.get(source.municipalityKey);
     const routeCity = routeCityByKey.get(buildRouteCityKey(input.routeKey, source.municipalityKey));
     const differences = city ? importDifferences(city, source) : [];
+    const safeCoordinateUpgrade = city
+      ? isSafeLegacyCoordinateUpgrade(city, source, differences)
+      : false;
     const needsEnrichment = city && [city.countryCode, city.municipalityCode, city.administrativeArea, city.latitude, city.longitude]
       .some((value) => value === null || value === undefined || value === '');
-    const conflict = differences.length > 0
+    const conflict = (differences.length > 0 && !safeCoordinateUpgrade)
       || (routeCity !== undefined && (
         routeCity.expectedOccurrences !== source.expectedOccurrences
         || routeCity.qualificationSourceHash !== input.dataset.datasetHash
       ));
     const action: ImportOperation['action'] = conflict
       ? 'conflict'
-      : !city ? 'create' : needsEnrichment || !routeCity ? 'enrich' : 'reuse';
+      : !city ? 'create' : needsEnrichment || safeCoordinateUpgrade || !routeCity ? 'enrich' : 'reuse';
+    const coordinateUpgrade = action === 'enrich' && safeCoordinateUpgrade
+      ? 'legacy_decimal_2' as const
+      : undefined;
     operations.push({
       kind: 'upsert_city_route_city',
       key: source.municipalityKey,
       municipalityKey: source.municipalityKey,
       action,
       ...(differences.length ? { differences } : {}),
+      ...(coordinateUpgrade ? { coordinateUpgrade } : {}),
       expectedTargetHash: hashImportTargetState(city, routeCity),
       expectedResultHash: expectedImportResult({
         source,
@@ -604,6 +659,7 @@ export function planCatalogueImport(input: {
         routeKey: input.routeKey,
         datasetHash: input.dataset.datasetHash,
         action,
+        coordinateUpgrade,
       }),
     });
   }
