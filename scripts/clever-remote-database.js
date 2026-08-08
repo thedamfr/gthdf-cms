@@ -107,6 +107,22 @@ function configureCleverRemoteDatabaseEnvironment({
   const cleverEnvironment = loadCleverEnvironment(cleverApp, runner);
   Object.assign(environment, cleverEnvironment);
 
+  // Le CLI est lancé depuis un clone qui peut contenir une .env locale. Strapi
+  // la charge après cette fonction : sans valeurs explicites, son bucket MinIO
+  // local pouvait alors remplacer silencieusement le bucket Cellar distant.
+  // Quand Clever fournit Cellar, figer ici toute la cible objet utilisée par la
+  // configuration production et neutraliser les fallbacks AWS locaux.
+  if (String(cleverEnvironment.CELLAR_ADDON_HOST ?? '').trim()) {
+    environment.AWS_BUCKET = String(cleverEnvironment.AWS_BUCKET ?? '').trim() || 'gthdf-media';
+    environment.AWS_REGION = String(cleverEnvironment.AWS_REGION ?? '').trim() || 'us-east-1';
+    for (const name of [
+      'AWS_ENDPOINT',
+      'AWS_CDN_URL',
+      'AWS_ACCESS_KEY_ID',
+      'AWS_SECRET_ACCESS_KEY',
+    ]) environment[name] = String(cleverEnvironment[name] ?? '');
+  }
+
   const directUri = String(cleverEnvironment.POSTGRESQL_ADDON_DIRECT_URI ?? '').trim();
   const directHost = String(cleverEnvironment.POSTGRESQL_ADDON_DIRECT_HOST ?? '').trim();
   const directPort = String(cleverEnvironment.POSTGRESQL_ADDON_DIRECT_PORT ?? '').trim();
