@@ -847,7 +847,11 @@ function collectValidatedPrimaryAnchors(input: {
     latitude: input.routeCity.city.latitude,
     longitude: input.routeCity.city.longitude,
   };
-  const recompose = (candidate: CatalogueAnchor, storedDistanceToTraceMetres: number, label: string) => {
+  const recompose = (
+    candidate: CatalogueAnchor,
+    label: string,
+    storedDistanceToTraceMetres?: number,
+  ) => {
     try {
       const recomposed = recomposeRouteAnchorPosition({
         route: input.route.segments,
@@ -855,6 +859,9 @@ function collectValidatedPrimaryAnchors(input: {
         cityPoint,
         storedDistanceToTraceMetres,
       });
+      if (recomposed.distanceToTraceMetres === undefined) {
+        throw new Error('La distance de la commune à l’ancre recomposée est absente.');
+      }
       const normalized: BoundaryPrimaryAnchor = {
         routeSegmentIndex: candidate.routeSegmentIndex,
         sourceSha256: candidate.sourceSha256.toLowerCase(),
@@ -865,7 +872,7 @@ function collectValidatedPrimaryAnchors(input: {
         chainageMetres: recomposed.chainageMetres,
         projectedLatitude: recomposed.point.latitude,
         projectedLongitude: recomposed.point.longitude,
-        distanceToTraceMetres: recomposed.distanceToTraceMetres ?? storedDistanceToTraceMetres,
+        distanceToTraceMetres: recomposed.distanceToTraceMetres,
       };
       anchors.set(boundaryPrimaryIdentity(normalized), normalized);
     } catch (error) {
@@ -882,6 +889,10 @@ function collectValidatedPrimaryAnchors(input: {
         ambiguityReasons.push(`Le décalage de chaînage du chapitre ${segment.chapterKey} est absent.`);
         continue;
       }
+      // La distance PRD03 a été calculée avec les coordonnées de commune
+      // disponibles lors de sa publication. PRD04 enrichit ces coordonnées :
+      // la provenance GPX reste contrôlée exactement, tandis que cette valeur
+      // dérivée est recalculée depuis la commune canonique courante.
       recompose({
         anchorKey: `prd03:${segment.chapterDocumentId}:${primary.municipalityKey}`,
         routeSegmentIndex: segment.index,
@@ -894,7 +905,7 @@ function collectValidatedPrimaryAnchors(input: {
         projectedLatitude: primary.projectedLatitude,
         projectedLongitude: primary.projectedLongitude,
         status: 'validated',
-      }, primary.distanceToCityMetres, `L’ancre PRD03 ${segment.chapterKey}/${primary.municipalityKey}`);
+      }, `L’ancre PRD03 ${segment.chapterKey}/${primary.municipalityKey}`);
     }
   }
 
@@ -902,7 +913,7 @@ function collectValidatedPrimaryAnchors(input: {
   // notamment pour rendre la reprise idempotente sans perdre le rattachement.
   for (const existing of input.routeCity.anchors) {
     if (existing.origin !== 'prd03_primary' || existing.status !== 'validated') continue;
-    recompose(existing, existing.distanceToTraceMetres, `L’ancre catalogue PRD03 ${existing.anchorKey}`);
+    recompose(existing, `L’ancre catalogue PRD03 ${existing.anchorKey}`, existing.distanceToTraceMetres);
   }
   return { anchors: [...anchors.values()], ambiguityReasons };
 }

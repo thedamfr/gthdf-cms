@@ -125,6 +125,57 @@ test('le planner réutilise l’ancre AB PRD03 publiée après recomposition exa
   assert.equal(plan.operations[0].fraction, 0.75);
 });
 
+test('le planner recalcule la distance PRD03 depuis les coordonnées de commune enrichies', () => {
+  const { route, routeCity, edgeLength } = anchorPlannerFixture();
+  routeCity.city.latitude = 0.01;
+  const plan = planCatalogueAnchors({
+    route,
+    routeCities: [routeCity],
+    dataset: {
+      datasetHash: 'd'.repeat(64),
+      sourceSha256: 'e'.repeat(64),
+      manifest: {},
+      cities: [{
+        municipalityKey: 'FR-00001',
+        countryCode: 'FR',
+        municipalityCode: '00001',
+        name: 'Ville',
+        administrativeArea: 'Test',
+        longitude: 1.25,
+        latitude: 0.01,
+        coordinateSource: {},
+        expectedOccurrences: 1,
+        firstChapterLabel: 'Chapitre un',
+        firstChainageMetres: edgeLength * 0.75,
+        qualificationEvidence: {},
+      }],
+      chapters: [{ slug: 'chapter-one', label: 'Chapitre un', sourceSha256: SOURCE_HASH, distanceMetres: edgeLength }],
+      products: [],
+      thresholdQa: [],
+    },
+    boundarySnapshot: {
+      version: 1,
+      manifestHash: 'f'.repeat(64),
+      features: [{
+        municipalityKey: 'FR-00001',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [[[0.5, -0.5], [1.5, -0.5], [1.5, 0.5], [0.5, 0.5], [0.5, -0.5]]],
+        },
+      }],
+    },
+    codeVersion: 'test-code',
+  });
+  assert.equal(route.segments[0].primaryAnchors?.[0].distanceToCityMetres, 0);
+  assert.equal(plan.operations.length, 1);
+  assert.equal(plan.operations[0].origin, 'prd03_primary');
+  assert.equal(plan.operations[0].validationStatus, 'proposed');
+  assert.ok(Math.abs(plan.operations[0].distanceToTraceMetres - distanceWgs84Metres(
+    { latitude: 0.01, longitude: 1.25 },
+    { latitude: 0, longitude: 1.25 },
+  )) < 1e-6);
+});
+
 test('calculate bloque une ancre validée dont le chaînage ne se recompose pas depuis le GPX', () => {
   const { route, routeCity, edgeLength } = anchorPlannerFixture();
   const validAnchor = {
