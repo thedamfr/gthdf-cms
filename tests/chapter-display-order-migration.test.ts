@@ -112,6 +112,12 @@ test('flattenCleverEnvironment keeps application and add-on values in memory', (
 test('configureCleverRemoteDatabaseEnvironment gets the direct database endpoint with Clever CLI', () => {
   const targetEnvironment: Record<string, string | undefined> = {
     DATABASE_URL: 'postgres://local',
+    AWS_BUCKET: 'gthdf-catalogue-media',
+    AWS_REGION: 'local-region',
+    AWS_ENDPOINT: 'http://127.0.0.1:59000',
+    AWS_CDN_URL: 'http://127.0.0.1:59000/gthdf-catalogue-media',
+    AWS_ACCESS_KEY_ID: 'local-key',
+    AWS_SECRET_ACCESS_KEY: 'local-secret',
   };
   const calls: unknown[] = [];
   const runner = (command: string, args: string[], options: unknown) => {
@@ -122,6 +128,9 @@ test('configureCleverRemoteDatabaseEnvironment gets the direct database endpoint
         env: [
           { name: 'POSTGRESQL_ADDON_DIRECT_URI', value: 'postgres://direct-user:secret@external.example.com:5432/production' },
           { name: 'POSTGRESQL_ADDON_DB', value: 'production' },
+          { name: 'CELLAR_ADDON_HOST', value: 'cellar.example.com' },
+          { name: 'CELLAR_ADDON_KEY_ID', value: 'cellar-key' },
+          { name: 'CELLAR_ADDON_KEY_SECRET', value: 'cellar-secret' },
         ],
       }],
       fromDependencies: [],
@@ -156,6 +165,40 @@ test('configureCleverRemoteDatabaseEnvironment gets the direct database endpoint
     'postgres://direct-user:secret@external.example.com:5432/production'
   );
   assert.equal(targetEnvironment.DATABASE_URL, undefined);
+  assert.equal(targetEnvironment.AWS_BUCKET, 'gthdf-media');
+  assert.equal(targetEnvironment.AWS_REGION, 'us-east-1');
+  assert.equal(targetEnvironment.AWS_ENDPOINT, '');
+  assert.equal(targetEnvironment.AWS_CDN_URL, '');
+  assert.equal(targetEnvironment.AWS_ACCESS_KEY_ID, '');
+  assert.equal(targetEnvironment.AWS_SECRET_ACCESS_KEY, '');
+});
+
+test('configureCleverRemoteDatabaseEnvironment keeps an explicit Clever bucket and region', () => {
+  const targetEnvironment: Record<string, string | undefined> = {
+    AWS_BUCKET: 'local-bucket',
+    AWS_REGION: 'local-region',
+  };
+  const runner = () => JSON.stringify({
+    env: [
+      { name: 'AWS_BUCKET', value: 'production-bucket' },
+      { name: 'AWS_REGION', value: 'production-region' },
+    ],
+    fromAddons: [{
+      env: [
+        { name: 'POSTGRESQL_ADDON_DIRECT_URI', value: 'postgres://direct-user:secret@external.example.com:5432/production' },
+        { name: 'CELLAR_ADDON_HOST', value: 'cellar.example.com' },
+      ],
+    }],
+  });
+
+  configureCleverRemoteDatabaseEnvironment({
+    cleverApp: 'app_test',
+    environment: targetEnvironment,
+    runner,
+  });
+
+  assert.equal(targetEnvironment.AWS_BUCKET, 'production-bucket');
+  assert.equal(targetEnvironment.AWS_REGION, 'production-region');
 });
 
 test('configureCleverRemoteDatabaseEnvironment keeps certificate verification by default', () => {
