@@ -42,6 +42,14 @@
       "info": {
         "description": "Active le Builder ville à ville uniquement lorsque tous les ancrages et jonctions publiés sont qualifiés."
       }
+    },
+    "publishCityItinerariesToNext": {
+      "type": "boolean",
+      "required": true,
+      "default": false,
+      "info": {
+        "description": "Coupe-circuit global fail-closed du catalogue public d’itinéraires."
+      }
     }
   }
 }

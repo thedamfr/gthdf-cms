@@ -40,6 +40,7 @@ export default ({ env }) => {
           'image/webp',
           'application/pdf',
           'application/gpx+xml',
+          'application/json',
           'application/xml',
           'text/xml',
         ],

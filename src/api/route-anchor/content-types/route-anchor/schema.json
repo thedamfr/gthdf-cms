@@ -1,0 +1,133 @@
+{
+  "kind": "collectionType",
+  "collectionName": "route_anchors",
+  "info": {
+    "singularName": "route-anchor",
+    "pluralName": "route-anchors",
+    "displayName": "Occurrence de commune sur le parcours",
+    "description": "Projection versionnée d’une occurrence communale sur la trace canonique"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "anchorKey": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 240
+    },
+    "anchorSemanticKey": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200,
+      "info": {
+        "description": "Identité stable route/commune/occurrence. Plusieurs versions source peuvent la partager."
+      }
+    },
+    "routeCity": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::route-city.route-city",
+      "inversedBy": "anchors",
+      "required": true
+    },
+    "occurrenceIndex": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "chapter": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::chapter.chapter",
+      "required": true
+    },
+    "sourceSegmentIndex": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "trackIndex": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "sourceTrackSegmentIndex": {
+      "type": "integer",
+      "required": true,
+      "min": 0,
+      "info": {
+        "description": "Index du trkseg dans le trk source; distinct de sourceSegmentIndex qui repère le chapitre dans la boucle."
+      }
+    },
+    "sourcePointIndex": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "sourceFraction": {
+      "type": "float",
+      "required": true,
+      "min": 0,
+      "max": 1
+    },
+    "chainageMetres": {
+      "type": "float",
+      "required": true,
+      "min": 0
+    },
+    "projectedLatitude": {
+      "type": "float",
+      "required": true,
+      "min": -90,
+      "max": 90
+    },
+    "projectedLongitude": {
+      "type": "float",
+      "required": true,
+      "min": -180,
+      "max": 180
+    },
+    "distanceToTraceMetres": {
+      "type": "float",
+      "required": true,
+      "min": 0
+    },
+    "sourceHash": {
+      "type": "string",
+      "required": true,
+      "minLength": 64,
+      "maxLength": 64,
+      "regex": "^[A-Fa-f0-9]{64}$"
+    },
+    "algorithmVersion": {
+      "type": "string",
+      "required": true,
+      "maxLength": 80
+    },
+    "validationStatus": {
+      "type": "enumeration",
+      "enum": ["proposed", "validated", "ambiguous", "stale", "rejected"],
+      "required": true,
+      "default": "proposed"
+    },
+    "origin": {
+      "type": "enumeration",
+      "enum": ["computed", "prd03_primary"],
+      "required": true,
+      "default": "computed"
+    },
+    "sourceDirection": {
+      "type": "enumeration",
+      "enum": ["ab", "ba"],
+      "required": true,
+      "default": "ab"
+    },
+    "calculationReport": {
+      "type": "json",
+      "private": true
+    }
+  }
+}

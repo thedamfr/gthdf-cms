@@ -557,6 +557,103 @@ export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCatalogueRunCatalogueRun
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'catalogue_runs';
+  info: {
+    description: 'Audit d\u2019une application verrouill\u00E9e et reprenable';
+    displayName: 'Ex\u00E9cution du catalogue';
+    pluralName: 'catalogue-runs';
+    singularName: 'catalogue-run';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    codeVersion: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 120;
+      }>;
+    completedAt: Schema.Attribute.DateTime;
+    counters: Schema.Attribute.JSON & Schema.Attribute.Private;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cursor: Schema.Attribute.String &
+      Schema.Attribute.Private &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 400;
+      }>;
+    errorSummary: Schema.Attribute.JSON & Schema.Attribute.Private;
+    heartbeatAt: Schema.Attribute.DateTime;
+    inputHash: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Private &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 64;
+        minLength: 64;
+      }>;
+    leaseOwner: Schema.Attribute.String &
+      Schema.Attribute.Private &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 80;
+      }>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::catalogue-run.catalogue-run'
+    > &
+      Schema.Attribute.Private;
+    lockExpiresAt: Schema.Attribute.DateTime;
+    mode: Schema.Attribute.Enumeration<
+      [
+        'import',
+        'anchors',
+        'calculate',
+        'apply',
+        'resume',
+        'archive_check',
+        'media_gc',
+      ]
+    > &
+      Schema.Attribute.Required;
+    operator: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Private &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 160;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    report: Schema.Attribute.JSON & Schema.Attribute.Private;
+    reportHash: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Private &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 64;
+        minLength: 64;
+      }>;
+    runKey: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 160;
+      }>;
+    scope: Schema.Attribute.JSON &
+      Schema.Attribute.Required &
+      Schema.Attribute.Private;
+    startedAt: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    status: Schema.Attribute.Enumeration<
+      ['planned', 'running', 'succeeded', 'failed', 'interrupted']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'planned'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   collectionName: 'categories';
   info: {
@@ -761,6 +858,95 @@ export interface ApiCheckpointsPageCheckpointsPage
   };
 }
 
+export interface ApiCityItineraryCityItinerary
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'city_itineraries';
+  info: {
+    description: 'Document \u00E9ditorial stable portant l\u2019URL publique d\u2019une paire';
+    displayName: 'Itin\u00E9raire ville \u00E0 ville';
+    pluralName: 'city-itineraries';
+    singularName: 'city-itinerary';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    activeRevision: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::itinerary-revision.itinerary-revision'
+    >;
+    blocks: Schema.Attribute.DynamicZone<
+      ['shared.media', 'shared.quote', 'shared.rich-text', 'shared.slider']
+    >;
+    businessKey: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 300;
+      }>;
+    cityA: Schema.Attribute.Relation<'manyToOne', 'api::city.city'> &
+      Schema.Attribute.Required;
+    cityB: Schema.Attribute.Relation<'manyToOne', 'api::city.city'> &
+      Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    currentEvaluationHash: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 64;
+        minLength: 64;
+      }>;
+    editorialOrder: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    featuredOnCityPages: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    introduction: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::city-itinerary.city-itinerary'
+    > &
+      Schema.Attribute.Private;
+    publicationNext: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    publishedAt: Schema.Attribute.DateTime;
+    reviewStatus: Schema.Attribute.Enumeration<
+      ['to_review', 'approved', 'rejected']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'to_review'>;
+    revisions: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::itinerary-revision.itinerary-revision'
+    >;
+    route: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::reference-route.reference-route'
+    > &
+      Schema.Attribute.Required;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    seoStatus: Schema.Attribute.Enumeration<['noindex', 'indexable']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'noindex'>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 180;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCityCity extends Struct.CollectionTypeSchema {
   collectionName: 'cities';
   info: {
@@ -790,7 +976,7 @@ export interface ApiCityCity extends Struct.CollectionTypeSchema {
     hasPublicPage: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
-    latitude: Schema.Attribute.Decimal &
+    latitude: Schema.Attribute.Float &
       Schema.Attribute.SetMinMax<
         {
           max: 90;
@@ -801,7 +987,7 @@ export interface ApiCityCity extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::city.city'> &
       Schema.Attribute.Private;
-    longitude: Schema.Attribute.Decimal &
+    longitude: Schema.Attribute.Float &
       Schema.Attribute.SetMinMax<
         {
           max: 180;
@@ -849,6 +1035,9 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
       'api::global.global'
     > &
       Schema.Attribute.Private;
+    publishCityItinerariesToNext: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
     publishedAt: Schema.Attribute.DateTime;
     siteDescription: Schema.Attribute.Text & Schema.Attribute.Required;
     siteName: Schema.Attribute.String & Schema.Attribute.Required;
@@ -905,6 +1094,226 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiItineraryRevisionItineraryRevision
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'itinerary_revisions';
+  info: {
+    description: 'R\u00E9sultat g\u00E9om\u00E9trique immuable et auditable';
+    displayName: 'R\u00E9vision calcul\u00E9e d\u2019itin\u00E9raire';
+    pluralName: 'itinerary-revisions';
+    singularName: 'itinerary-revision';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    algorithmVersion: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 80;
+      }>;
+    arrival: Schema.Attribute.Relation<'manyToOne', 'api::city.city'> &
+      Schema.Attribute.Required;
+    arrivalAnchor: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::route-anchor.route-anchor'
+    > &
+      Schema.Attribute.Required;
+    artifactIntegrityHash: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 64;
+        minLength: 64;
+      }>;
+    artifactIntegrityStatus: Schema.Attribute.Enumeration<
+      ['pending', 'verified', 'invalid']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'pending'>;
+    asTheCrowFliesMetres: Schema.Attribute.Float &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    calculationReport: Schema.Attribute.JSON & Schema.Attribute.Private;
+    calculationStatus: Schema.Attribute.Enumeration<
+      ['ready', 'warning', 'error', 'stale', 'archived']
+    > &
+      Schema.Attribute.Required;
+    chaptersOnRoute: Schema.Attribute.Component<
+      'catalogue.chapter-on-route',
+      true
+    >;
+    citiesOnRoute: Schema.Attribute.Component<'catalogue.city-on-route', true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    departure: Schema.Attribute.Relation<'manyToOne', 'api::city.city'> &
+      Schema.Attribute.Required;
+    departureAnchor: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::route-anchor.route-anchor'
+    > &
+      Schema.Attribute.Required;
+    detourRatio: Schema.Attribute.Float &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    displayGeometry: Schema.Attribute.Media<'files'>;
+    displayGeometryObjectKey: Schema.Attribute.String &
+      Schema.Attribute.Private &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
+    displayGeometrySha256: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 64;
+        minLength: 64;
+      }>;
+    distanceMetres: Schema.Attribute.Float &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    elevationAvailable: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    elevationGainMetres: Schema.Attribute.Float &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    elevationLossMetres: Schema.Attribute.Float &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    eligibleByDirect: Schema.Attribute.Boolean & Schema.Attribute.Required;
+    eligibleByRoute: Schema.Attribute.Boolean & Schema.Attribute.Required;
+    generatedGpx: Schema.Attribute.Media<'files'>;
+    generatedGpxObjectKey: Schema.Attribute.String &
+      Schema.Attribute.Private &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
+    generatedGpxSha256: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 64;
+        minLength: 64;
+      }>;
+    itinerary: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::city-itinerary.city-itinerary'
+    > &
+      Schema.Attribute.Required;
+    junctionWarnings: Schema.Attribute.JSON;
+    lastVerifiedEvaluationHash: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 64;
+        minLength: 64;
+      }>;
+    lastVerifiedRun: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::catalogue-run.catalogue-run'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::itinerary-revision.itinerary-revision'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    revisionKey: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 400;
+      }>;
+    run: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::catalogue-run.catalogue-run'
+    > &
+      Schema.Attribute.Required;
+    sourceHash: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 64;
+        minLength: 64;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    usesLoopOrigin: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    warningApproved: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    warningApprovedAt: Schema.Attribute.DateTime;
+    warningApprovedBy: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 160;
+      }>;
+  };
+}
+
+export interface ApiItinerarySlugRedirectItinerarySlugRedirect
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'itinerary_slug_redirects';
+  info: {
+    description: 'Ancien slug explicitement reli\u00E9 \u00E0 sa cible canonique';
+    displayName: 'Redirection d\u2019itin\u00E9raire';
+    pluralName: 'itinerary-slug-redirects';
+    singularName: 'itinerary-slug-redirect';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    enabled: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    itinerary: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::city-itinerary.city-itinerary'
+    > &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::itinerary-slug-redirect.itinerary-slug-redirect'
+    > &
+      Schema.Attribute.Private;
+    oldSlug: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    reason: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 300;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiLegalNoticeLegalNotice extends Struct.SingleTypeSchema {
   collectionName: 'legal_notices';
   info: {
@@ -931,6 +1340,296 @@ export interface ApiLegalNoticeLegalNotice extends Struct.SingleTypeSchema {
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Mentions L\u00E9gales'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiReferenceRouteReferenceRoute
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'reference_routes';
+  info: {
+    description: 'Boucle canonique et sources du catalogue ville \u00E0 ville';
+    displayName: 'Parcours de r\u00E9f\u00E9rence';
+    pluralName: 'reference-routes';
+    singularName: 'reference-route';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    algorithmVersion: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 80;
+      }>;
+    catalogueEnabled: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    currentInputFingerprint: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 64;
+        minLength: 64;
+      }>;
+    isLoop: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    itineraries: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::city-itinerary.city-itinerary'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::reference-route.reference-route'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    notes: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    routeCities: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::route-city.route-city'
+    >;
+    routeKey: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    segments: Schema.Attribute.Component<'route.reference-segment', true> &
+      Schema.Attribute.Required;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    sourceManifestHash: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 64;
+        minLength: 64;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiRouteAnchorRouteAnchor extends Struct.CollectionTypeSchema {
+  collectionName: 'route_anchors';
+  info: {
+    description: 'Projection versionn\u00E9e d\u2019une occurrence communale sur la trace canonique';
+    displayName: 'Occurrence de commune sur le parcours';
+    pluralName: 'route-anchors';
+    singularName: 'route-anchor';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    algorithmVersion: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 80;
+      }>;
+    anchorKey: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 240;
+      }>;
+    anchorSemanticKey: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
+    calculationReport: Schema.Attribute.JSON & Schema.Attribute.Private;
+    chainageMetres: Schema.Attribute.Float &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    chapter: Schema.Attribute.Relation<'manyToOne', 'api::chapter.chapter'> &
+      Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    distanceToTraceMetres: Schema.Attribute.Float &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::route-anchor.route-anchor'
+    > &
+      Schema.Attribute.Private;
+    occurrenceIndex: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    origin: Schema.Attribute.Enumeration<['computed', 'prd03_primary']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'computed'>;
+    projectedLatitude: Schema.Attribute.Float &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 90;
+          min: -90;
+        },
+        number
+      >;
+    projectedLongitude: Schema.Attribute.Float &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 180;
+          min: -180;
+        },
+        number
+      >;
+    publishedAt: Schema.Attribute.DateTime;
+    routeCity: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::route-city.route-city'
+    > &
+      Schema.Attribute.Required;
+    sourceDirection: Schema.Attribute.Enumeration<['ab', 'ba']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'ab'>;
+    sourceFraction: Schema.Attribute.Float &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 1;
+          min: 0;
+        },
+        number
+      >;
+    sourceHash: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 64;
+        minLength: 64;
+      }>;
+    sourcePointIndex: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    sourceSegmentIndex: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    sourceTrackSegmentIndex: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    trackIndex: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    validationStatus: Schema.Attribute.Enumeration<
+      ['proposed', 'validated', 'ambiguous', 'stale', 'rejected']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'proposed'>;
+  };
+}
+
+export interface ApiRouteCityRouteCity extends Struct.CollectionTypeSchema {
+  collectionName: 'route_cities';
+  info: {
+    description: 'Qualification administrative d\u2019une commune pour un parcours';
+    displayName: 'Commune candidate du parcours';
+    pluralName: 'route-cities';
+    singularName: 'route-city';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    anchors: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::route-anchor.route-anchor'
+    >;
+    city: Schema.Attribute.Relation<'manyToOne', 'api::city.city'> &
+      Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    currentInputFingerprint: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 64;
+        minLength: 64;
+      }>;
+    expectedOccurrences: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::route-city.route-city'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    qualificationEvidence: Schema.Attribute.JSON & Schema.Attribute.Private;
+    qualificationSourceHash: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 64;
+        minLength: 64;
+      }>;
+    qualificationStatus: Schema.Attribute.Enumeration<
+      ['proposed', 'validated', 'rejected', 'stale']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'proposed'>;
+    qualifiedAt: Schema.Attribute.DateTime;
+    reviewNote: Schema.Attribute.Text;
+    route: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::reference-route.reference-route'
+    > &
+      Schema.Attribute.Required;
+    routeCityKey: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1451,14 +2150,21 @@ declare module '@strapi/strapi' {
       'api::about.about': ApiAboutAbout;
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
+      'api::catalogue-run.catalogue-run': ApiCatalogueRunCatalogueRun;
       'api::category.category': ApiCategoryCategory;
       'api::chapter.chapter': ApiChapterChapter;
       'api::checkpoint.checkpoint': ApiCheckpointCheckpoint;
       'api::checkpoints-page.checkpoints-page': ApiCheckpointsPageCheckpointsPage;
+      'api::city-itinerary.city-itinerary': ApiCityItineraryCityItinerary;
       'api::city.city': ApiCityCity;
       'api::global.global': ApiGlobalGlobal;
       'api::homepage.homepage': ApiHomepageHomepage;
+      'api::itinerary-revision.itinerary-revision': ApiItineraryRevisionItineraryRevision;
+      'api::itinerary-slug-redirect.itinerary-slug-redirect': ApiItinerarySlugRedirectItinerarySlugRedirect;
       'api::legal-notice.legal-notice': ApiLegalNoticeLegalNotice;
+      'api::reference-route.reference-route': ApiReferenceRouteReferenceRoute;
+      'api::route-anchor.route-anchor': ApiRouteAnchorRouteAnchor;
+      'api::route-city.route-city': ApiRouteCityRouteCity;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

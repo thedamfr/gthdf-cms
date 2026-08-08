@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_catalogue_chapters_on_route",
+  "info": {
+    "displayName": "Chapitre traversé",
+    "icon": "layer",
+    "description": "Chapitre inclus dans une révision, dans l’ordre de la portion"
+  },
+  "options": {},
+  "attributes": {
+    "chapter": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::chapter.chapter",
+      "required": true
+    },
+    "routeOrder": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "distanceMetres": {
+      "type": "float",
+      "required": true,
+      "min": 0
+    },
+    "direction": {
+      "type": "enumeration",
+      "enum": ["ab", "ba"],
+      "required": true,
+      "default": "ab"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_catalogue_cities_on_route",
+  "info": {
+    "displayName": "Ville traversée",
+    "icon": "pinMap",
+    "description": "Première occurrence d’une ville sur une révision calculée"
+  },
+  "options": {},
+  "attributes": {
+    "city": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::city.city",
+      "required": true
+    },
+    "routeOrder": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "occurrenceIndex": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "chainageFromDepartureMetres": {
+      "type": "float",
+      "required": true,
+      "min": 0
+    }
+  }
+}
