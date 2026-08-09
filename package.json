@@ -17,6 +17,7 @@
     "migrate:chapter-display-order:remote": "node scripts/migrate-chapter-display-order.js --remote",
     "migrate:catalogue-schema": "node scripts/migrate-catalogue-schema.js",
     "migrate:catalogue-schema:remote": "node --env-file=.env scripts/migrate-catalogue-schema.js --remote",
+    "provision:datamaster": "tsx scripts/provision-datamaster-role.ts",
     "catalogue:import": "tsx scripts/catalogue.ts import",
     "catalogue:anchors": "tsx scripts/catalogue.ts anchors",
     "catalogue:calculate": "tsx scripts/catalogue.ts calculate",

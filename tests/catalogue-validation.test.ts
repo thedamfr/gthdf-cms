@@ -285,3 +285,50 @@ test('le statut de calcul d’une révision est réservé au job catalogue', () 
     { warningApproved: true, warningApprovedAt: '2026-08-08T10:00:00Z' },
   ));
 });
+
+test('les champs calculés et d’intégrité restent réservés au job sur tous les types techniques', () => {
+  const rejected = [
+    ['api::reference-route.reference-route', { segments: [] }],
+    ['api::route-city.route-city', { qualificationEvidence: {} }],
+    ['api::route-anchor.route-anchor', { projectedLatitude: 50.1 }],
+    ['api::city-itinerary.city-itinerary', { businessKey: 'route:a:b' }],
+    ['api::itinerary-revision.itinerary-revision', { distanceMetres: 12 }],
+    ['api::catalogue-run.catalogue-run', { status: 'succeeded' }],
+  ] as const;
+  for (const [uid, data] of rejected) {
+    assert.throws(
+      () => validateNoManualSystemFieldMutation(uid, data),
+      /job catalogue/,
+      uid,
+    );
+  }
+
+  assert.doesNotThrow(() => validateNoManualSystemFieldMutation(
+    'api::reference-route.reference-route',
+    { name: 'Grand Tour', catalogueEnabled: true, notes: 'Relu' },
+  ));
+  assert.doesNotThrow(() => validateNoManualSystemFieldMutation(
+    'api::route-city.route-city',
+    { qualificationStatus: 'qualified', qualifiedAt: '2026-08-09T10:00:00Z', reviewNote: 'Relu' },
+  ));
+  assert.doesNotThrow(() => validateNoManualSystemFieldMutation(
+    'api::route-anchor.route-anchor',
+    { validationStatus: 'validated' },
+  ));
+});
+
+test('les identités et relations dérivées du catalogue restent réservées au job', () => {
+  const rejected = [
+    ['api::reference-route.reference-route', { routeKey: 'grand-tour', slug: 'grand-tour' }],
+    ['api::route-city.route-city', { anchors: { set: [] } }],
+    ['api::city-itinerary.city-itinerary', { slug: 'calais-saint-omer' }],
+  ] as const;
+
+  for (const [uid, data] of rejected) {
+    assert.throws(
+      () => validateNoManualSystemFieldMutation(uid, data),
+      /job catalogue/,
+      uid,
+    );
+  }
+});

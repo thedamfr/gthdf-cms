@@ -4,9 +4,11 @@ import test from 'node:test';
 import {
   CHAPTER_PUBLICATION_LOCK_KEY,
   CATALOGUE_SOURCE_LOCK_KEY,
+  runAsCatalogueSystemMutation,
   runDocumentMiddleware,
   validateCityItineraryDocument,
   validateChapterDocument,
+  validateItineraryRedirectDocument,
 } from '../src/index.ts';
 import { computeArtifactIntegrityHash } from '../src/domain/catalogue-validation.ts';
 
@@ -277,6 +279,126 @@ test('runDocumentMiddleware does not revalidate an already enabled builder', asy
   assert.equal(events.includes('lock:advisory'), true);
   assert.equal(events.includes('validation:read-published'), false);
   assert.equal(events.includes('next'), true);
+});
+
+test('le middleware bloque les mutations manuelles calculées mais laisse passer le job catalogue', async () => {
+  const nextCalls: string[] = [];
+  const next = async () => { nextCalls.push('next'); };
+  const strapi = {
+    db: {
+      transaction: async (callback: any) => callback({
+        trx: { raw: async () => undefined },
+      }),
+      query: () => assert.fail('La garde doit précéder toute lecture de données.'),
+    },
+  };
+
+  await assert.rejects(
+    () => runDocumentMiddleware(strapi as never, {
+      action: 'update',
+      contentType: { uid: 'api::route-anchor.route-anchor' },
+      params: { documentId: 'anchor-doc', data: { projectedLatitude: 50.1 } },
+    } as never, next),
+    /projectedLatitude.*job catalogue/,
+  );
+  await assert.rejects(
+    () => runDocumentMiddleware(strapi as never, {
+      action: 'update',
+      contentType: { uid: 'api::catalogue-run.catalogue-run' },
+      params: { documentId: 'run-doc', data: { status: 'succeeded' } },
+    } as never, next),
+    /status.*job catalogue/,
+  );
+
+  await runAsCatalogueSystemMutation(() => runDocumentMiddleware(strapi as never, {
+    action: 'update',
+    contentType: { uid: 'api::catalogue-run.catalogue-run' },
+    params: { documentId: 'run-doc', data: { status: 'succeeded' } },
+  } as never, next));
+  assert.deepEqual(nextCalls, ['next']);
+});
+
+test('une redirection exige une cible canonique publiée et libre de collision', async () => {
+  const itineraryReads: any[] = [];
+  const strapi = {
+    db: {
+      query: (uid: string) => ({
+        findOne: async (options: any) => {
+          if (uid !== 'api::city-itinerary.city-itinerary') return null;
+          itineraryReads.push(options);
+          if (options.where.documentId === 'target-doc') {
+            return { documentId: 'target-doc', slug: 'nouveau-slug', publishedAt: '2026-08-09T10:00:00Z' };
+          }
+          return null;
+        },
+      }),
+    },
+  };
+  const context = {
+    action: 'create',
+    contentType: { uid: 'api::itinerary-slug-redirect.itinerary-slug-redirect' },
+    params: {
+      data: {
+        oldSlug: 'ancien-slug',
+        itinerary: { connect: [{ documentId: 'target-doc' }] },
+        enabled: true,
+        reason: 'Changement éditorial validé.',
+      },
+    },
+  };
+
+  await assert.doesNotReject(() => validateItineraryRedirectDocument(strapi as never, context as never));
+  assert.deepEqual(itineraryReads.at(-1), {
+    where: {
+      slug: 'ancien-slug',
+      publishedAt: { $ne: null },
+      documentId: { $ne: 'target-doc' },
+    },
+    select: ['documentId'],
+  });
+
+  const collidingStrapi = {
+    db: {
+      query: () => ({
+        findOne: async (options: any) => options.where.documentId === 'target-doc'
+          ? { documentId: 'target-doc', slug: 'nouveau-slug', publishedAt: '2026-08-09T10:00:00Z' }
+          : { documentId: 'other-doc' },
+      }),
+    },
+  };
+  await assert.rejects(
+    () => validateItineraryRedirectDocument(collidingStrapi as never, context as never),
+    /itinéraire publié/,
+  );
+});
+
+test('une redirection refuse de pointer le slug canonique vers lui-même', async () => {
+  const strapi = {
+    db: {
+      query: () => ({
+        findOne: async (options: any) => options.where.documentId === 'target-doc'
+          ? { documentId: 'target-doc', slug: 'slug-canonique', publishedAt: '2026-08-09T10:00:00Z' }
+          : null,
+      }),
+    },
+  };
+  const context = {
+    action: 'create',
+    contentType: { uid: 'api::itinerary-slug-redirect.itinerary-slug-redirect' },
+    params: {
+      data: {
+        oldSlug: 'slug-canonique',
+        itinerary: { documentId: 'target-doc' },
+        enabled: true,
+        reason: 'Ancienne URL revue.',
+      },
+    },
+  };
+
+  await assert.rejects(
+    () => validateItineraryRedirectDocument(strapi as never, context as never),
+    /slug canonique/,
+  );
 });
 
 for (const { label, context } of publishedMutationCases) {

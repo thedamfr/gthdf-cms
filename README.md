@@ -30,6 +30,8 @@ Documents de référence :
 - [PRD 02 — Retrouver son chapitre sur mobile](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/prd_02_retrouver_chapitre_mobile.md), livré et validé en production ;
 - [PRD 03 — GPX Builder v2 ville à ville](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/prd_03_gpx_builder_ville_a_ville.md), implémenté localement, qualification éditoriale en attente ;
 - [PRD 04 — Catalogue d’itinéraires ville à ville](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/prd_04_catalogue_itineraires_ville_a_ville.md), prêt pour revue.
+- le lot CMS DataMaster du PRD 05 est documenté dans
+  [`docs/prd05-datamaster-rbac.md`](docs/prd05-datamaster-rbac.md).
 
 ## 🐳 Development Setup
 
@@ -429,6 +431,26 @@ npm run test:integration:prd01
 Le smoke test vérifie le refus d'une ville incomplète, l'immutabilité du slug
 après publication et le refus d'un chapitre aux passages invalides. Ses
 documents QA temporaires sont supprimés avant la fin du test.
+
+## Provisionnement PRD05 du rôle DataMaster
+
+Le rôle d’administration `DataMaster` sépare la qualification du catalogue de
+la contribution éditoriale, sans modifier les rôles de l’API publique ni
+affecter automatiquement un compte. Le provisionnement est idempotent et reste
+en lecture seule par défaut. Il réserve également au DataMaster les ancrages et
+jonctions GPX techniques imbriqués dans les chapitres, sans retirer aux rôles
+éditoriaux leurs autres champs de chapitre :
+
+```bash
+npm run provision:datamaster
+npm run provision:datamaster -- --apply --confirm-apply
+```
+
+Après l’application, un second dry-run doit annoncer
+`"changesRequired": false`. L’affectation du rôle et la recette avec deux
+comptes restent manuelles. La matrice exacte, les protections serveur, le
+protocole de recette et le rollback sont détaillés dans
+[`docs/prd05-datamaster-rbac.md`](docs/prd05-datamaster-rbac.md).
 
 ### `develop`
 

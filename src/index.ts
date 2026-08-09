@@ -53,6 +53,7 @@ const ROUTE_CITY_UID = 'api::route-city.route-city';
 const ROUTE_ANCHOR_UID = 'api::route-anchor.route-anchor';
 const CITY_ITINERARY_UID = 'api::city-itinerary.city-itinerary';
 const ITINERARY_REVISION_UID = 'api::itinerary-revision.itinerary-revision';
+const CATALOGUE_RUN_UID = 'api::catalogue-run.catalogue-run';
 const ITINERARY_REDIRECT_UID = 'api::itinerary-slug-redirect.itinerary-slug-redirect';
 // Les scripts TS chargent parfois `src/index.ts` pendant que Strapi exécute sa
 // copie compilée `dist/src/index.js`. Un stockage porté par globalThis garantit
@@ -456,6 +457,7 @@ async function validateRouteAnchorDocument(
 ): Promise<void> {
   if (!['create', 'update'].includes(context.action)) return;
   try {
+    if (!isCatalogueSystemMutation()) validateNoManualSystemFieldMutation(ROUTE_ANCHOR_UID, context.params.data ?? {});
     const current = context.params.documentId
       ? await strapi.db.query(ROUTE_ANCHOR_UID).findOne({
         where: { documentId: context.params.documentId },
@@ -528,6 +530,15 @@ async function validateRouteAnchorDocument(
       validateAnchorIdentity(next);
       validateAnchorAgainstPublishedRoute(next, publishedSegments, city);
     }
+  } catch (error) {
+    throwApplicationError(error);
+  }
+}
+
+function validateCatalogueRunDocument(context: DocumentMiddlewareContext): void {
+  if (!['create', 'update'].includes(context.action) || isCatalogueSystemMutation()) return;
+  try {
+    validateNoManualSystemFieldMutation(CATALOGUE_RUN_UID, context.params.data ?? {});
   } catch (error) {
     throwApplicationError(error);
   }
@@ -680,6 +691,61 @@ export async function validateCityItineraryDocument(
   }
 }
 
+export async function validateItineraryRedirectDocument(
+  strapi: Core.Strapi,
+  context: DocumentMiddlewareContext,
+): Promise<void> {
+  if (!['create', 'update'].includes(context.action)) return;
+  try {
+    const current = context.params.documentId
+      ? await strapi.db.query(ITINERARY_REDIRECT_UID).findOne({
+        where: { documentId: context.params.documentId },
+        populate: { itinerary: true },
+      }) as Record<string, unknown> | null
+      : null;
+    const next = { ...(current ?? {}), ...(context.params.data ?? {}) } as Record<string, any>;
+    const oldSlug = typeof next.oldSlug === 'string' ? next.oldSlug.trim() : '';
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(oldSlug)) {
+      throw new Error('L’ancien slug de redirection est invalide.');
+    }
+    if (typeof next.reason !== 'string' || !next.reason.trim()) {
+      throw new Error('Une redirection exige une décision éditoriale motivée.');
+    }
+
+    const targetReference = extractMediaReference(next.itinerary);
+    if (!targetReference) throw new Error('Une redirection exige un itinéraire cible publié.');
+    const target = await strapi.db.query(CITY_ITINERARY_UID).findOne({
+      where: {
+        ...(targetReference.id !== undefined
+          ? { id: targetReference.id }
+          : { documentId: targetReference.documentId }),
+        publishedAt: { $ne: null },
+      },
+      select: ['documentId', 'slug', 'publishedAt'],
+    }) as Record<string, any> | null;
+    if (!target?.documentId) {
+      throw new Error('Une redirection exige un itinéraire cible canonique publié.');
+    }
+    if (target.slug === oldSlug) {
+      throw new Error('L’ancien slug doit être différent du slug canonique de la cible.');
+    }
+
+    const conflictingItinerary = await strapi.db.query(CITY_ITINERARY_UID).findOne({
+      where: {
+        slug: oldSlug,
+        publishedAt: { $ne: null },
+        documentId: { $ne: target.documentId },
+      },
+      select: ['documentId'],
+    });
+    if (conflictingItinerary) {
+      throw new Error('L’ancien slug appartient déjà à un autre itinéraire publié.');
+    }
+  } catch (error) {
+    throwApplicationError(error);
+  }
+}
+
 export async function validateChapterDocument(
   strapi: Core.Strapi,
   context: DocumentMiddlewareContext
@@ -802,8 +868,16 @@ async function validateDocumentAndRunNext(
     await validateItineraryRevisionDocument(strapi, context);
   }
 
+  if (context.contentType.uid === CATALOGUE_RUN_UID) {
+    validateCatalogueRunDocument(context);
+  }
+
   if (context.contentType.uid === CITY_ITINERARY_UID) {
     await validateCityItineraryDocument(strapi, context);
+  }
+
+  if (context.contentType.uid === ITINERARY_REDIRECT_UID) {
+    await validateItineraryRedirectDocument(strapi, context);
   }
 
   if (SEO_CONTENT_TYPES.includes(context.contentType.uid)) {
