@@ -67,12 +67,13 @@ function canonicalize(value: unknown): unknown {
 }
 
 function comparablePermission(permission: ExistingAdminPermission): Record<string, unknown> {
+  const normalized = permissionInput(permission);
   return canonicalize({
-    action: permission.action,
-    subject: permission.subject ?? undefined,
-    properties: permission.properties,
-    conditions: permission.conditions,
-    actionParameters: permission.actionParameters,
+    action: normalized.action,
+    subject: normalized.subject ?? undefined,
+    properties: normalized.properties,
+    conditions: normalized.conditions,
+    actionParameters: normalized.actionParameters,
   }) as Record<string, unknown>;
 }
 

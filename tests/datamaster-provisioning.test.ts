@@ -7,6 +7,7 @@ import {
   runDataMasterProvisioning,
   runDataMasterProvisioningCli,
 } from '../scripts/provision-datamaster-role';
+import { DATAMASTER_ROLE, buildDataMasterPermissions } from '../src/domain/datamaster-rbac';
 
 test('le provisionnement DataMaster reste en dry-run et exige une confirmation explicite', () => {
   assert.deepEqual(parseDataMasterProvisioningArguments([]), {
@@ -130,6 +131,32 @@ test('un apply crée et restreint une seule fois puis devient idempotent', async
     { code: 'strapi-editor', name: 'Editor', permissions: 'unchanged' },
   ]);
   assert.deepEqual(writes, { creates: 1, updates: 0, assignments: 2 });
+});
+
+test('les valeurs par défaut omises par Strapi ne créent pas de dérive permanente', async () => {
+  const existingPermissions = buildDataMasterPermissions(() => ['allField']).map((permission) => ({
+    action: permission.action,
+    subject: permission.subject,
+    properties: permission.properties,
+  }));
+
+  const report = await runDataMasterProvisioning({ apply: false }, {
+    listRoles: async () => [{
+      id: 3,
+      name: DATAMASTER_ROLE.name,
+      code: 'gthdf-datamaster',
+      description: DATAMASTER_ROLE.description,
+    }],
+    listPermissions: async () => existingPermissions,
+    normalizePermissions: async (permissions) => permissions,
+    allFieldsForSubject: () => ['allField'],
+    createRole: async () => assert.fail('Le rôle existe déjà.'),
+    updateRole: async () => assert.fail('Les métadonnées sont déjà exactes.'),
+    assignPermissions: async () => assert.fail('Le dry-run ne doit rien modifier.'),
+  });
+
+  assert.equal(report.changesRequired, false);
+  assert.deepEqual(report.dataMaster.permissions, 'unchanged');
 });
 
 test('le code stable retrouve et renomme un rôle DataMaster ayant dérivé', async () => {
