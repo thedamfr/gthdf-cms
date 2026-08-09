@@ -2,9 +2,9 @@
 
 **Date :** 9 août 2026
 
-**Statut CMS :** implémenté, recette humaine à deux comptes non exécutée
+**Statut CMS :** implémenté, recette humaine à deux comptes en cours
 
-**Matrice :** version 1
+**Matrice :** version 2
 
 Ce lot livre uniquement la gouvernance Strapi du PRD05. La carte et le Builder
 restent hors de cette pull request et seront traités séparément, dans cet ordre,
@@ -32,6 +32,7 @@ Aucun utilisateur n’est créé, invité ou affecté par le provisionnement.
 | `ItineraryRevision` | lire, modifier les trois champs `warningApproved*` | aucune création ou suppression |
 | `CatalogueRun` | lire | aucune mutation |
 | `ItinerarySlugRedirect` | lire, créer, modifier et désactiver | aucune suppression physique |
+| `Chapter` | lire, modifier uniquement `status` et `reviewNote` sur les ancrages et jonctions GPX imbriqués | aucune création, publication ou suppression ; hashes, métriques, coordonnées et médias sources en lecture seule |
 | `CityItinerary` | lire, relier la révision, gérer revue et publication, publier | aucun champ d’identité ou calculé |
 | `City` | lire, modifier les cinq champs administratifs PRD04 | aucun autre champ modifiable |
 | `Global` | lire, modifier `publishCityItinerariesToNext` | aucun autre champ modifiable |
@@ -40,13 +41,18 @@ Les rôles d’administration ordinaires perdent toute permission sur les six
 types techniques. Sur `CityItinerary`, ils conservent seulement la lecture et
 la modification de `title`, `introduction`, `blocks` et `seo`. Leurs autres
 permissions sans rapport sont conservées. Les champs administratifs PRD04 de
-`City` et le coupe-circuit catalogue de `Global` leur sont retirés.
+`City` et le coupe-circuit catalogue de `Global` leur sont retirés. Sur
+`Chapter`, ils conservent leurs permissions éditoriales existantes, mais les
+champs `cityPassages.gpxAnchorAB`, `cityPassages.gpxAnchorBA`,
+`gpxJunctionAfterAB` et `gpxJunctionAfterBA` leur sont masqués et interdits en
+création comme en modification.
 
 Les restrictions d’interface sont complétées par les validations serveur :
-les métriques, empreintes, relations calculées, médias, ancres et données de
-run refusent toute mutation humaine. Les jobs passent par leur contexte
-système interne. Une redirection exige un motif, une cible canonique publiée
-et un ancien slug différent de la cible qui n’appartient pas à une autre fiche
+les métriques, empreintes, relations calculées, médias et données de run
+refusent toute mutation humaine. Seuls les champs de décision explicitement
+accordés restent modifiables. Les jobs passent par leur contexte système
+interne. Une redirection exige un motif, une cible canonique publiée et un
+ancien slug différent de la cible qui n’appartient pas à une autre fiche
 publiée.
 
 ## Provisionnement
@@ -83,6 +89,18 @@ pour le rôle et les deux matrices éditoriales. La base de test a ensuite été
 supprimée. Cette intégration ne remplace ni l’application sur l’environnement
 cible, ni la recette humaine ci-dessous.
 
+La première passe de recette humaine a ensuite montré qu’un compte `Editor`
+voyait encore les ancrages et jonctions GPX imbriqués dans `Chapter`. La
+matrice version 2 les retire des permissions `create`, `read` et `update` des
+rôles éditoriaux, et ajoute `Chapter` au DataMaster en lecture et mise à jour
+limitée à `status` et `reviewNote`. Sur la base PostgreSQL de recette isolée,
+le cycle dry-run, apply puis dry-run s’est terminé avec
+`changesRequired: false`. Le même chapitre a été contrôlé avec les deux
+profils : les quatre blocs techniques affichent `No permissions` pour Editor ;
+DataMaster voit les valeurs calculées en lecture seule et peut modifier
+uniquement les deux champs de décision humaine. La recette complète reste en
+cours.
+
 L’affectation du rôle reste une opération humaine du `Super Admin`. Ne pas
 affecter DataMaster avant la recette ci-dessous. Un compte possédant plusieurs
 rôles cumule leurs permissions ; les deux comptes de recette doivent donc
@@ -104,7 +122,9 @@ Avec le contributeur :
 3. vérifier sur `CityItinerary` que seuls `title`, `introduction`, `blocks` et
    `seo` sont lisibles et modifiables ;
 4. vérifier que les cinq champs administratifs de `City` et
-   `Global.publishCityItinerariesToNext` ne sont pas accessibles.
+   `Global.publishCityItinerariesToNext` ne sont pas accessibles ;
+5. ouvrir un `Chapter` et vérifier que ses ancrages et jonctions GPX ne sont ni
+   visibles ni envoyés par les endpoints du Content Manager.
 
 Avec DataMaster :
 
@@ -117,7 +137,11 @@ Avec DataMaster :
 5. créer une redirection valide vers une fiche publiée, puis la désactiver sans
    la supprimer ; vérifier le refus d’une cible brouillon et d’une collision ;
 6. vérifier l’impossibilité d’atteindre utilisateurs, rôles, tokens, webhooks,
-   réglages, configuration des vues et Content-Type Builder.
+   réglages, configuration des vues et Content-Type Builder ;
+7. ouvrir un `Chapter`, vérifier que les ancrages et jonctions GPX sont
+   accessibles, que seuls leurs `status` et `reviewNote` sont modifiables, puis
+   vérifier que les autres champs restent en lecture seule et que les fichiers
+   GPX sources ne peuvent pas être remplacés.
 
 Enfin, comparer les permissions du rôle API public et du token frontend avant
 et après la commande : aucun droit ne doit avoir changé. Relancer le dry-run et

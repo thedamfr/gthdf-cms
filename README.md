@@ -437,7 +437,9 @@ documents QA temporaires sont supprimés avant la fin du test.
 Le rôle d’administration `DataMaster` sépare la qualification du catalogue de
 la contribution éditoriale, sans modifier les rôles de l’API publique ni
 affecter automatiquement un compte. Le provisionnement est idempotent et reste
-en lecture seule par défaut :
+en lecture seule par défaut. Il réserve également au DataMaster les ancrages et
+jonctions GPX techniques imbriqués dans les chapitres, sans retirer aux rôles
+éditoriaux leurs autres champs de chapitre :
 
 ```bash
 npm run provision:datamaster

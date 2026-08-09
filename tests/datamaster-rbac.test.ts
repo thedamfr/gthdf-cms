@@ -10,7 +10,7 @@ import {
 } from '../src/domain/datamaster-rbac';
 
 test('la matrice DataMaster versionnée accorde uniquement les actions techniques prévues', () => {
-  assert.equal(DATAMASTER_PERMISSION_MATRIX_VERSION, 1);
+  assert.equal(DATAMASTER_PERMISSION_MATRIX_VERSION, 2);
   assert.deepEqual(DATAMASTER_ROLE, {
     name: 'DataMaster',
     description: 'Contrôle et qualification des données techniques du catalogue d’itinéraires, sans administration générale de Strapi.',
@@ -210,4 +210,78 @@ test('une liste de champs explicitement vide ne gagne aucun droit éditorial', (
   }], () => ['title', 'introduction', 'blocks.shared.rich-text.body', 'seo.metaTitle']);
 
   assert.deepEqual(restricted, []);
+});
+
+test('les ancrages et jonctions GPX de Chapter sont réservés à DataMaster', () => {
+  const chapterFields = [
+    'title',
+    'slug',
+    'displayOrder',
+    'gpxFileAB',
+    'gpxFileBA',
+    'cityPassages.city',
+    'cityPassages.role',
+    'cityPassages.note',
+    'cityPassages.gpxAnchorAB.status',
+    'cityPassages.gpxAnchorAB.sourceSha256',
+    'cityPassages.gpxAnchorAB.reviewNote',
+    'cityPassages.gpxAnchorBA.status',
+    'cityPassages.gpxAnchorBA.reviewNote',
+    'gpxJunctionAfterAB.status',
+    'gpxJunctionAfterAB.sourceSha256',
+    'gpxJunctionAfterAB.reviewNote',
+    'gpxJunctionAfterBA.status',
+    'gpxJunctionAfterBA.reviewNote',
+  ];
+  const permissions = buildDataMasterPermissions((subject) => (
+    subject === 'api::chapter.chapter' ? chapterFields : ['allField']
+  ));
+  assert.deepEqual(permissions
+    .filter((permission) => permission.subject === 'api::chapter.chapter')
+    .map((permission) => permission.action)
+    .sort(), [
+    'plugin::content-manager.explorer.read',
+    'plugin::content-manager.explorer.update',
+  ]);
+  const chapterUpdate = permissions.find((permission) => (
+    permission.subject === 'api::chapter.chapter'
+    && permission.action === 'plugin::content-manager.explorer.update'
+  ));
+
+  assert.deepEqual(chapterUpdate?.properties.fields, [
+    'cityPassages.gpxAnchorAB.status',
+    'cityPassages.gpxAnchorAB.reviewNote',
+    'cityPassages.gpxAnchorBA.status',
+    'cityPassages.gpxAnchorBA.reviewNote',
+    'gpxJunctionAfterAB.status',
+    'gpxJunctionAfterAB.reviewNote',
+    'gpxJunctionAfterBA.status',
+    'gpxJunctionAfterBA.reviewNote',
+  ]);
+
+  const restricted = restrictEditorialRolePermissions([
+    'create',
+    'read',
+    'update',
+  ].map((action) => ({
+    action: `plugin::content-manager.explorer.${action}`,
+    subject: 'api::chapter.chapter',
+    properties: { fields: chapterFields },
+    conditions: [],
+  })), () => chapterFields);
+
+  const expectedEditorialFields = [
+    'title',
+    'slug',
+    'displayOrder',
+    'gpxFileAB',
+    'gpxFileBA',
+    'cityPassages.city',
+    'cityPassages.role',
+    'cityPassages.note',
+  ];
+  assert.equal(restricted.length, 3);
+  for (const permission of restricted) {
+    assert.deepEqual(permission.properties.fields, expectedEditorialFields);
+  }
 });

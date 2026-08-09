@@ -1,4 +1,4 @@
-export const DATAMASTER_PERMISSION_MATRIX_VERSION = 1;
+export const DATAMASTER_PERMISSION_MATRIX_VERSION = 2;
 
 export const DATAMASTER_ROLE = Object.freeze({
   name: 'DataMaster',
@@ -45,6 +45,7 @@ const TECHNICAL_ACTIONS: Record<(typeof DATAMASTER_TECHNICAL_SUBJECTS)[number], 
 };
 
 const MIXED_ACTIONS: Record<string, readonly ContentManagerAction[]> = {
+  'api::chapter.chapter': ['read', 'update'],
   'api::city-itinerary.city-itinerary': ['read', 'update', 'publish'],
   'api::city.city': ['read', 'update'],
   'api::global.global': ['read', 'update'],
@@ -102,6 +103,26 @@ const RESTRICTED_CITY_FIELDS = [
 
 const RESTRICTED_GLOBAL_FIELDS = ['publishCityItinerariesToNext'] as const;
 
+const RESTRICTED_CHAPTER_FIELDS = [
+  'cityPassages.gpxAnchorAB',
+  'cityPassages.gpxAnchorBA',
+  'gpxJunctionAfterAB',
+  'gpxJunctionAfterBA',
+] as const;
+
+const DATAMASTER_NESTED_UPDATE_FIELDS: Record<string, readonly string[]> = {
+  'api::chapter.chapter': [
+    'cityPassages.gpxAnchorAB.status',
+    'cityPassages.gpxAnchorAB.reviewNote',
+    'cityPassages.gpxAnchorBA.status',
+    'cityPassages.gpxAnchorBA.reviewNote',
+    'gpxJunctionAfterAB.status',
+    'gpxJunctionAfterAB.reviewNote',
+    'gpxJunctionAfterBA.status',
+    'gpxJunctionAfterBA.reviewNote',
+  ],
+};
+
 function fieldMatchesRoot(field: string, root: string): boolean {
   return field === root || field.startsWith(`${root}.`);
 }
@@ -156,11 +177,13 @@ export function restrictEditorialRolePermissions<T extends ExistingAdminPermissi
     ].includes(permission.action);
     if (!isFieldAction) return [permission];
 
-    const restrictedFields = subject === 'api::city.city'
-      ? RESTRICTED_CITY_FIELDS
-      : subject === 'api::global.global'
-        ? RESTRICTED_GLOBAL_FIELDS
-        : null;
+    const restrictedFields = subject === 'api::chapter.chapter'
+      ? RESTRICTED_CHAPTER_FIELDS
+      : subject === 'api::city.city'
+        ? RESTRICTED_CITY_FIELDS
+        : subject === 'api::global.global'
+          ? RESTRICTED_GLOBAL_FIELDS
+          : null;
     if (!restrictedFields) return [permission];
 
     const fields = permissionFields(permission, allFieldsForSubject).filter((field) => (
@@ -179,17 +202,23 @@ export function buildDataMasterPermissions(
   };
 
   return Object.entries(actionsBySubject).flatMap(([subject, actions]) => (
-    actions.map((action) => ({
-      action: `plugin::content-manager.explorer.${action}` as const,
-      subject,
-      properties: {
-        fields: action === 'update' && DATAMASTER_UPDATE_FIELDS[subject]
-          ? [...DATAMASTER_UPDATE_FIELDS[subject]]
-          : action === 'publish'
-            ? []
-            : [...allFieldsForSubject(subject)],
-      },
-      conditions: [],
-    }))
+    actions.map((action) => {
+      const allFields = allFieldsForSubject(subject);
+      const nestedUpdateFields = DATAMASTER_NESTED_UPDATE_FIELDS[subject];
+      return {
+        action: `plugin::content-manager.explorer.${action}` as const,
+        subject,
+        properties: {
+          fields: action === 'update' && DATAMASTER_UPDATE_FIELDS[subject]
+            ? [...DATAMASTER_UPDATE_FIELDS[subject]]
+            : action === 'update' && nestedUpdateFields
+              ? allFields.filter((field) => nestedUpdateFields.includes(field))
+              : action === 'publish'
+                ? []
+                : [...allFields],
+        },
+        conditions: [],
+      };
+    })
   ));
 }
