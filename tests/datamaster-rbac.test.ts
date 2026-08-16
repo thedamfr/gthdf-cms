@@ -10,7 +10,7 @@ import {
 } from '../src/domain/datamaster-rbac';
 
 test('la matrice DataMaster versionnée accorde uniquement les actions techniques prévues', () => {
-  assert.equal(DATAMASTER_PERMISSION_MATRIX_VERSION, 2);
+  assert.equal(DATAMASTER_PERMISSION_MATRIX_VERSION, 3);
   assert.deepEqual(DATAMASTER_ROLE, {
     name: 'DataMaster',
     description: 'Contrôle et qualification des données techniques du catalogue d’itinéraires, sans administration générale de Strapi.',
@@ -93,6 +93,8 @@ test('DataMaster ne peut modifier que les champs humains de revue et de publicat
     'municipalityCode',
     'administrativeArea',
     'coordinateSource',
+    'fromLabel',
+    'toLabel',
   ]);
   assert.deepEqual(updateFields('api::global.global'), ['publishCityItinerariesToNext']);
 
@@ -145,7 +147,16 @@ test('les rôles éditoriaux perdent les données techniques sans perdre leurs a
     {
       action: 'plugin::content-manager.explorer.update',
       subject: 'api::city.city',
-      properties: { fields: ['name', 'shortDescription', 'municipalityKey', 'countryCode'] },
+      properties: {
+        fields: [
+          'name',
+          'shortDescription',
+          'fromLabel',
+          'toLabel',
+          'municipalityKey',
+          'countryCode',
+        ],
+      },
       conditions: [],
     },
     {
@@ -194,6 +205,8 @@ test('les rôles éditoriaux perdent les données techniques sans perdre leurs a
   assert.deepEqual(restricted.find((permission) => permission.subject === 'api::city.city')?.properties?.fields, [
     'name',
     'shortDescription',
+    'fromLabel',
+    'toLabel',
   ]);
   assert.deepEqual(restricted.find((permission) => permission.subject === 'api::global.global')?.properties?.fields, [
     'siteName',

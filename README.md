@@ -29,7 +29,7 @@ Documents de référence :
 - [PRD 01 — Référentiel des villes et pages hubs](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/prd_01_referentiel_villes_pages_hubs.md), livré ;
 - [PRD 02 — Retrouver son chapitre sur mobile](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/prd_02_retrouver_chapitre_mobile.md), livré et validé en production ;
 - [PRD 03 — GPX Builder v2 ville à ville](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/prd_03_gpx_builder_ville_a_ville.md), implémenté localement, qualification éditoriale en attente ;
-- [PRD 04 — Catalogue d’itinéraires ville à ville](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/prd_04_catalogue_itineraires_ville_a_ville.md), prêt pour revue.
+- [PRD 04 — Catalogue d’itinéraires ville à ville](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/prd_04_catalogue_itineraires_ville_a_ville.md), livré ; optimisation SEO des fiches en cours de déploiement.
 - le lot CMS DataMaster du PRD 05 est documenté dans
   [`docs/prd05-datamaster-rbac.md`](docs/prd05-datamaster-rbac.md).
 
@@ -135,6 +135,21 @@ Garanties du script :
 
 Les chemins peuvent être remplacés avec `--mapping`, `--resolutions` et
 `--report`. `npm run migrate:cities -- --help` documente toutes les options.
+
+### Libellés directionnels des itinéraires
+
+`City.fromLabel` et `City.toLabel` sont deux chaînes éditoriales optionnelles,
+limitées à 180 caractères. Elles contiennent le libellé prépositionnel complet,
+par exemple `du Touquet-Paris-Plage`, `d’Abbeville`, `au Crotoy` ou
+`à Camiers`. Elles servent au H1, au téléchargement, aux cartes et aux liens
+d’itinéraires. Laisser un champ vide active le fallback grammatical du
+frontend ; renseigner puis publier la ville permet de traiter une exception
+comme un h aspiré.
+
+Le changement de schéma est additif et ne demande aucun script de migration.
+Déployer le CMS avant la version du frontend qui sélectionne ces champs dans
+l’API Strapi. L’ancien frontend les ignore ; en cas de rollback, conserver les
+colonnes et redéployer seulement le frontend précédent.
 
 ### Reprise manuelle en production
 
