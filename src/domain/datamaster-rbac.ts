@@ -1,4 +1,4 @@
-export const DATAMASTER_PERMISSION_MATRIX_VERSION = 2;
+export const DATAMASTER_PERMISSION_MATRIX_VERSION = 4;
 
 export const DATAMASTER_ROLE = Object.freeze({
   name: 'DataMaster',

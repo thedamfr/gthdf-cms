@@ -4,7 +4,7 @@
 
 **Statut CMS :** implémenté, recette humaine à deux comptes en cours
 
-**Matrice :** version 2
+**Matrice :** version 4
 
 Ce lot livre uniquement la gouvernance Strapi du PRD05. La carte et le Builder
 restent hors de cette pull request et seront traités séparément, dans cet ordre,
@@ -79,6 +79,11 @@ npm run provision:datamaster -- --apply --confirm-apply
 Relancer immédiatement le dry-run. `changesRequired` doit alors valoir
 `false`. Une évolution ultérieure de la matrice doit incrémenter
 `DATAMASTER_PERMISSION_MATRIX_VERSION`, être testée, puis suivre le même cycle.
+
+La version 4 retire explicitement les libellés directionnels éditoriaux
+`City.fromLabel` et `City.toLabel` de la matrice DataMaster. La version 3 qui
+les référençait a été déployée sans être provisionnée : les permissions de
+production n’ont pas changé et cette correction ne demande aucun apply.
 
 ### Contrôle local du 9 août 2026
 
