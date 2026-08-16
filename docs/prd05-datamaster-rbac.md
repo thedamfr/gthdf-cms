@@ -80,11 +80,6 @@ Relancer immédiatement le dry-run. `changesRequired` doit alors valoir
 `false`. Une évolution ultérieure de la matrice doit incrémenter
 `DATAMASTER_PERMISSION_MATRIX_VERSION`, être testée, puis suivre le même cycle.
 
-La matrice version 3 ajoute les libellés directionnels éditoriaux
-`City.fromLabel` et `City.toLabel` aux champs modifiables par DataMaster. Après
-le déploiement du schéma, rejouer le cycle dry-run, apply puis dry-run afin que
-le rôle existant reçoive ces deux permissions.
-
 ### Contrôle local du 9 août 2026
 
 Le provisionnement a été exécuté sur une base PostgreSQL locale vierge et
