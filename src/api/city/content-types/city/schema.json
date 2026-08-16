@@ -24,6 +24,14 @@
     "alternativeNames": {
       "type": "json"
     },
+    "fromLabel": {
+      "type": "string",
+      "maxLength": 180
+    },
+    "toLabel": {
+      "type": "string",
+      "maxLength": 180
+    },
     "municipalityKey": {
       "type": "string",
       "unique": true

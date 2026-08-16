@@ -145,7 +145,16 @@ test('les rôles éditoriaux perdent les données techniques sans perdre leurs a
     {
       action: 'plugin::content-manager.explorer.update',
       subject: 'api::city.city',
-      properties: { fields: ['name', 'shortDescription', 'municipalityKey', 'countryCode'] },
+      properties: {
+        fields: [
+          'name',
+          'shortDescription',
+          'fromLabel',
+          'toLabel',
+          'municipalityKey',
+          'countryCode',
+        ],
+      },
       conditions: [],
     },
     {
@@ -194,6 +203,8 @@ test('les rôles éditoriaux perdent les données techniques sans perdre leurs a
   assert.deepEqual(restricted.find((permission) => permission.subject === 'api::city.city')?.properties?.fields, [
     'name',
     'shortDescription',
+    'fromLabel',
+    'toLabel',
   ]);
   assert.deepEqual(restricted.find((permission) => permission.subject === 'api::global.global')?.properties?.fields, [
     'siteName',
