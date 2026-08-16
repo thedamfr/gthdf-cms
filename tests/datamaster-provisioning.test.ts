@@ -60,7 +60,7 @@ test('le dry-run décrit les restrictions sans créer de rôle ni modifier de pe
 
   assert.deepEqual(report, {
     mode: 'dry-run',
-    matrixVersion: 3,
+    matrixVersion: 4,
     changesRequired: true,
     dataMaster: {
       role: 'create',
@@ -294,7 +294,7 @@ test('la CLI ouvre Strapi en lecture seule par défaut et le ferme après le rap
   assert.deepEqual(events, ['load-read-only', 'destroy']);
   assert.deepEqual(JSON.parse(output), {
     mode: 'dry-run',
-    matrixVersion: 3,
+    matrixVersion: 4,
     changesRequired: true,
     dataMaster: { role: 'create', permissions: 'replace' },
     editorialRoles: [],

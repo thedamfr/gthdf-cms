@@ -10,7 +10,7 @@ import {
 } from '../src/domain/datamaster-rbac';
 
 test('la matrice DataMaster versionnée accorde uniquement les actions techniques prévues', () => {
-  assert.equal(DATAMASTER_PERMISSION_MATRIX_VERSION, 3);
+  assert.equal(DATAMASTER_PERMISSION_MATRIX_VERSION, 4);
   assert.deepEqual(DATAMASTER_ROLE, {
     name: 'DataMaster',
     description: 'Contrôle et qualification des données techniques du catalogue d’itinéraires, sans administration générale de Strapi.',
@@ -93,8 +93,6 @@ test('DataMaster ne peut modifier que les champs humains de revue et de publicat
     'municipalityCode',
     'administrativeArea',
     'coordinateSource',
-    'fromLabel',
-    'toLabel',
   ]);
   assert.deepEqual(updateFields('api::global.global'), ['publishCityItinerariesToNext']);
 

@@ -1,4 +1,4 @@
-export const DATAMASTER_PERMISSION_MATRIX_VERSION = 3;
+export const DATAMASTER_PERMISSION_MATRIX_VERSION = 4;
 
 export const DATAMASTER_ROLE = Object.freeze({
   name: 'DataMaster',
@@ -82,8 +82,6 @@ const DATAMASTER_UPDATE_FIELDS: Record<string, readonly string[]> = {
     'municipalityCode',
     'administrativeArea',
     'coordinateSource',
-    'fromLabel',
-    'toLabel',
   ],
   'api::global.global': ['publishCityItinerariesToNext'],
 };
