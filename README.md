@@ -91,6 +91,45 @@ npm install
 npm run develop
 ```
 
+## Image de production autohébergée
+
+Le `Dockerfile` produit une image Strapi autonome et non-root sur Node.js 24.
+Les identifiants PostgreSQL, les secrets Strapi et les clés S3 sont injectés au
+runtime ; ils ne doivent jamais être transmis comme arguments de build. Le
+stockage S3 générique utilise `AWS_ENDPOINT`, `AWS_REGION`, `AWS_BUCKET`,
+`AWS_ACCESS_KEY_ID` et `AWS_SECRET_ACCESS_KEY`. `PUBLIC_URL` fixe l'URL publique
+du CMS derrière le proxy et `MEDIA_ALLOWED_ORIGINS` complète la CSP. Le CORS
+n'utilise jamais la valeur permissive par défaut de Strapi : il accepte
+uniquement `CLIENT_URL` et les origines HTTP(S) explicites de
+`PREVIEW_ALLOWED_ORIGINS`.
+
+```bash
+docker build -t gthdf-cms:staging .
+docker run --rm gthdf-cms:staging node -e \
+  "console.log(process.getuid(), process.getgid())"
+```
+
+La recette MicroK8s et la stratégie de migration restent documentées dans le
+dépôt frontend canonique, sous `infrastructure/README.md` et
+`documentation/adr_hebergement_microk8s_partage.md`.
+
+### Copie des médias vers OVH Paris
+
+La copie de staging est reprenable et non destructive : elle récupère les
+identifiants Cellar avec `clever-cli`, lit les identifiants OVH depuis un fichier
+privé explicitement fourni et ne supprime jamais la source. Les objets déjà
+présents avec la même taille sont ignorés.
+
+```bash
+GTHDF_OVH_CREDENTIALS_FILE=/chemin/prive/ovh.env \
+  npm run migrate:media:ovh-staging
+```
+
+Le domaine public du bucket OVH utilise le format virtual-host
+`https://gthdf-staging-media.s3.eu-west-par.io.cloud.ovh.net` ; le format
+path-style sert aux appels S3 authentifiés mais ne doit pas être utilisé comme
+`AWS_CDN_URL`.
+
 Le CMS et le frontend doivent partager la même valeur longue et aléatoire de
 `PREVIEW_SECRET`. Elle protège l’activation du Draft Mode pour les previews
 d’article, de chapitre et de ville.
