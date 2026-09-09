@@ -1,0 +1,15 @@
+.git
+.github
+.tmp
+.cache
+build
+dist
+node_modules
+.env
+.env.*
+!.env.example
+Dockerfile*
+docker-compose*.yml
+docker-compose*.yaml
+public/uploads/*
+!public/uploads/.gitkeep

@@ -15,6 +15,7 @@
     "migrate:featured-cities:remote": "node --env-file=.env scripts/migrate-featured-city-passages.js --remote",
     "migrate:chapter-display-order": "node scripts/migrate-chapter-display-order.js",
     "migrate:chapter-display-order:remote": "node scripts/migrate-chapter-display-order.js --remote",
+    "migrate:media:ovh-staging": "node scripts/copy-clever-media-to-ovh.mjs",
     "migrate:catalogue-schema": "node scripts/migrate-catalogue-schema.js",
     "migrate:catalogue-schema:remote": "node --env-file=.env scripts/migrate-catalogue-schema.js --remote",
     "provision:datamaster": "tsx scripts/provision-datamaster-role.ts",
@@ -44,11 +45,12 @@
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.51.1",
-    "@strapi/plugin-users-permissions": "5.51.1",
-    "@strapi/provider-upload-aws-s3": "5.51.1",
-    "@strapi/strapi": "5.51.1",
-    "csv-parse": "^5.6.0",
+    "@aws-sdk/client-s3": "3.1023.0",
+    "@strapi/plugin-cloud": "5.52.3",
+    "@strapi/plugin-users-permissions": "5.52.3",
+    "@strapi/provider-upload-aws-s3": "5.52.3",
+    "@strapi/strapi": "5.52.3",
+    "csv-parse": "^7.0.2",
     "fast-xml-parser": "^5.10.1",
     "fs-extra": "^10.0.0",
     "mime-types": "^2.1.27",
@@ -59,11 +61,14 @@
     "styled-components": "^6.0.0"
   },
   "optionalDependencies": {
-    "sharp": "^0.34.5"
+    "sharp": "0.35.4"
   },
   "overrides": {
+    "nodemailer": "9.1.1",
+    "qs": "6.16.0",
+    "vite": "6.4.3",
     "@strapi/upload": {
-      "sharp": "0.33.5"
+      "sharp": "0.35.4"
     }
   },
   "devDependencies": {
