@@ -100,7 +100,17 @@ Au 10 septembre 2026, Strapi est servi sur `https://cms.gthf.fr` par
 `game-prod-ovh-gra` (MicroK8s). Le tag observé est `gthdf-cms:staging`, prêt :
 ce nom historique correspond bien au CMS de production. Le PostgreSQL local
 au cluster et le bucket OVH Paris sont ceux de la production ; le domaine
-`staging-cms.gthf.fr` partage ces mêmes ressources.
+`staging-cms.gthf.fr` partage ces mêmes ressources. Ce partage est un écart à
+corriger : il ne permet pas une recette avec écritures isolée.
+
+La cible est un **staging GTHF complet distinct de la production** : frontend,
+CMS et PostgreSQL dédiés, PVC/caches, médias, configuration, secrets et comptes
+de recette propres, sans droits d'écriture en production. Il doit permettre
+les vrais parcours de création, édition, publication, preview et uploads.
+Les agents coordonnent la version et la réservation du staging partagé pour
+montrer leurs changements ; une instance supplémentaire par PR reste une
+option éventuelle. Le plan détaille les
+[critères de staging complet](docs/livraison-continue.md#staging-complet-du-produit).
 
 Aucun workflow GitHub Actions n'est versionné dans ce dépôt ni dans le frontend.
 Un push sur `main` ne garantit donc pas, avec les scripts présents, une
@@ -109,9 +119,11 @@ plus de prouver quel commit sert les requêtes.
 
 La direction du CMS est de **sélectionner et construire son image sur des
 runners GitHub Actions**, de la publier sur **GHCR par SHA/digest**, puis de
-la déployer automatiquement sur Penthouse après CI verte sur chaque push
-`main`. Le serveur reçoit l'artefact ; le build local reste un secours
-explicitement autorisé. Ansible et Kustomize restent les outils d'activation.
+la qualifier sur le staging complet puis la promouvoir automatiquement sur
+Penthouse après validations vertes pour chaque push `main`. Le même digest
+est promu lorsque sa configuration runtime le permet et que cela a été vérifié.
+Le serveur reçoit l'artefact ; le build local reste un secours explicitement
+autorisé. Ansible et Kustomize restent les outils d'activation.
 Le [plan de livraison du CMS](docs/livraison-continue.md) précise la sélection,
 les contrats avec le frontend, le verrou commun de déploiement, les migrations
 et la preuve de la version effectivement servie. Cette direction reste à
