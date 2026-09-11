@@ -13,3 +13,9 @@ docker-compose*.yml
 docker-compose*.yaml
 public/uploads/*
 !public/uploads/.gitkeep
+tests
+docs/**/*.md
+documentation/**/*.md
+README.md
+AGENTS.md
+*.log

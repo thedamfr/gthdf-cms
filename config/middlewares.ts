@@ -56,6 +56,7 @@ export default ({ env }) => {
         keepHeaderOnError: true,
       },
     },
+    'global::release',
     'strapi::poweredBy',
     'strapi::query',
     'strapi::body',

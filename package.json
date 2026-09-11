@@ -42,7 +42,10 @@
     "start": "strapi start",
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
-    "upgrade:dry": "npx @strapi/upgrade latest --dry"
+    "upgrade:dry": "npx @strapi/upgrade latest --dry",
+    "delivery:storage:check": "node scripts/check-delivery-storage.mjs",
+    "test:delivery": "tsx --test tests/delivery-staging.test.ts tests/release-health.test.ts tests/schema-lock.test.ts",
+    "delivery:staging:prepare": "node scripts/prepare-delivery-staging.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.1023.0",
