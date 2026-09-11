@@ -27,3 +27,15 @@ ni déploiement supplémentaire.
 
 Cette autorisation ne permet pas de modifier globalement le monitoring, les
 droits système, les secrets ou les autres projets au titre d'une livraison.
+
+## GitHub et revue des changements
+
+Le propriétaire autorise les commits, le push de branches et l'ouverture de
+pull requests nécessaires au travail demandé, sans confirmation supplémentaire.
+Ouvrir une PR en draft pendant la préparation, puis la passer en Ready for review
+lorsque les vérifications adaptées ont réussi. L'autorisation de fusion ou de
+mise en production dépend des instructions de la tâche en cours.
+
+Indiquer dans la PR les accès de recette réellement vérifiés, notamment les URLs
+HTTPS Tailscale disponibles. Ne pas inventer d'URL Tailscale ; préciser lorsqu'un
+environnement utilise un domaine public protégé par authentification.
