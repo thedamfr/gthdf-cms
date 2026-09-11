@@ -93,15 +93,19 @@ npm install
 npm run develop
 ```
 
-## Livraison continue OVH en préparation
+## Livraison continue OVH
 
-Le workflow GitHub Actions de cette PR valide les PR et prépare la publication GHCR
-sur `main`. Son activation et les preuves de staging/production sont suivies
-dans le [runbook frontend](https://github.com/thedamfr/gthdf-frontend/pull/33).
-L'automatisation n'est pas encore active. La production conserve le namespace
-historique `gthdf-staging` et le bucket `gthdf-staging-media` ; le staging dédié
-est préparé dans `gthdf-qualification`, avec `gthf-staging-media-bis` à Gravelines.
-L'utilisateur S3 `gthf` sera partagé entre les seuls buckets GTHF, comme demandé.
+Les PR frontend #33 et CMS #23 sont fusionnées. GitHub Actions a publié les
+premières images GHCR, vérifiées dans le staging isolé puis en production.
+Le [runbook commun](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/deploiement_continu.md)
+conserve les digests, les recettes et l’incident suivi d’une reprise. L’automatisation
+attend encore l’identité Tailscale des runners.
+
+La production conserve `gthdf-staging` et le bucket `gthdf-staging-media` à Paris.
+Le staging complet utilise `gthdf-qualification` et `gthf-staging-media-bis` à
+Gravelines. L’utilisateur S3 GTHF autorisé est installé dans les deux environnements ;
+les secrets Strapi et les comptes de recette sont distincts. Le
+[CMS staging](https://staging-cms.gthf.fr/) exige une authentification.
 
 L'image reçoit `GTHDF_REVISION` au build, sans secret. `GET /api/release` renvoie
 cette révision avec `Cache-Control: no-store` après une requête PostgreSQL ; une
@@ -117,7 +121,8 @@ la synchronisation additive du nouveau ; les démarrages concurrents attendent
 leur tour. Conserver `DATABASE_POOL_MAX=3` au minimum : le verrou réserve une
 connexion en plus de celles utilisées par Strapi. La première activation doit
 partir du schéma courant sans changement, car l'image historique ne porte pas
-encore ce verrou. Le rollout et cette concurrence restent à recetter en staging.
+encore ce verrou. Les deux démarrages simultanés et la persistance ont été
+vérifiés en staging ; les 37 schémas de la première promotion sont identiques.
 
 Les contrôles de stockage et le peuplement initial utilisent :
 
@@ -136,45 +141,27 @@ sont réutilisées ; seuls les objets manquants sont transférés. La migration
 réécrit les tables applicatives, crée les accès de recette et enlève les
 jetons d'exemple uniquement lors de l'initialisation sans administrateur.
 Les 2 720 objets et la réécriture des 2 209 fichiers ont été vérifiés le
-11 septembre. Les applications et les domaines staging restent à basculer.
+11 septembre. Les applications et domaines staging sont isolés, et les recettes
+CRUD, preview, publication, upload et nettoyage ont réussi.
 
 ## Image de production autohébergée
 
-Au 10 septembre 2026, Strapi est servi sur `https://cms.gthf.fr` par
-`deployment/gthdf-cms`, namespace `gthdf-staging`, sur
-`game-prod-ovh-gra` (MicroK8s). Le déploiement est prêt et utilise le tag
-`gthdf-cms:staging` ; ce nom historique correspond au CMS de production. Le PostgreSQL local
-au cluster et le bucket OVH Paris sont ceux de la production ; le domaine
-`staging-cms.gthf.fr` partage ces mêmes ressources. Ce partage est un écart à
-corriger : il ne permet pas une recette avec écritures isolée.
+Depuis le 11 septembre 2026, `deployment/gthdf-cms` sert `https://cms.gthf.fr`
+sur Penthouse, namespace `gthdf-staging`, avec le commit
+`bd7c11222ed03325fe2161d349de0b1286255e18` et le digest GHCR
+`sha256:35dd2cdc3bccd4c91db281b79eab4a4efbcda5aa28b404e80c8be1e4ab8972d8`.
+Le même digest est qualifié dans `gthdf-qualification`. PostgreSQL et les
+médias de production restent conservés.
 
-La cible est un **staging GTHF complet distinct de la production** : frontend,
-CMS et PostgreSQL dédiés, PVC/caches, médias, configuration, secrets et comptes
-de recette propres. L’identité S3 partagée entre les deux buckets GTHF est une
-exception explicite demandée par le propriétaire ; les scripts bornent leurs
-écritures au bucket staging. Il doit permettre
-les vrais parcours de création, édition, publication, preview et uploads.
-Les agents coordonnent la version et la réservation du staging partagé pour
-montrer leurs changements ; une instance supplémentaire par PR reste une
-option éventuelle. Le plan détaille les
-[critères de staging complet](docs/livraison-continue.md#staging-complet-du-produit).
+Les [critères de staging complet](docs/livraison-continue.md#staging-complet-du-produit)
+sont recettés. `GTHDF_DELIVERY_ENABLED` reste désactivé jusqu’au raccordement
+Tailscale/SSH du runner et au test d’un cycle automatique complet. Les publications
+sur `main` fonctionnent ; elles ne constituent pas encore un déploiement automatique.
 
-Les workflows de cette évolution sont en revue. `GTHDF_DELIVERY_ENABLED` reste
-désactivé pendant l’amorçage et la qualification ; un push `main` ne déploie
-pas encore automatiquement OVH. Le tag historique en ligne ne démontre pas
-son commit source.
-
-La direction du CMS est de **sélectionner et construire son image sur des
-runners GitHub Actions**, de la publier sur **GHCR par SHA/digest**, puis de
-la qualifier sur le staging complet puis la promouvoir automatiquement sur
-Penthouse après validations vertes pour chaque push `main`. Le même digest
-est promu lorsque sa configuration runtime le permet et que cela a été vérifié.
-Le serveur reçoit l'artefact ; le build local reste un secours explicitement
-autorisé. Ansible et Kustomize restent les outils d'activation.
-Le [plan de livraison du CMS](docs/livraison-continue.md) précise la sélection,
-les contrats avec le frontend, le verrou commun de déploiement, les migrations
-et la preuve de la version effectivement servie. Les contrôles avant activation
-et les résultats réellement obtenus sont suivis dans ce plan.
+Le [plan de livraison du CMS](docs/livraison-continue.md) décrit la sélection,
+le verrou commun, la compatibilité des schémas et le retour arrière. Le serveur
+reçoit les artefacts construits par GitHub Actions. Ansible et Kustomize restent
+les outils d’activation ; les commandes Docker locales suivantes sont un secours.
 
 Le `Dockerfile` produit une image Strapi autonome et non-root sur Node.js 24.
 Les identifiants PostgreSQL, les secrets Strapi et les clés S3 sont injectés au
