@@ -91,6 +91,42 @@ npm install
 npm run develop
 ```
 
+## Livraison continue OVH en préparation
+
+Le workflow GitHub Actions local valide les PR et prépare la publication GHCR
+sur `main`. Son activation et les preuves de staging/production sont suivies
+dans le [runbook frontend](https://github.com/thedamfr/gthdf-frontend/pull/33).
+L'automatisation n'est pas encore active. La production conserve le namespace
+historique `gthdf-staging` et le bucket `gthdf-staging-media` ; le staging dédié
+est préparé dans `gthdf-qualification`, avec `gthf-staging-media-bis` à Gravelines.
+L'utilisateur S3 `gthf` sera partagé entre les seuls buckets GTHF, comme demandé.
+
+L'image reçoit `GTHDF_REVISION` au build, sans secret. `GET /api/release` renvoie
+cette révision avec `Cache-Control: no-store` après une requête PostgreSQL ; une
+base indisponible donne 503. `DATABASE_FORCE_MIGRATION` vaut `false` par défaut :
+Strapi conserve les tables et colonnes persistantes lors d'un retour arrière.
+Les modifications destructives ou contraintes nouvelles restent des migrations
+à planifier séparément. Le déployeur vérifie cette compatibilité avant un rollout.
+
+Les contrôles de stockage et le peuplement initial utilisent :
+
+```bash
+npm run delivery:storage:check -- /chemin/prive/ovh-gthf.txt
+npm run delivery:storage:check -- /chemin/prive/ovh-gthf.txt --inventory
+```
+
+Le premier contrôle crée, lit et supprime son seul objet temporaire dans le
+bucket staging, puis vérifie l'accès de contrôle au bucket de production.
+`--inventory` ne fait que compter les objets et leurs octets dans staging.
+Le peuplement `delivery:staging:prepare` est exécuté par le job Ansible du
+frontend dans le namespace vérifié ; il requiert les secrets de staging et
+refuse les overrides PostgreSQL/Cellar. Les copies marquées par leur checksum
+sont réutilisées ; seuls les objets manquants sont transférés. La migration
+réécrit les tables applicatives, crée les accès de recette et enlève les
+jetons d'exemple uniquement lors de l'initialisation sans administrateur.
+Les 2 720 objets et la réécriture des 2 209 fichiers ont été vérifiés le
+11 septembre. Les applications et les domaines staging restent à basculer.
+
 ## Image de production autohébergée
 
 Le `Dockerfile` produit une image Strapi autonome et non-root sur Node.js 24.

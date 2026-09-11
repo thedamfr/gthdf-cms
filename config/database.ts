@@ -27,6 +27,10 @@ export default ({ env }) => {
   };
 
   return {
+    // Rolling updates and application rollback must not drop persisted schema.
+    settings: {
+      forceMigration: env.bool('DATABASE_FORCE_MIGRATION', false),
+    },
     connection: {
       client,
       ...connections[client],
