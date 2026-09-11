@@ -35,8 +35,9 @@ CMS conserve le digest de `bd7c112` ; seule sa révision traitée avance à `029
 La première publication construit une image en l’absence d’historique de candidats,
 mais le service conserve l’image en production lorsqu’elle est équivalente.
 Les [PR de clôture frontend #37](https://github.com/thedamfr/gthdf-frontend/pull/37)
-et [CMS #27](https://github.com/thedamfr/gthdf-cms/pull/27) consignent le contrôle
-documentaire ultérieur : réutilisation des images et conservation des pods.
+et [CMS #27](https://github.com/thedamfr/gthdf-cms/pull/27) recevront, après fusion,
+le résultat du contrôle documentaire : réutilisation des images et conservation
+des pods. Ce contrôle reste à exécuter lors de la rédaction de cette version.
 
 ## Activation et retour arrière
 
