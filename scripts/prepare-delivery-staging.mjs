@@ -28,9 +28,17 @@ export function stagingMediaUrl(value) {
 
 export function requireStagingTarget(env) {
   if (env.GTHDF_NAMESPACE !== 'gthdf-qualification' || env.DATABASE_HOST !== 'gthdf-postgres'
+    || env.DATABASE_CLIENT !== 'postgres'
     || env.AWS_BUCKET !== 'gthf-staging-media-bis' || env.AWS_ENDPOINT !== 'https://s3.gra.io.cloud.ovh.net'
     || env.DATABASE_URL || Object.entries(env).some(([key, value]) => /^(POSTGRESQL|CELLAR)_ADDON_/.test(key) && value)) {
     throw new Error('Data preparation is restricted to the isolated qualification database and bucket');
+  }
+}
+
+export function requireStagingReadToken(token, accessKey) {
+  if (token.accessKey !== accessKey || token.type !== 'read-only' || token.kind !== 'content-api'
+    || token.lifespan !== null || token.expiresAt !== null) {
+    throw new Error('The staging read token has changed');
   }
 }
 
@@ -123,7 +131,7 @@ async function prepare() {
     const name = 'gthdf-staging-read';
     const existing = await app.db.query('admin::api-token').findOne({ where: { name } });
     const accessKey = tokenService.hash(process.env.STRAPI_API_TOKEN);
-    if (existing && existing.accessKey !== accessKey) throw new Error('The staging read token has changed');
+    if (existing) requireStagingReadToken(existing, accessKey);
     if (!existing) await app.db.query('admin::api-token').create({ data: { name, kind: 'content-api', type: 'read-only', accessKey, lifespan: null, expiresAt: null } });
     console.log(JSON.stringify({ status: 'prepared', mediaObjects: entries.length, copied, productionWrites: 0 }));
   } catch {

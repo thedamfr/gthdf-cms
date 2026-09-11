@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { requireStagingTarget, stagingMediaUrl, editableColumns, isCompletedMediaCopy, initialExampleTokens } from '../scripts/prepare-delivery-staging.mjs';
+import { requireStagingTarget, requireStagingReadToken, stagingMediaUrl, editableColumns, isCompletedMediaCopy, initialExampleTokens } from '../scripts/prepare-delivery-staging.mjs';
 
 const staging = {
-  GTHDF_NAMESPACE: 'gthdf-qualification', DATABASE_HOST: 'gthdf-postgres',
+  GTHDF_NAMESPACE: 'gthdf-qualification', DATABASE_HOST: 'gthdf-postgres', DATABASE_CLIENT: 'postgres',
   AWS_BUCKET: 'gthf-staging-media-bis', AWS_ENDPOINT: 'https://s3.gra.io.cloud.ovh.net',
 };
 
@@ -14,6 +14,20 @@ test('data preparation refuses production, connection overrides and an unexpecte
     { POSTGRESQL_ADDON_HOST: 'production' }, { AWS_BUCKET: 'gthdf-staging-media' },
     { CELLAR_ADDON_HOST: 'production-cellar.example' },
   ]) assert.throws(() => requireStagingTarget({ ...staging, ...override }));
+});
+
+test('data preparation requires PostgreSQL explicitly', () => {
+  assert.throws(() => requireStagingTarget({ ...staging, DATABASE_CLIENT: 'sqlite' }));
+  assert.throws(() => requireStagingTarget({ ...staging, DATABASE_CLIENT: undefined }));
+});
+
+test('resuming requires an unchanged, read-only content token without expiration', () => {
+  const token = { accessKey: 'test-hash', type: 'read-only', kind: 'content-api', lifespan: null, expiresAt: null };
+  requireStagingReadToken(token, 'test-hash');
+  for (const override of [
+    { accessKey: 'changed' }, { type: 'full-access' }, { type: 'custom' },
+    { kind: 'admin' }, { lifespan: 3600000 }, { expiresAt: '2030-01-01T00:00:00.000Z' },
+  ]) assert.throws(() => requireStagingReadToken({ ...token, ...override }, 'test-hash'));
 });
 
 test('initial seeding removes default example tokens without touching later configured access', () => {
