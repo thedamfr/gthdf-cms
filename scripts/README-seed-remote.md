@@ -113,6 +113,11 @@ de production exige une instruction spécifique.
 
 - ⚠️ **Ne commit pas** les variables d'environnement sensibles
 - 💾 Le script sauvegarde automatiquement votre `.env` local
-- 🔄 En cas d'erreur, contrôler la présence de `.env.local`/`.env.backup` et
-  restaurer la configuration avec précaution : le script ne le garantit pas.
+- 🔄 En cas d'erreur, contrôler les fichiers `.env`, `.env.local`,
+  `.env.backup` et `.env.remote` sans afficher leurs secrets. Après un échec
+  du seed, `.env` contient encore la configuration distante et `.env.local`
+  contient l'original ; `.env.backup` en conserve aussi une copie. Un échec à
+  une autre étape peut laisser `.env.remote`. Identifier et restaurer la
+  configuration locale avant de relancer l'application, puis retirer uniquement
+  les fichiers temporaires identifiés : le script ne garantit pas ces étapes.
 - 🗑️ Le nettoyage automatique couvre seulement le chemin de succès.

@@ -133,8 +133,8 @@ Les 2 720 objets et la réécriture des 2 209 fichiers ont été vérifiés le
 
 Au 10 septembre 2026, Strapi est servi sur `https://cms.gthf.fr` par
 `deployment/gthdf-cms`, namespace `gthdf-staging`, sur
-`game-prod-ovh-gra` (MicroK8s). Le tag observé est `gthdf-cms:staging`, prêt :
-ce nom historique correspond bien au CMS de production. Le PostgreSQL local
+`game-prod-ovh-gra` (MicroK8s). Le déploiement est prêt et utilise le tag
+`gthdf-cms:staging` ; ce nom historique correspond au CMS de production. Le PostgreSQL local
 au cluster et le bucket OVH Paris sont ceux de la production ; le domaine
 `staging-cms.gthf.fr` partage ces mêmes ressources. Ce partage est un écart à
 corriger : il ne permet pas une recette avec écritures isolée.
