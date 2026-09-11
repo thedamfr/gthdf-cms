@@ -27,8 +27,11 @@ Les 259 tests CMS et le build Strapi ont réussi localement. La préparation ré
 
 ## Activation et retour arrière
 
-Le workflow CMS utilise le déployeur frontend de `main` et enregistre son SHA
-exact. Fusionner la nouvelle publication frontend avant le workflow CMS. Le service
+Le workflow CMS utilise le publieur frontend épinglé au commit
+`636d7b6a6226d225141df69d57d45c6bc344f7c7`, fusionné dans la PR #36, et conserve ce SHA
+dans chaque candidat. Toute mise à jour de ce publieur demande une modification
+relue du workflow CMS ; un nouveau commit frontend ne reçoit donc pas implicitement
+le jeton d’écriture CMS. Le service
 local sur Penthouse suit le mécanisme déjà actif du site : il vérifie le candidat,
 la CI et les empreintes, qualifie en staging puis promeut sous le verrou commun.
 Le serveur lit les dépôts publics sans identifiant GitHub ; les images privées
