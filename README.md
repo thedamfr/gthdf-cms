@@ -21,8 +21,10 @@ deux dépôts sont voisins, ces fichiers se trouvent sous
 
 Ne pas copier les PRD dans ce dépôt : les lier depuis le README, une issue ou
 une pull request. Cette centralisation simplifie la revue d’architecture sans
-coupler les cycles de livraison ; chaque application reste versionnée et
-déployée depuis son propre dépôt, notamment vers `production-clever`.
+coupler les cycles de livraison. Chaque application possède son dépôt et son
+image, mais les manifests et playbooks OVH des deux applications sont dans le
+dépôt frontend. `production-clever` décrit l'ancien hébergement ; ce n'est plus
+la cible de production publique.
 
 Documents de référence :
 
@@ -93,7 +95,7 @@ npm run develop
 
 ## Livraison continue OVH en préparation
 
-Le workflow GitHub Actions local valide les PR et prépare la publication GHCR
+Le workflow GitHub Actions de cette PR valide les PR et prépare la publication GHCR
 sur `main`. Son activation et les preuves de staging/production sont suivies
 dans le [runbook frontend](https://github.com/thedamfr/gthdf-frontend/pull/33).
 L'automatisation n'est pas encore active. La production conserve le namespace
@@ -129,6 +131,42 @@ Les 2 720 objets et la réécriture des 2 209 fichiers ont été vérifiés le
 
 ## Image de production autohébergée
 
+Au 10 septembre 2026, Strapi est servi sur `https://cms.gthf.fr` par
+`deployment/gthdf-cms`, namespace `gthdf-staging`, sur
+`game-prod-ovh-gra` (MicroK8s). Le tag observé est `gthdf-cms:staging`, prêt :
+ce nom historique correspond bien au CMS de production. Le PostgreSQL local
+au cluster et le bucket OVH Paris sont ceux de la production ; le domaine
+`staging-cms.gthf.fr` partage ces mêmes ressources. Ce partage est un écart à
+corriger : il ne permet pas une recette avec écritures isolée.
+
+La cible est un **staging GTHF complet distinct de la production** : frontend,
+CMS et PostgreSQL dédiés, PVC/caches, médias, configuration, secrets et comptes
+de recette propres. L’identité S3 partagée entre les deux buckets GTHF est une
+exception explicite demandée par le propriétaire ; les scripts bornent leurs
+écritures au bucket staging. Il doit permettre
+les vrais parcours de création, édition, publication, preview et uploads.
+Les agents coordonnent la version et la réservation du staging partagé pour
+montrer leurs changements ; une instance supplémentaire par PR reste une
+option éventuelle. Le plan détaille les
+[critères de staging complet](docs/livraison-continue.md#staging-complet-du-produit).
+
+Les workflows de cette évolution sont en revue. `GTHDF_DELIVERY_ENABLED` reste
+désactivé pendant l’amorçage et la qualification ; un push `main` ne déploie
+pas encore automatiquement OVH. Le tag historique en ligne ne démontre pas
+son commit source.
+
+La direction du CMS est de **sélectionner et construire son image sur des
+runners GitHub Actions**, de la publier sur **GHCR par SHA/digest**, puis de
+la qualifier sur le staging complet puis la promouvoir automatiquement sur
+Penthouse après validations vertes pour chaque push `main`. Le même digest
+est promu lorsque sa configuration runtime le permet et que cela a été vérifié.
+Le serveur reçoit l'artefact ; le build local reste un secours explicitement
+autorisé. Ansible et Kustomize restent les outils d'activation.
+Le [plan de livraison du CMS](docs/livraison-continue.md) précise la sélection,
+les contrats avec le frontend, le verrou commun de déploiement, les migrations
+et la preuve de la version effectivement servie. Les contrôles avant activation
+et les résultats réellement obtenus sont suivis dans ce plan.
+
 Le `Dockerfile` produit une image Strapi autonome et non-root sur Node.js 24.
 Les identifiants PostgreSQL, les secrets Strapi et les clés S3 sont injectés au
 runtime ; ils ne doivent jamais être transmis comme arguments de build. Le
@@ -140,14 +178,43 @@ uniquement `CLIENT_URL` et les origines HTTP(S) explicites de
 `PREVIEW_ALLOWED_ORIGINS`.
 
 ```bash
-docker build -t gthdf-cms:staging .
-docker run --rm gthdf-cms:staging node -e \
+sudo -n docker build -t gthdf-cms:staging .
+sudo -n docker run --rm --network none gthdf-cms:staging node -e \
   "console.log(process.getuid(), process.getgid())"
 ```
 
-La recette MicroK8s et la stratégie de migration restent documentées dans le
-dépôt frontend canonique, sous `infrastructure/README.md` et
-`documentation/adr_hebergement_microk8s_partage.md`.
+Ces commandes utilisent le builder local autorisé sur OVH ; un poste de
+développement peut disposer d'un autre mode d'accès Docker. Le build ne
+remplace pas l'import dans le containerd MicroK8s ni l'activation du workload.
+La recette MicroK8s et la stratégie de migration sont documentées dans le
+[runbook infra frontend](https://github.com/thedamfr/gthdf-frontend/blob/main/infrastructure/README.md)
+et l'[ADR d'hébergement](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/adr_hebergement_microk8s_partage.md).
+
+### Portée des commandes distantes et des migrations
+
+Les procédures Clever ci-dessous conservent l'historique des migrations, mais
+ne sont pas des commandes de production OVH :
+
+| Commande | Cible réellement sélectionnée aujourd'hui |
+|---|---|
+| `migrate:cities:remote`, `migrate:featured-cities:remote` | Variables `POSTGRESQL_ADDON_*_REMOTE` du fichier local, à contrôler explicitement |
+| `migrate:chapter-display-order:remote`, `prepare:gpx-anchors:remote`, `migrate:catalogue-schema:remote` | Base récupérée par `clever env`, application Clever `gthdf-cms` par défaut |
+| `migrate:media:ovh-staging` | Copie depuis Cellar vers le bucket OVH, sans suppression de la source |
+| `seed:remote` | Base distante fournie en environnement ; import de données d'exemple, exclu de la livraison de production |
+
+Le suffixe `:remote` ne signifie jamais « base OVH ». Ne pas appliquer les
+commandes Clever à la source historique en pensant modifier la production.
+Une future exécution OVH doit identifier le serveur, le namespace et la base,
+utiliser les identifiants privés autorisés, produire un dry-run puis vérifier
+une sauvegarde avant les options d'application prévues par le script. Les
+migrations irréversibles ou restaurations écrasantes restent des opérations
+spécifiques, hors du déploiement automatique courant.
+
+Les migrations métier ne sont pas des étapes automatiques de démarrage.
+Strapi peut toutefois synchroniser son schéma au lancement : un changement de
+schéma exige donc une revue de compatibilité avant le rollout. Pour les
+évolutions additives, livrer et valider le CMS avant le frontend qui lit les
+nouveaux champs ; conserver les champs lors d'un rollback applicatif.
 
 ### Copie des médias vers OVH Paris
 
@@ -226,7 +293,7 @@ Déployer le CMS avant la version du frontend qui sélectionne ces champs dans
 l’API Strapi. L’ancien frontend les ignore ; en cas de rollback, conserver les
 colonnes et redéployer seulement le frontend précédent.
 
-### Reprise manuelle en production
+### Reprise manuelle historique sur Clever
 
 Cette reprise n'est jamais lancée au démarrage de Clever Cloud. Strapi crée le
 schéma au chargement de la nouvelle version ; le script ci-dessous reprend
@@ -323,8 +390,8 @@ publiée de chaque document. Elle ne republie aucun chapitre et n’écrit que
 inattendu, dupliqué ou s’il manque une des deux versions. Un second passage doit
 signaler les dix chapitres comme inchangés.
 
-En production, prendre une sauvegarde PostgreSQL, vérifier que la CLI Clever
-est installée et authentifiée, puis exécuter d’abord :
+Pour la cible historique Clever, prendre une sauvegarde PostgreSQL, vérifier
+que la CLI Clever est installée et authentifiée, puis exécuter d’abord :
 
 ```bash
 npm run migrate:chapter-display-order:remote -- --allow-self-signed-tls
@@ -440,8 +507,8 @@ npm run prepare:gpx-anchors -- \
   --confirm-apply
 ```
 
-L’exécution distante suit le même ordre après une sauvegarde PostgreSQL
-réussie. Le dry run reste sans écriture ; l’application distante exige les
+L’exécution distante historique sur Clever suit le même ordre après une
+sauvegarde PostgreSQL réussie. Le dry run reste sans écriture ; l’application distante exige les
 trois confirmations explicites :
 
 ```bash
@@ -570,13 +637,16 @@ npm run build
 yarn build
 ```
 
-## ⚙️ Deployment
+## Déploiement de production
 
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
-
-```
-yarn strapi deploy
-```
+Les images sont d'abord construites et importées dans MicroK8s, puis activées
+avec Ansible et Kustomize depuis le dépôt frontend. Suivre la section
+[Image de production autohébergée](#image-de-production-autohébergée) et le
+[runbook infra](https://github.com/thedamfr/gthdf-frontend/blob/main/infrastructure/README.md).
+La commande npm `deploy` existe encore dans `package.json`, mais appelle
+`strapi deploy` : elle ne déploie pas ce cluster OVH. Le hook
+`.clevercloud/post_build.sh` est conservé pour l'ancien hébergement ; il ne
+constitue pas une automatisation de livraison OVH.
 
 ## 📚 Learn more
 
