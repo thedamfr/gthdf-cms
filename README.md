@@ -97,7 +97,7 @@ npm run develop
 
 Le transport local est coordonné par les PR
 [frontend #36](https://github.com/thedamfr/gthdf-frontend/pull/36) et
-[CMS #26](https://github.com/thedamfr/gthdf-cms/pull/26), à fusionner dans cet ordre.
+[CMS #26](https://github.com/thedamfr/gthdf-cms/pull/26), fusionnées dans cet ordre.
 Les premières images GHCR, issues des anciennes PR #33/#23, ont déjà été
 vérifiées dans le staging isolé puis en production.
 Le [runbook commun](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/deploiement_continu.md)
@@ -157,12 +157,16 @@ Le même digest est qualifié dans `gthdf-qualification`. PostgreSQL et les
 médias de production restent conservés.
 
 Les [critères de staging complet](docs/livraison-continue.md#staging-complet-du-produit)
-sont recettés. Le réconciliateur local reste à qualifier avant activation du timer. Les publications
-sur `main` fonctionnent ; elles ne constituent pas encore un déploiement automatique.
+sont recettés. Le réconciliateur local est actif et a traité automatiquement
+`02963c8bafed323658890752cc19f2c9356e7748` le 11 septembre à 17:49 UTC, après recette
+staging puis production. Le runtime étant identique, il conserve le digest
+ci-dessus ; 228 contrôles origine ont réussi sans erreur. Une CI verte atteste
+la publication du candidat ; le résultat de production est enregistré sur le serveur.
 
 Le [plan de livraison du CMS](docs/livraison-continue.md) décrit la sélection,
 le verrou commun, la compatibilité des schémas et le retour arrière. Le serveur
-reçoit les artefacts construits par GitHub Actions. Ansible et Kustomize restent
+lit le candidat public dans `gthdf-release` et le cluster récupère son digest GHCR.
+Ansible et Kustomize restent
 les outils d’activation ; les commandes Docker locales suivantes sont un secours.
 
 Le `Dockerfile` produit une image Strapi autonome et non-root sur Node.js 24.

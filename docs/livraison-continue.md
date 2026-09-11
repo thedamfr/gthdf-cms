@@ -1,9 +1,9 @@
 # Livraison continue du CMS GTHF
 
-Version 0.4 — 11 septembre 2026. Statut : **première promotion vérifiée, réconciliation locale en qualification**.
+Version 0.5 — 11 septembre 2026. Statut : **réconciliation locale activée, cycle CMS vérifié**.
 Le [plan initial du 10 septembre](livraison-continue-initiale-2026-09-10.md) est conservé intégralement.
 Le [runbook frontend](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/deploiement_continu.md) porte les commandes communes et les preuves d'exploitation.
-Le transport local est coordonné dans les PR [frontend #36](https://github.com/thedamfr/gthdf-frontend/pull/36) puis [CMS #26](https://github.com/thedamfr/gthdf-cms/pull/26), à fusionner dans cet ordre. Les PR #33/#23 portent la première qualification historique des images.
+Le transport local est coordonné dans les PR [frontend #36](https://github.com/thedamfr/gthdf-frontend/pull/36) puis [CMS #26](https://github.com/thedamfr/gthdf-cms/pull/26), fusionnées dans cet ordre. Les PR #33/#23 portent la première qualification historique des images.
 
 ## Staging complet du produit
 
@@ -25,6 +25,20 @@ Les applications et domaines sont isolés. [Frontend staging](https://staging.gt
 
 Les 259 tests CMS et le build Strapi ont réussi localement. La préparation réelle de la base et des médias a réussi, avec un administrateur, un jeton de lecture et aucun webhook. Le [workflow CMS](https://github.com/thedamfr/gthdf-cms/actions/runs/34608608471) a publié le digest `sha256:35dd2cdc3bccd4c91db281b79eab4a4efbcda5aa28b404e80c8be1e4ab8972d8` du commit `bd7c11222ed03325fe2161d349de0b1286255e18`. La qualification puis la promotion ont été exécutées par une opération SSH autorisée, avec les preuves du runbook frontend lié ci-dessus. Les recettes CRUD/preview/publication/upload/nettoyage, la persistance et deux démarrages CMS simultanés ont réussi. La reprise de production a passé 468 contrôles origine sans erreur, dont une fenêtre de santé de 60 secondes après rollout. La première tentative avait déclenché un retour arrière après des timeouts ; les preuves des deux tentatives sont conservées dans le runbook commun.
 
+Le [nouveau workflow CMS](https://github.com/thedamfr/gthdf-cms/actions/runs/34629330095)
+a publié `02963c8bafed323658890752cc19f2c9356e7748`. Le service local a vérifié
+automatiquement le candidat puis exécuté la recette staging de 17:48:06 à
+17:48:31 UTC et la recette production de 17:48:31 à 17:49:53 UTC. Les 228 contrôles
+origine ont réussi, avec au moins 60 secondes saines après la recette et des sondes
+Prometheus fraîches avant et après. Les sources runtime n’ayant pas changé, le
+CMS conserve le digest de `bd7c112` ; seule sa révision traitée avance à `02963c8`.
+La première publication construit une image en l’absence d’historique de candidats,
+mais le service conserve l’image en production lorsqu’elle est équivalente.
+Les [PR de clôture frontend #37](https://github.com/thedamfr/gthdf-frontend/pull/37)
+et [CMS #27](https://github.com/thedamfr/gthdf-cms/pull/27) recevront, après fusion,
+le résultat du contrôle documentaire : réutilisation des images et conservation
+des pods. Ce contrôle reste à exécuter lors de la rédaction de cette version.
+
 ## Activation et retour arrière
 
 Le workflow CMS utilise le publieur frontend épinglé au commit
@@ -38,7 +52,7 @@ Le serveur lit les dépôts publics sans identifiant GitHub ; les images privée
 utilisent le Secret GHCR existant. Aucun accès SSH ou Tailscale de runner n’est
 nécessaire. ArgoCD Studio reste une intégration séparée en préparation ; cette
 livraison ne crée pas d’Application ArgoCD GTHF. Le runbook commun porte
-l’installation, la pause et les preuves du cycle réel restant à qualifier.
+l’installation, la pause et les preuves des cycles réels frontend et CMS vérifiés.
 
 La première paire d’images a été qualifiée puis promue, avec sauvegarde PostgreSQL et contrôles de disponibilité. Les références initiales staging et production sont enregistrées après réussite de leurs recettes. La livraison automatique refuse leur absence. Les volumes, secrets et données de staging ne sont jamais promus. Le retour arrière conserve les données et réactive la dernière image compatible ; aucune restauration de base n'est automatique.
 
