@@ -95,11 +95,14 @@ npm run develop
 
 ## Livraison continue OVH
 
-Les PR frontend #33 et CMS #23 sont fusionnées. GitHub Actions a publié les
-premières images GHCR, vérifiées dans le staging isolé puis en production.
+Le transport local est coordonné par les PR
+[frontend #36](https://github.com/thedamfr/gthdf-frontend/pull/36) et
+[CMS #26](https://github.com/thedamfr/gthdf-cms/pull/26), à fusionner dans cet ordre.
+Les premières images GHCR, issues des anciennes PR #33/#23, ont déjà été
+vérifiées dans le staging isolé puis en production.
 Le [runbook commun](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/deploiement_continu.md)
-conserve les digests, les recettes et l’incident suivi d’une reprise. L’automatisation
-attend encore l’identité Tailscale des runners.
+conserve les digests, les recettes et l’incident suivi d’une reprise. Le raccordement automatique utilise un réconciliateur local sur Penthouse,
+sans connexion des runners au serveur.
 
 La production conserve `gthdf-staging` et le bucket `gthdf-staging-media` à Paris.
 Le staging complet utilise `gthdf-qualification` et `gthf-staging-media-bis` à
@@ -154,8 +157,7 @@ Le même digest est qualifié dans `gthdf-qualification`. PostgreSQL et les
 médias de production restent conservés.
 
 Les [critères de staging complet](docs/livraison-continue.md#staging-complet-du-produit)
-sont recettés. `GTHDF_DELIVERY_ENABLED` reste désactivé jusqu’au raccordement
-Tailscale/SSH du runner et au test d’un cycle automatique complet. Les publications
+sont recettés. Le réconciliateur local reste à qualifier avant activation du timer. Les publications
 sur `main` fonctionnent ; elles ne constituent pas encore un déploiement automatique.
 
 Le [plan de livraison du CMS](docs/livraison-continue.md) décrit la sélection,

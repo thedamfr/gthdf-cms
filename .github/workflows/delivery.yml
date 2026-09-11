@@ -37,9 +37,9 @@ jobs:
     timeout-minutes: 60
     environment: production
     permissions:
-      contents: read
+      actions: read
+      contents: write
       packages: write
-      id-token: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -49,7 +49,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: thedamfr/gthdf-frontend
-          ref: main
+          # Shared publisher reviewed and merged in frontend PR #36.
+          ref: 636d7b6a6226d225141df69d57d45c6bc344f7c7
           path: deployer
           persist-credentials: false
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
@@ -61,34 +62,11 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ github.token }}
-      - name: Join the deployment tailnet using workload identity
-        if: vars.GTHDF_DELIVERY_ENABLED == 'true'
-        uses: tailscale/github-action@780049a30b6ff5c378a9e7b389d15ece7a204888
-        with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          audience: ${{ secrets.TS_AUDIENCE }}
-          tags: tag:github-deploy
-          ping: penthouse.taild95457.ts.net
-      - name: Install the dedicated SSH identity
-        if: vars.GTHDF_DELIVERY_ENABLED == 'true'
+      - name: Require the frontend candidate publication protocol
+        run: node --input-type=module -e "const protocol = await import('./deployer/infrastructure/delivery/publication.mjs'); if (typeof protocol.publishCandidate !== 'function') throw new Error('Frontend candidate publisher must be merged first');"
+      - name: Select and publish a candidate for the local reconciler
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.GTHDF_SSH_PRIVATE_KEY }}
-          SSH_KNOWN_HOSTS: ${{ secrets.GTHDF_SSH_KNOWN_HOSTS }}
-        run: |
-          set -eu
-          test -n "$SSH_PRIVATE_KEY"
-          test -n "$SSH_KNOWN_HOSTS"
-          install -d -m 0700 "$HOME/.ssh"
-          umask 077
-          printf '%s\n' "$SSH_PRIVATE_KEY" > "$HOME/.ssh/id_ed25519"
-          printf '%s\n' "$SSH_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
-      - name: Install the pinned Ansible runner
-        if: vars.GTHDF_DELIVERY_ENABLED == 'true'
-        run: python3 -m pip install -r deployer/infrastructure/ansible/requirements.txt
-      - name: Select, publish, qualify and promote the release
-        env:
-          GTHDF_DELIVERY_ENABLED: ${{ vars.GTHDF_DELIVERY_ENABLED }}
-          GTHDF_SSH_TARGET: ubuntu@penthouse.taild95457.ts.net
+          GH_TOKEN: ${{ github.token }}
         run: node deployer/infrastructure/delivery/ci.mjs cms "$GITHUB_WORKSPACE/application" "$GITHUB_WORKSPACE/deployer"
       - name: Preserve the release evidence
         if: always()
