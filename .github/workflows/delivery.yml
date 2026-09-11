@@ -61,6 +61,8 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ github.token }}
+      - name: Require the frontend candidate publication protocol
+        run: node --input-type=module -e "const protocol = await import('./deployer/infrastructure/delivery/publication.mjs'); if (typeof protocol.publishCandidate !== 'function') throw new Error('Frontend candidate publisher must be merged first');"
       - name: Select and publish a candidate for the local reconciler
         env:
           GH_TOKEN: ${{ github.token }}
