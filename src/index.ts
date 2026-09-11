@@ -2,6 +2,7 @@ import type { Core, Modules } from '@strapi/strapi';
 import { AsyncLocalStorage } from 'node:async_hooks';
 import { resolve } from 'node:path';
 import { errors } from '@strapi/utils';
+import { withSchemaLock } from './infrastructure/schema-lock';
 import {
   validateChapterForPublication,
   validatePublishedChapterOrder,
@@ -1009,7 +1010,12 @@ export default {
    *
    * This gives you an opportunity to extend code.
    */
-  register(/* { strapi }: { strapi: Core.Strapi } */) {},
+  register({ strapi }: { strapi: Core.Strapi }) {
+    if (strapi.config.get('database.connection.client') !== 'postgres') return;
+    const schema = strapi.db.schema;
+    const synchronize = schema.sync.bind(schema);
+    schema.sync = () => withSchemaLock(strapi.db.connection, synchronize);
+  },
 
   /**
    * An asynchronous bootstrap function that runs before

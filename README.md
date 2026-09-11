@@ -110,6 +110,15 @@ Strapi conserve les tables et colonnes persistantes lors d'un retour arrière.
 Les modifications destructives ou contraintes nouvelles restent des migrations
 à planifier séparément. Le déployeur vérifie cette compatibilité avant un rollout.
 
+Au démarrage PostgreSQL, `register` sérialise `db.schema.sync()` avec un verrou
+transactionnel consultatif commun aux instances CMS (`0x47544853`). Il est
+libéré au succès comme à l'échec. L'ancien pod peut continuer à servir pendant
+la synchronisation additive du nouveau ; les démarrages concurrents attendent
+leur tour. Conserver `DATABASE_POOL_MAX=3` au minimum : le verrou réserve une
+connexion en plus de celles utilisées par Strapi. La première activation doit
+partir du schéma courant sans changement, car l'image historique ne porte pas
+encore ce verrou. Le rollout et cette concurrence restent à recetter en staging.
+
 Les contrôles de stockage et le peuplement initial utilisent :
 
 ```bash

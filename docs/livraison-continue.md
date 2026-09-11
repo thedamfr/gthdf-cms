@@ -18,11 +18,12 @@ Les applications et le routage restent à basculer : les domaines staging histor
 - `.github/workflows/delivery.yml` : tests et build sur PR, publication par SHA/digest GHCR sur `main`, puis déployeur commun uniquement si `GTHDF_DELIVERY_ENABLED=true`.
 - `GET /api/release` : révision effective du processus, absence de cache et requête PostgreSQL ; dépendance indisponible en 503.
 - `DATABASE_FORCE_MIGRATION=false` : conservation des tables et colonnes lors du retour arrière ; changements destructifs refusés par le déployeur.
+- `src/infrastructure/schema-lock.ts` : verrou PostgreSQL autour de la synchronisation du schéma, pour conserver le rolling update sans synchronisations concurrentes. Le pool garde au moins trois connexions ; voir les conditions de première activation dans le [README](../README.md#livraison-continue-ovh-en-préparation).
 - `.dockerignore` : documentation narrative et tests exclus de l'image ; les scripts et données métier restent des entrées runtime.
 - `delivery:storage:check` : contrôle borné création/lecture/suppression en staging, puis accès au bucket de production sans écriture.
 - `delivery:staging:prepare` : copie reprenable des médias, réécriture des URLs et comptes de staging, avec garde-fous sur la cible.
 
-Les 254 tests CMS et le build Strapi ont réussi localement. La préparation réelle de la base et des médias a réussi, avec un administrateur, un jeton de lecture et aucun webhook. La publication GHCR, la recette CRUD/preview/upload et la persistance après rollout applicatif restent à valider. Aucune nouvelle image de cette PR n'est annoncée déployée.
+Les 259 tests CMS et le build Strapi ont réussi localement. La préparation réelle de la base et des médias a réussi, avec un administrateur, un jeton de lecture et aucun webhook. La publication GHCR, la recette CRUD/preview/upload et la persistance après rollout applicatif restent à valider. Aucune nouvelle image de cette PR n'est annoncée déployée.
 
 ## Activation et retour arrière
 
