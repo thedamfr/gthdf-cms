@@ -3,7 +3,7 @@
 Version 0.4 — 11 septembre 2026. Statut : **première promotion vérifiée, réconciliation locale en qualification**.
 Le [plan initial du 10 septembre](livraison-continue-initiale-2026-09-10.md) est conservé intégralement.
 Le [runbook frontend](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/deploiement_continu.md) porte les commandes communes et les preuves d'exploitation.
-Les implémentations sont coordonnées dans les PR [frontend #33](https://github.com/thedamfr/gthdf-frontend/pull/33) et [CMS #23](https://github.com/thedamfr/gthdf-cms/pull/23).
+Le transport local est coordonné dans les PR [frontend #36](https://github.com/thedamfr/gthdf-frontend/pull/36) puis [CMS #26](https://github.com/thedamfr/gthdf-cms/pull/26), à fusionner dans cet ordre. Les PR #33/#23 portent la première qualification historique des images.
 
 ## Staging complet du produit
 
