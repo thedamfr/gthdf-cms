@@ -1,6 +1,6 @@
 # Livraison continue du CMS GTHF
 
-Version 0.3 — 11 septembre 2026. Statut : **première promotion vérifiée, automatisation en attente de Tailscale**.
+Version 0.4 — 11 septembre 2026. Statut : **première promotion vérifiée, réconciliation locale en qualification**.
 Le [plan initial du 10 septembre](livraison-continue-initiale-2026-09-10.md) est conservé intégralement.
 Le [runbook frontend](https://github.com/thedamfr/gthdf-frontend/blob/main/documentation/deploiement_continu.md) porte les commandes communes et les preuves d'exploitation.
 Les implémentations sont coordonnées dans les PR [frontend #33](https://github.com/thedamfr/gthdf-frontend/pull/33) et [CMS #23](https://github.com/thedamfr/gthdf-cms/pull/23).
@@ -15,7 +15,7 @@ Les applications et domaines sont isolés. [Frontend staging](https://staging.gt
 
 ## Implémentation et validations
 
-- `.github/workflows/delivery.yml` : tests et build sur PR, publication par SHA/digest GHCR sur `main`, puis déployeur commun uniquement si `GTHDF_DELIVERY_ENABLED=true`.
+- `.github/workflows/delivery.yml` : tests et build sur PR, publication par SHA/digest GHCR sur `main`, puis candidat public dans `gthdf-release`, pris en charge par le réconciliateur local après réussite complète du workflow.
 - `GET /api/release` : révision effective du processus, absence de cache et requête PostgreSQL ; dépendance indisponible en 503.
 - `DATABASE_FORCE_MIGRATION=false` : conservation des tables et colonnes lors du retour arrière ; changements destructifs refusés par le déployeur.
 - `src/infrastructure/schema-lock.ts` : verrou PostgreSQL autour de la synchronisation du schéma, pour conserver le rolling update sans synchronisations concurrentes. Le pool garde au moins trois connexions ; voir les conditions de première activation dans le [README](../README.md#livraison-continue-ovh).
@@ -27,7 +27,15 @@ Les 259 tests CMS et le build Strapi ont réussi localement. La préparation ré
 
 ## Activation et retour arrière
 
-Le déployeur frontend a été fusionné avant le workflow CMS. La connexion privée GitHub Actions → Penthouse exige une identité OIDC Tailscale autorisant les deux dépôts, une clé SSH dédiée et la lecture GHCR côté cluster. Le runbook `infra-sincere` ne fournit pas encore les paramètres GTHF au contrôle du 11 septembre ; son complément est demandé.
+Le workflow CMS utilise le déployeur frontend de `main` et enregistre son SHA
+exact. Fusionner la nouvelle publication frontend avant le workflow CMS. Le service
+local sur Penthouse suit le mécanisme déjà actif du site : il vérifie le candidat,
+la CI et les empreintes, qualifie en staging puis promeut sous le verrou commun.
+Le serveur lit les dépôts publics sans identifiant GitHub ; les images privées
+utilisent le Secret GHCR existant. Aucun accès SSH ou Tailscale de runner n’est
+nécessaire. ArgoCD Studio reste une intégration séparée en préparation ; cette
+livraison ne crée pas d’Application ArgoCD GTHF. Le runbook commun porte
+l’installation, la pause et les preuves du cycle réel restant à qualifier.
 
 La première paire d’images a été qualifiée puis promue, avec sauvegarde PostgreSQL et contrôles de disponibilité. Les références initiales staging et production sont enregistrées après réussite de leurs recettes. La livraison automatique refuse leur absence. Les volumes, secrets et données de staging ne sont jamais promus. Le retour arrière conserve les données et réactive la dernière image compatible ; aucune restauration de base n'est automatique.
 
